@@ -49,7 +49,7 @@ def run_full_bbob_random_test():
     
     # Tools setup
     evaluator = EvaluationFramework(n_runs=2)
-    llm_designer = LLMDesigner()
+    llm_designer = LLMDesigner(config_space=EXTENDED_CONFIG_SPACE)
     
     for problem in selected_problems:
         pname = problem.name
@@ -63,6 +63,7 @@ def run_full_bbob_random_test():
 
         # 1. Meta-learning search (EA_Designer)
         designer = EA_Designer(
+            config_space=EXTENDED_CONFIG_SPACE,
             population_size=20,
             generations=5,
             runs_per_eval=2,
