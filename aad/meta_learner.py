@@ -13,8 +13,7 @@ Strategy: Evolution of EAs  (a (μ + λ)-style search in config space)
 
 Meta-level convergence and configuration history are tracked for analysis.
 """
-import json
-import os       # Changed this
+
 import random
 
 import numpy as np
@@ -24,7 +23,7 @@ from .evolutionary_algorithm import EvolutionaryAlgorithm
 from .landscape_features import LandscapeFeatureExtractor
 from .surrogate_model import SurrogateModel
 
-DEFAULT_MEMORY_BANK_PATH = os.path.join("results", "meta_memory_bank.json")         #Changed this
+
 class EA_Designer:
     """
     Meta-optimiser that searches over EA design configurations.
@@ -63,15 +62,12 @@ class EA_Designer:
         runs_per_eval: int = 3,
         use_surrogate: bool = True,
         surrogate_type: str = "rf",
-        memory_bank_path: str = DEFAULT_MEMORY_BANK_PATH, #Changed here
     ):
         self.config_space = config_space or EA_CONFIG_SPACE
         self.population_size = population_size
         self.generations = generations
         self.runs_per_eval = runs_per_eval
         self.use_surrogate = use_surrogate
-        #Changed this
-        self.memory_bank_path = memory_bank_path
 
         self._surrogate = (
             SurrogateModel(model_type=surrogate_type) if use_surrogate else None
@@ -81,9 +77,6 @@ class EA_Designer:
         # Memory for surrogate fitting: (combined_feature_vector, performance)
         self._mem_X: list = []
         self._mem_y: list = []
-
-        # Warm-start: Load existing experiences from disk
-        self._load_memory_bank()
 
         # Meta-level tracking
         self.meta_convergence: list = []
@@ -150,42 +143,12 @@ class EA_Designer:
         return predicted <= threshold
 
     def _update_surrogate(self) -> None:
-        """Re-fit the surrogate on all accumulated memory and persist."""
+        """Re-fit the surrogate on all accumulated memory."""
         if (
             self._surrogate is not None
             and len(self._mem_X) >= 5
         ):
             self._surrogate.fit(self._mem_X, self._mem_y)
-            self._save_memory_bank()
-
-    #------------------------------------------------------------------ 
-    # Memory bank save/load helpers
-    #------------------------------------------------------------------
-    def _save_memory_bank(self) -> None:
-        """Persist accumulated evaluations to disk."""
-        if not self.memory_bank_path:
-            return
-        os.makedirs(os.path.dirname(self.memory_bank_path), exist_ok=True)
-        try:
-            with open(self.memory_bank_path, "w") as fh:
-                json.dump({"X": self._mem_X, "y": self._mem_y}, fh)
-        except Exception as exc:
-            print(f"  [EA_Designer] Warning: Failed to save memory bank ({exc})")
-
-    def _load_memory_bank(self) -> None:
-        """Load prior cross-problem memory bank from disk."""
-        if not self.memory_bank_path or not os.path.exists(self.memory_bank_path):
-            return
-        try:
-            with open(self.memory_bank_path, "r") as fh:
-                payload = json.load(fh)
-                self._mem_X = payload.get("X", [])
-                self._mem_y = payload.get("y", [])
-            if self._surrogate is not None and len(self._mem_X) >= 5:
-                self._surrogate.fit(self._mem_X, self._mem_y)
-                print(f"  [EA_Designer] Warm-started surrogate with {len(self._mem_X)} prior samples.")
-        except Exception as exc:
-            print(f"  [EA_Designer] Warning: Could not load memory bank ({exc})")
 
     # ------------------------------------------------------------------
     # Main meta-evolution loop
