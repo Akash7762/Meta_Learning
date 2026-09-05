@@ -23,10 +23,31 @@ import time
 
 import numpy as np
 
+import sys
+import os
+
+class OutputLogger:
+    """Intercepts sys.stdout to write to both the terminal and a log file."""
+    def __init__(self, filepath="results/output.txt"):
+        os.makedirs(os.path.dirname(filepath), exist_ok=True)
+        self.terminal = sys.stdout
+        # Use utf-8 to safely capture special characters like '…'
+        self.log = open(filepath, "w", encoding="utf-8")
+
+    def write(self, message):
+        self.terminal.write(message)
+        self.log.write(message)
+        self.log.flush()  # Ensures real-time writing to disk
+
+    def flush(self):
+        self.terminal.flush()
+        self.log.flush()
+
 from aad import (
     EA_Designer,
     EvaluationFramework,
     EvolutionaryAlgorithm,
+    EXTENDED_CONFIG_SPACE,
     LLMDesigner,
     Visualizer,
     AckleyProblem,
@@ -172,7 +193,7 @@ def run_experiment(
 
     evaluator = EvaluationFramework(n_runs=runs_per_eval)
     visualizer = Visualizer(output_dir=RESULTS_DIR)
-    llm_designer = LLMDesigner() if use_llm_designer else None
+    llm_designer = LLMDesigner(config_space=EXTENDED_CONFIG_SPACE) if use_llm_designer else None
 
     # ── Banner ────────────────────────────────────────────────────────
     sep = "=" * 70
@@ -206,6 +227,7 @@ def run_experiment(
             generations=meta_generations,
             runs_per_eval=runs_per_eval,
             use_surrogate=use_surrogate,
+            config_space=EXTENDED_CONFIG_SPACE,
         )
         t0 = time.perf_counter()
         best_config, best_perf = designer.evolve(problem, verbose=verbose)
@@ -303,4 +325,5 @@ def run_experiment(
 # ---------------------------------------------------------------------------
 
 if __name__ == "__main__":
+    sys.stdout = OutputLogger("results/output.txt")
     run_experiment()
