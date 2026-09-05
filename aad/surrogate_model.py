@@ -13,8 +13,7 @@ Two backends are supported:
 Both backends benefit from input / output standardisation, which is
 applied automatically.
 """
-import os
-import joblib       #changes in imports
+
 import numpy as np
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.gaussian_process import GaussianProcessRegressor
@@ -150,36 +149,3 @@ class SurrogateModel:
             y_mean_s.reshape(-1, 1)
         ).ravel()
         return y_mean, y_std_s
-
-    # ------------------------------------------------------------------
-    # Persistence (Save / Load)
-    # ------------------------------------------------------------------
-
-    def save(self, filepath: str = "results/surrogate_model.pkl") -> None:
-        """Serialize the fitted surrogate model and scalers to disk."""
-        if not self.is_fitted:
-            return
-        os.makedirs(os.path.dirname(filepath), exist_ok=True)
-        checkpoint = {
-            "model": self._model,
-            "scaler_X": self._scaler_X,
-            "scaler_y": self._scaler_y,
-            "is_fitted": self.is_fitted,
-            "model_type": self.model_type,
-        }
-        joblib.dump(checkpoint, filepath)
-
-    def load(self, filepath: str = "results/surrogate_model.pkl") -> bool:
-        """Load a pretrained surrogate model and scalers from disk."""
-        if not os.path.exists(filepath):
-            return False
-        try:
-            checkpoint = joblib.load(filepath)
-            self._model = checkpoint["model"]
-            self._scaler_X = checkpoint["scaler_X"]
-            self._scaler_y = checkpoint["scaler_y"]
-            self.is_fitted = checkpoint["is_fitted"]
-            self.model_type = checkpoint.get("model_type", self.model_type)
-            return True
-        except Exception:
-            return False
