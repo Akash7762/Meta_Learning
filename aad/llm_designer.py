@@ -129,13 +129,12 @@ class LLMDesigner:
             prompt = (
                 "You are an expert in evolutionary computation.\n"
                 "Given the following optimisation problem description, "
-                "suggest the best EA configuration.\n\n"
+                "suggest the best algorithm configuration.\n\n"
                 f"Problem: {description}\n\n"
                 f"Valid configuration space:\n{space_str}\n\n"
                 "Return a JSON object with exactly these keys:\n"
-                "  population_size, selection, crossover, mutation, "
-                "max_generations\n"
-                "Each value must be one of the options listed above.\n"
+                "  algorithm, population_size, selection, crossover, mutation, max_generations\n"
+                "Each value must be one of the options listed in the configuration space above.\n"
                 "Return ONLY the JSON, no explanation."
             )
 
