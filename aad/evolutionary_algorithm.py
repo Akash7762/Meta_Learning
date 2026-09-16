@@ -205,9 +205,10 @@ def build_algorithm(config: dict):
     """
     Return an algorithm instance appropriate for *config*.
 
-    If ``config["algorithm"]`` is absent or ``"ea"``, an
-    :class:`EvolutionaryAlgorithm` is returned.  Otherwise the value is
-    looked up in :data:`~aad.mealpy_algorithms.MEALPY_REGISTRY` and a
+    ``config["algorithm"]`` is required.  If it is ``"ea"`` (or an explicit
+    ``None``/``""``), an :class:`EvolutionaryAlgorithm` is returned.
+    Otherwise the value is looked up in
+    :data:`~aad.mealpy_algorithms.MEALPY_REGISTRY` and a
     :class:`~aad.mealpy_algorithms.MealpyAlgorithm` is returned.
 
     Parameters
@@ -217,8 +218,20 @@ def build_algorithm(config: dict):
     Returns
     -------
     EvolutionaryAlgorithm | MealpyAlgorithm
+
+    Raises
+    ------
+    ValueError
+        If *config* has no ``"algorithm"`` key, or the key names an
+        algorithm that is not registered.
     """
-    algorithm_key = config.get("algorithm", "pso")
+    if "algorithm" not in config:
+        raise ValueError(
+            "config is missing required key 'algorithm'. "
+            "Pass 'ea' for the built-in EvolutionaryAlgorithm or one of "
+            "the mealpy keys (see MEALPY_ALGORITHM_KEYS)."
+        )
+    algorithm_key = config["algorithm"]
     if algorithm_key in (None, "ea", ""):
         return EvolutionaryAlgorithm(config)
     from .mealpy_algorithms import MealpyAlgorithm

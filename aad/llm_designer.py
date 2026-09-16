@@ -20,7 +20,7 @@ import random
 import os
 from dotenv import load_dotenv
 
-from .config_space import EA_CONFIG_SPACE
+from .config_space import EXTENDED_CONFIG_SPACE
 
 load_dotenv()  # Load environment variables from .env file
 
@@ -33,22 +33,24 @@ class LLMDesigner:
     api_key : str | None
         Google Gemini API key.  If ``None`` (default) the rule-based fallback
         is used automatically.
-    model : str, default ``"gemini-1.5-flash"``
+    model : str, default ``"gemini-3.6-flash"``
         Gemini model to use (only relevant when *api_key* is provided).
     config_space : dict, optional
-        The EA config space to constrain the proposals.
+        The config space to constrain the proposals.  Defaults to
+        :data:`~aad.config_space.EXTENDED_CONFIG_SPACE`, so a bare
+        ``LLMDesigner()`` proposes across every registered algorithm.
     """
 
     def __init__(
         self,
         api_key: str = None,
-        model: str = "gemini-1.5-flash",
+        model: str = "gemini-3.6-flash",
         config_space: dict = None,
     ):
         self.api_key = api_key or os.getenv("GEMINI_API_KEY")
         self.model = model
-        self.config_space = config_space or EA_CONFIG_SPACE
-        self._use_llm = api_key is not None
+        self.config_space = config_space or EXTENDED_CONFIG_SPACE
+        self._use_llm = bool(self.api_key)
 
     # ------------------------------------------------------------------
     # Rule-based fallback
@@ -67,6 +69,16 @@ class LLMDesigner:
         """
         desc = description.lower()
         config: dict = {}
+
+        # --- Algorithm ---
+        algorithm_options = self.config_space.get("algorithm", ["ea"])
+        if any(kw in desc for kw in ("multimodal", "noisy", "rugged")):
+            preferred = [a for a in algorithm_options if a in ("GWO", "WOA", "HHO", "SA", "GA")]
+        elif any(kw in desc for kw in ("smooth", "unimodal", "convex")):
+            preferred = [a for a in algorithm_options if a in ("DE", "L_SHADE", "CMA_ES", "ea")]
+        else:
+            preferred = algorithm_options
+        config["algorithm"] = random.choice(preferred or algorithm_options)
 
         # --- Population size ---
         if any(kw in desc for kw in ("high-dimensional", "complex", "large")):

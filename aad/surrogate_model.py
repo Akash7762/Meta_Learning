@@ -60,6 +60,19 @@ class SurrogateModel:
             raise ValueError(
                 f"Unknown model_type '{model_type}'. Choose 'rf' or 'gp'."
             )
+     # ------------------------------------------------------------------
+    # Target transform helpers
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _forward_log(y: np.ndarray) -> np.ndarray:
+        """Signed log1p — handles negative fitness values (e.g. F5, F19, F20)."""
+        return np.sign(y) * np.log1p(np.abs(y))
+
+    @staticmethod
+    def _inverse_log(y: np.ndarray) -> np.ndarray:
+        """Inverse of :meth:`_forward_log`."""
+        return np.sign(y) * np.expm1(np.abs(y))
 
     # ------------------------------------------------------------------
     # Training
@@ -76,6 +89,8 @@ class SurrogateModel:
         """
         X = np.asarray(X, dtype=float)
         y = np.asarray(y, dtype=float).reshape(-1, 1)
+        y = np.nan_to_num(y, nan=1e12, posinf=1e12, neginf=-1e12)
+        y = self._forward_log(y)
 
         X_s = self._scaler_X.fit_transform(X)
         y_s = self._scaler_y.fit_transform(y).ravel()
@@ -106,7 +121,8 @@ class SurrogateModel:
             X = X.reshape(1, -1)
         X_s = self._scaler_X.transform(X)
         y_s = self._model.predict(X_s)
-        return self._scaler_y.inverse_transform(y_s.reshape(-1, 1)).ravel()
+        y_log = self._scaler_y.inverse_transform(y_s.reshape(-1, 1)).ravel()
+        return self._inverse_log(y_log)
 
     def predict_with_uncertainty(self, X):
         """
@@ -134,10 +150,10 @@ class SurrogateModel:
         if self.model_type == "gp":
             y_mean_s, y_std_s = self._model.predict(X_s, return_std=True)
             # Invert scaling for mean only (std is in normalised space)
-            y_mean = self._scaler_y.inverse_transform(
+            y_mean_log = self._scaler_y.inverse_transform(
                 y_mean_s.reshape(-1, 1)
             ).ravel()
-            return y_mean, y_std_s
+            return self._inverse_log(y_mean_log), y_std_s
 
         # RF: use variance across estimators
         tree_preds = np.stack(
@@ -145,7 +161,7 @@ class SurrogateModel:
         )
         y_mean_s = tree_preds.mean(axis=0)
         y_std_s = tree_preds.std(axis=0)
-        y_mean = self._scaler_y.inverse_transform(
+        y_mean_log = self._scaler_y.inverse_transform(
             y_mean_s.reshape(-1, 1)
         ).ravel()
-        return y_mean, y_std_s
+        return self._inverse_log(y_mean_log), y_std_s

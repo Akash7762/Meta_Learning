@@ -69,8 +69,8 @@ def run_full_bbob_random_test():
             runs_per_eval=2,
             use_surrogate=True,
         )
+
         
-       
         best_config, best_perf = designer.evolve(problem, verbose=True)
 
         # 2. LLM Designer (Description & Proposal)
@@ -93,6 +93,33 @@ def run_full_bbob_random_test():
         print(f"\n  [Results] {pname}")
         EvaluationFramework.summarize(full_metrics)
 
+def test_algorithm_key_present_and_valid():
+    """
+    Regression test: LLMDesigner._rule_based_proposal must always emit
+    an 'algorithm' key that is a valid member of EXTENDED_CONFIG_SPACE,
+    and build_algorithm must reject configs missing that key.
+    """
+    from aad import EXTENDED_CONFIG_SPACE
+    from aad.evolutionary_algorithm import build_algorithm
+
+    llm_designer = LLMDesigner(config_space=EXTENDED_CONFIG_SPACE)
+    desc = llm_designer.generate_description(BBOB_F1_Sphere(dim=10))
+    llm_config = llm_designer.propose_algorithm(desc)
+
+    assert "algorithm" in llm_config, "LLM designer output missing 'algorithm' key"
+    assert llm_config["algorithm"] in EXTENDED_CONFIG_SPACE["algorithm"], (
+        f"'{llm_config['algorithm']}' not in EXTENDED_CONFIG_SPACE['algorithm']"
+    )
+
+    try:
+        build_algorithm({"population_size": 20, "max_generations": 10})
+        raise AssertionError("build_algorithm should have raised on missing 'algorithm' key")
+    except ValueError:
+        pass
+
+    print("  [OK] test_algorithm_key_present_and_valid passed")
+
 
 if __name__ == "__main__":
+    test_algorithm_key_present_and_valid()
     run_full_bbob_random_test()

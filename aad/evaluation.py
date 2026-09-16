@@ -25,6 +25,13 @@ import numpy as np
 
 from .evolutionary_algorithm import EvolutionaryAlgorithm, build_algorithm
 
+_FITNESS_PENALTY = 1e12  # see meta_learner.py — same rationale, duplicated here to avoid
+# a cross-module dependency for one constant.
+
+
+def _sanitize_fitness(value: float) -> float:
+    """Return *value* unchanged, or a large finite penalty if it is NaN/Inf."""
+    return float(value) if np.isfinite(value) else _FITNESS_PENALTY
 
 class EvaluationFramework:
     """
@@ -69,7 +76,7 @@ class EvaluationFramework:
             _, best_fit = ea.run(problem)
             elapsed = time.perf_counter() - t0
 
-            best_fitnesses.append(best_fit)
+            best_fitnesses.append(_sanitize_fitness(best_fit))
             histories.append(ea.history)
             runtimes.append(elapsed)
 
@@ -95,16 +102,28 @@ class EvaluationFramework:
                 reached = 0
             speeds.append(reached)
 
+    # Stability: coefficient-of-variation based, inverted so higher
+    # still means "more stable". Normalising by |mean| (instead of a
+    # bare epsilon on std alone) prevents the metric from exploding
+    # to non-informative values (e.g. ~1e10) when std is merely small
+    # relative to the epsilon rather than genuinely zero.
+        mean_bf = np.mean(bf)
+        std_bf = np.std(bf)
+        cv = std_bf / (np.abs(mean_bf) + 1e-10)
+        stability = float(1.0 / (cv + 1e-10))
+
         return {
             "best_fitness": float(np.min(bf)),
             "mean_fitness": float(np.mean(bf)),
             "std_fitness": float(np.std(bf)),
             "worst_fitness": float(np.max(bf)),
             "convergence_speed": float(np.mean(speeds)),
-            "stability": float(1.0 / (np.std(bf) + 1e-10)),
+            "stability": stability,
             "mean_runtime": float(np.mean(runtimes)),
             "histories": histories,
         }
+
+
 
     # ------------------------------------------------------------------
     # Multi-configuration comparison

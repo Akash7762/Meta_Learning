@@ -18,10 +18,20 @@ import random
 
 import numpy as np
 
-from .config_space import EA_CONFIG_SPACE, random_config, config_to_vector
-from .evolutionary_algorithm import EvolutionaryAlgorithm
+from .config_space import EXTENDED_CONFIG_SPACE, random_config, config_to_vector
+from .evolutionary_algorithm import build_algorithm
 from .landscape_features import LandscapeFeatureExtractor
 from .surrogate_model import SurrogateModel
+
+# sentinel assigned to a run that returned NaN/Inf, so a single
+# numerically unstable trial (e.g. an adaptive-DE variant collapsing)
+# is heavily penalised rather than corrupting the surrogate's training
+# data or the meta-population's fitness ranking.
+_FITNESS_PENALTY = 1e12
+
+def _sanitize_fitness(value: float) -> float:
+    """Return *value* unchanged, or a large finite penalty if it is NaN/Inf."""
+    return float(value) if np.isfinite(value) else _FITNESS_PENALTY
 
 
 class EA_Designer:
@@ -32,7 +42,9 @@ class EA_Designer:
     ----------
     config_space : dict, optional
         Configuration space to search over.  Defaults to
-        :data:`~aad.config_space.EA_CONFIG_SPACE`.
+        :data:`~aad.config_space.EXTENDED_CONFIG_SPACE`, i.e. selection
+        across every registered algorithm.  Pass a space pinned to
+        ``algorithm=["ea"]`` for the secondary operator-tuning experiment.
     population_size : int, default 10
         Number of EA configurations in the meta-population.
     generations : int, default 5
@@ -63,7 +75,7 @@ class EA_Designer:
         use_surrogate: bool = True,
         surrogate_type: str = "rf",
     ):
-        self.config_space = config_space or EA_CONFIG_SPACE
+        self.config_space = config_space or EXTENDED_CONFIG_SPACE
         self.population_size = population_size
         self.generations = generations
         self.runs_per_eval = runs_per_eval
@@ -115,9 +127,9 @@ class EA_Designer:
         """
         scores = []
         for _ in range(self.runs_per_eval):
-            ea = EvolutionaryAlgorithm(ea_config)
+            ea = build_algorithm(ea_config)
             _, best_fit = ea.run(problem)
-            scores.append(best_fit)
+            scores.append(_sanitize_fitness(best_fit))
         return float(np.mean(scores))
 
     def _should_evaluate(

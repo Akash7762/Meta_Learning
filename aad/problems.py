@@ -664,14 +664,21 @@ class BBOB_F17_SchaffersF7(_BBOBBase):
     """
     BBOB F17 – Schaffer's F7 function.
     Tests performance on non-separable, multi-modal landscape with
-    a moderate conditioning number.
+    a moderate conditioning number (10), as opposed to F18's 1000.
     """
     _fid = 17
 
     def evaluate(self, solution):
         x = np.asarray(solution, dtype=float)
-        z = self._lam10 ** 0.5 * (self.Q @ self._t_asy(self.R @ (x - self.xopt), beta=0.5))
         n = self.dim
+        # Condition number 10. Previously this used ``self._lam10 ** 0.5``,
+        # i.e. 10**(3*i/(n-1)), which is condition 1000 -- numerically
+        # identical to F18 and made the two functions the same benchmark.
+        if n > 1:
+            lam = 10.0 ** (np.arange(n, dtype=float) / (n - 1))
+        else:
+            lam = np.ones(1)
+        z = lam * (self.Q @ self._t_asy(self.R @ (x - self.xopt), beta=0.5))
         if n < 2:
             return 0.0
         s = np.sqrt(z[:-1] ** 2 + z[1:] ** 2)

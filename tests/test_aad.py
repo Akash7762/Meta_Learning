@@ -31,6 +31,7 @@ from aad.ea_components import (
 from aad.evolutionary_algorithm import EvolutionaryAlgorithm
 from aad.config_space import (
     EA_CONFIG_SPACE,
+    EXTENDED_CONFIG_SPACE,
     random_config,
     all_configs,
     config_to_vector,
@@ -240,21 +241,32 @@ class TestEvolutionaryAlgorithm:
 
 class TestConfigSpace:
     def test_random_config_keys(self):
+        # EXTENDED_CONFIG_SPACE is the canonical default (Phase 0 decision)
         cfg = random_config()
-        assert set(cfg.keys()) == set(EA_CONFIG_SPACE.keys())
+        assert set(cfg.keys()) == set(EXTENDED_CONFIG_SPACE.keys())
 
     def test_random_config_valid_values(self):
         for _ in range(10):
             cfg = random_config()
             for k, v in cfg.items():
-                assert v in EA_CONFIG_SPACE[k]
+                assert v in EXTENDED_CONFIG_SPACE[k]
 
     def test_all_configs_count(self):
         configs = all_configs()
         expected = 1
-        for v in EA_CONFIG_SPACE.values():
+        for v in EXTENDED_CONFIG_SPACE.values():
             expected *= len(v)
         assert len(configs) == expected
+
+    def test_default_config_space_carries_algorithm_key(self):
+        # The default space must always yield a buildable config.
+        assert "algorithm" in random_config()
+
+    def test_ea_config_space_still_usable_explicitly(self):
+        # Operator tuning remains supported as an explicit, secondary path.
+        cfg = random_config(EA_CONFIG_SPACE)
+        assert set(cfg.keys()) == set(EA_CONFIG_SPACE.keys())
+        assert "algorithm" not in cfg
 
     def test_config_to_vector_length(self):
         cfg = random_config()
@@ -347,20 +359,29 @@ class TestSurrogateModel:
 # ---------------------------------------------------------------------------
 
 class TestLLMDesigner:
+    @pytest.fixture(autouse=True)
+    def _no_api_key(self, monkeypatch):
+        # Hermetic guarantee: no test in this class may reach the live Gemini
+        # API, whatever GEMINI_API_KEY the local .env happens to define.
+        # load_dotenv() runs at llm_designer import time, but the key is read
+        # from os.environ inside LLMDesigner.__init__, so deleting it here is
+        # enough. monkeypatch restores it after each test.
+        monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+
     def test_rule_based_returns_valid_config(self):
-        d = LLMDesigner()  # no API key → rule-based
+        d = LLMDesigner(api_key=None)  # no API key → rule-based
         cfg = d.propose_algorithm("High-dimensional multimodal complex problem.")
         assert cfg["selection"] in EA_CONFIG_SPACE["selection"]
         assert cfg["crossover"] in EA_CONFIG_SPACE["crossover"]
         assert cfg["mutation"] in EA_CONFIG_SPACE["mutation"]
 
     def test_generate_description_is_string(self):
-        d = LLMDesigner()
+        d = LLMDesigner(api_key=None)
         desc = d.generate_description(SphereProblem(dim=10))
         assert isinstance(desc, str) and len(desc) > 0
 
     def test_rule_based_keywords(self):
-        d = LLMDesigner()
+        d = LLMDesigner(api_key=None)
         cfg = d.propose_algorithm("simple low-dimensional unimodal smooth problem")
         # Heuristic: smooth → polynomial mutation, small pop
         assert cfg["mutation"] == "polynomial"
@@ -374,6 +395,7 @@ class TestLLMDesigner:
 class TestEvaluationFramework:
     def _cfg(self):
         return {
+            "algorithm": "ea",
             "population_size": 10,
             "max_generations": 10,
             "selection": "tournament",

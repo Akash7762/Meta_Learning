@@ -26,6 +26,8 @@ import numpy as np
 import sys
 import os
 
+from aad.evolutionary_algorithm import build_algorithm
+
 class OutputLogger:
     """Intercepts sys.stdout to write to both the terminal and a log file."""
     def __init__(self, filepath="results/output.txt"):
@@ -289,7 +291,7 @@ def run_experiment(
         if is_mo:
             # Run the best EA once more to collect the final population
             # and plot its objective-space projection as a Pareto front.
-            _ea = EvolutionaryAlgorithm({**best_config, "max_generations": 50})
+            _ea = build_algorithm({**best_config, "max_generations": 50})
             _ea.run(problem)
             lb = np.asarray(problem.bounds()[0])
             ub = np.asarray(problem.bounds()[1])
@@ -313,6 +315,7 @@ def run_experiment(
     for pname, pres in all_results.items():
         best = pres["final_evaluation"]["metrics"]["best_fitness"]
         cfg = pres["final_evaluation"]["config"]
+        log_best = np.log1p(abs(best)) * (1 if best >= 0 else -1)
         print(f"  {pname:<28s}  best={best:.6f}")
         print(f"  {'':28s}  cfg={cfg}")
     print(sep)

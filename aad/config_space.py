@@ -34,16 +34,25 @@ EA_CONFIG_SPACE: Dict[str, List[Any]] = {
 # value the corresponding mealpy optimizer is used and those three keys are
 # ignored (only population_size and max_generations are forwarded).
 
+# NOTE: this list must stay in step with MEALPY_REGISTRY in
+# aad/mealpy_algorithms.py. It is a hand-maintained duplicate: an algorithm
+# listed here but missing from the registry makes build_algorithm raise
+# ValueError as soon as the meta-learner samples it.
+#
+# CMA_ES, AOA and DE were removed on 2026-09-15 -- their mealpy
+# implementations run without error but do not optimise (see the exclusion
+# note in aad/mealpy_algorithms.py and results/phase1b_screening.txt).
+
 MEALPY_ALGORITHM_KEYS: List[str] = [
     # Evolutionary
-    "GA", "DE", "JADE", "CMA_ES", "SHADE", "L_SHADE",
+    "GA", "JADE", "SHADE", "L_SHADE",
     # Swarm
     "PSO", "GWO", "WOA", "HHO", "ABC",
     "GJO", "ARO", "AO", "MPA", "HBA",
     # Physics
     "SA", "EO", "MVO", "RIME",
     # Bio / Math
-    "SMA", "BBO", "SCA", "AOA",
+    "SMA", "BBO", "SCA",
 ]
 
 EXTENDED_CONFIG_SPACE: Dict[str, List[Any]] = {
@@ -68,14 +77,14 @@ def random_config(config_space: dict = None) -> dict:
     ----------
     config_space : dict, optional
         Mapping ``{param_name: [value1, value2, ...]}``.
-        Defaults to :data:`EA_CONFIG_SPACE`.
+        Defaults to :data:`EXTENDED_CONFIG_SPACE`.
 
     Returns
     -------
     dict  –  one value chosen uniformly at random per parameter.
     """
     if config_space is None:
-        config_space = EA_CONFIG_SPACE
+        config_space = EXTENDED_CONFIG_SPACE
     return {k: random.choice(v) for k, v in config_space.items()}
 
 
@@ -88,7 +97,7 @@ def all_configs(config_space: dict = None) -> list:
     list of dict
     """
     if config_space is None:
-        config_space = EA_CONFIG_SPACE
+        config_space = EXTENDED_CONFIG_SPACE
     keys = list(config_space.keys())
     values = list(config_space.values())
     return [dict(zip(keys, combo)) for combo in itertools.product(*values)]
@@ -109,14 +118,14 @@ def config_to_vector(config: dict, config_space: dict = None) -> list:
     Parameters
     ----------
     config       : dict  –  an EA configuration
-    config_space : dict, optional  –  defaults to :data:`EA_CONFIG_SPACE`
+    config_space : dict, optional  –  defaults to :data:`EXTENDED_CONFIG_SPACE`
 
     Returns
     -------
     list of float
     """
     if config_space is None:
-        config_space = EA_CONFIG_SPACE
+        config_space = EXTENDED_CONFIG_SPACE
 
     vec = []
     for key, options in config_space.items():
@@ -150,7 +159,7 @@ def vector_to_config(vector: list, config_space: dict = None) -> dict:
     dict
     """
     if config_space is None:
-        config_space = EA_CONFIG_SPACE
+        config_space = EXTENDED_CONFIG_SPACE
 
     config = {}
     idx = 0
