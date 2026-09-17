@@ -193,7 +193,8 @@ def run_lopo(P, A, M, F, groups):
     N = normalise_rows(M)
     ranks = np.vstack([rankdata(M[i, :]) for i in range(n_prob)])
 
-    names = ["VBS (oracle)", "SBS (fold-aware)", "Random", "1-NN", "3-NN", "RF-regression"]
+    names = ["VBS (oracle)", "SBS (fold-aware)", "Random", "1-NN", "3-NN", "RF-regression",
+             "RF in-sample (ceiling)"]
     picks = {n: [] for n in names}
     rng = np.random.default_rng(RANDOM_SEED)
 
@@ -209,6 +210,15 @@ def run_lopo(P, A, M, F, groups):
         picks["1-NN"].append(sel_knn(1, Xtr, Xte, N_train))
         picks["3-NN"].append(sel_knn(3, Xtr, Xte, N_train))
         picks["RF-regression"].append(sel_rf(Xtr, Xte, N_train, RF_SEED))
+
+        # DIAGNOSTIC, NOT A SELECTOR. Deliberately trains on every row,
+        # including the held-out one, so the model is allowed to memorise
+        # the answer. It measures whether the features can separate these
+        # problems AT ALL. If this stalls near the LOPO score the features
+        # carry no usable signal; if it approaches VBS the features are
+        # fine and the loss is in generalising across functions.
+        Xa_tr, Xa_te, _ = prep_features(F, F[i:i + 1])
+        picks["RF in-sample (ceiling)"].append(sel_rf(Xa_tr, Xa_te, N, RF_SEED))
 
     return N, ranks, names, picks
 
@@ -306,7 +316,7 @@ def report(P, A, M, N, names, picks, summ, data, groups=None, source=None):
     w(f"             alternative='two-sided', method='auto', ...)")
     sbs_scores = np.array(summ["SBS (fold-aware)"]["norm_scores"])
     for name in names:
-        if name in ("VBS (oracle)", "SBS (fold-aware)"):
+        if name in ("VBS (oracle)", "SBS (fold-aware)", "RF in-sample (ceiling)"):
             continue
         x = np.array(summ[name]["norm_scores"])
         diff = x - sbs_scores
