@@ -1,5 +1,13 @@
 # Generated outputs
-results/
+# results/ is deliberately TRACKED (2026-09-23): the matrices cost 8-30 hours
+# each to rebuild and were living only in the working tree, unprotected.
+# Two files vanished from disk during that period with no explanation.
+#
+# Ignore only the transient pieces:
+results/*.tmp
+results/*.jsonl        # append-only crash journal; the .json snapshot is the record
+results/_tmp_*
+results/*_dryrun.*
 
 # Python cache
 __pycache__/
