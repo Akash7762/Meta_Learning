@@ -6,10 +6,17 @@ selector more than 23 training rows.
 
 Row set
 -------
-    24 BBOB functions
-  x  5 pseudo-instances (distinct problem seeds)
-  x  3 dimensions (5, 10, 20)
-  =  360 rows,  x 22 algorithms  =  7920 cells
+    24 BBOB functions  x  PSEUDO_INSTANCE_SEEDS  x  DIMENSIONS
+    x 22 algorithms = the cell count
+
+Deliberately NOT written out as numbers here. An earlier version of this
+header claimed "5 pseudo-instances x 3 dimensions = 360 rows" while the
+constants below built 96 rows, and that contradiction is part of why the
+Phase 2c spec deviation went unnoticed. The constants are the single source
+of truth; the script prints the actual row/cell count at startup.
+
+Cost scales linearly with n_runs at ~1.35 s per run per cell, measured across
+both builds (10771.8s/528 cells at n_runs=15; 8508.3s/2112 cells at n_runs=3).
 
 TERMINOLOGY -- "PSEUDO-INSTANCE", NOT "BBOB INSTANCE"
 -----------------------------------------------------
@@ -38,8 +45,8 @@ cell in "budget_note", as in Phase 2.
 
 STATUS OF THIS FILE
 -------------------
-n_runs=3, not 15. This matrix exists for SELECTOR TRAINING, where many
-moderately-noisy rows beat few precise ones. results/phase2_matrix.json
+This matrix uses fewer runs per cell than Phase 2 (see N_RUNS). It exists for
+SELECTOR TRAINING, where many moderately-noisy rows beat few precise ones. results/phase2_matrix.json
 (n_runs=15) remains the authoritative source for SBS/VBS headline figures.
 Both files state this in their meta block.
 
@@ -75,12 +82,12 @@ from aad.mealpy_algorithms import MEALPY_REGISTRY
 # Fixed experiment parameters
 # ---------------------------------------------------------------------------
 
-DIMENSIONS = [10]
-PSEUDO_INSTANCE_SEEDS = [42, 43, 44, 45]   # -> xopt + R + Q per row
+DIMENSIONS = [5, 10, 20]
+PSEUDO_INSTANCE_SEEDS = [42, 43, 44, 45, 46, 47, 48, 49, 50, 51]   # -> xopt + R + Q per row
 POPULATION_SIZE = 50
 MAX_FE = 5000
 EA_MAX_GENERATIONS = 100
-N_RUNS = 3
+N_RUNS = 5
 RUN_SEEDS = [1000 + i for i in range(N_RUNS)]
 
 EA_OPERATORS = {"selection": "tournament", "crossover": "sbx",
@@ -114,13 +121,34 @@ def cell_key(fn, seed, dim, alg):
 # State
 # ---------------------------------------------------------------------------
 
+def _env_versions():
+    """Library versions that produced this matrix. Seeds alone do not make a
+    build reproducible -- a different numpy/scipy/mealpy can yield different
+    numbers from an identical seed."""
+    import platform
+    import numpy
+    import scipy
+    out = {"python": platform.python_version(),
+           "numpy": numpy.__version__,
+           "scipy": scipy.__version__}
+    try:
+        import mealpy
+        out["mealpy"] = getattr(mealpy, "__version__", "unknown")
+    except Exception:
+        out["mealpy"] = "unavailable"
+    return out
+
+
 def fresh_state(functions, seeds, dims, algorithms, n_runs):
     return {
         "meta": {
-            "purpose": ("SELECTOR TRAINING ONLY. n_runs=3 makes per-cell "
+            # Built from n_runs, never hardcoded: this string goes into the
+            # data file and would otherwise mislabel the matrix in the thesis.
+            "purpose": ("SELECTOR TRAINING ONLY. n_runs={} makes per-cell "
                         "medians noisier than Phase 2. "
                         "results/phase2_matrix.json (n_runs=15) remains the "
-                        "AUTHORITATIVE source for SBS/VBS headline figures."),
+                        "AUTHORITATIVE source for SBS/VBS headline "
+                        "figures.".format(n_runs)),
             "n_runs": n_runs,
             "max_fe": MAX_FE,
             "population_size": POPULATION_SIZE,
@@ -141,6 +169,7 @@ def fresh_state(functions, seeds, dims, algorithms, n_runs):
             "feature_samples": FEATURE_SAMPLES,
             "feature_seed": FEATURE_SEED,
             "authoritative_matrix": "results/phase2_matrix.json",
+            "env": _env_versions(),
         },
         "features": {},
         "cells": {},
@@ -154,6 +183,32 @@ def load_state(functions, seeds, dims, algorithms, n_runs):
     if os.path.exists(OUT_JSON):
         with open(OUT_JSON, encoding="utf-8") as fh:
             disk = json.load(fh)
+
+        # n_runs is NOT part of the cell key, so a resume with a different
+        # n_runs would skip every existing cell and append new ones at a
+        # different precision -- producing a matrix that silently mixes, say,
+        # 3-run and 15-run medians with nothing to distinguish them. Refuse.
+        disk_runs = disk.get("meta", {}).get("n_runs")
+        if disk_runs is not None and disk_runs != n_runs:
+            sys.exit("\n".join([
+                f"REFUSING TO RESUME: {OUT_JSON} was built with n_runs={disk_runs},",
+                f"  but this run is configured for n_runs={n_runs}.",
+                "  n_runs is not part of the cell key, so resuming would mix",
+                "  medians of different precision in one matrix.",
+                f"  Either set N_RUNS={disk_runs}, or build to a NEW filename",
+                "  (change OUT_JSON/OUT_JSONL), or delete the existing file."]))
+
+        # Same hazard for the feature sampler: features cached under a
+        # different seed/sample count are not comparable with new ones.
+        for key, cur in (("feature_seed", FEATURE_SEED),
+                         ("feature_samples", FEATURE_SAMPLES)):
+            was = disk.get("meta", {}).get(key)
+            if was is not None and was != cur:
+                sys.exit("\n".join([
+                    f"REFUSING TO RESUME: {OUT_JSON} has {key}={was}, this run",
+                    f"  uses {cur}. Cached feature rows would not be",
+                    "  comparable with new ones."]))
+
         state["features"].update(disk.get("features", {}))
         state["cells"].update(disk.get("cells", {}))
         state["build_seconds"] = disk.get("build_seconds", 0.0)
