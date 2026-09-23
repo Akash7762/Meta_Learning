@@ -45,11 +45,14 @@ Nothing in Phase 0-3b depends on them.
 
 ## Backup
 
-`~/meta_learning_backup/` holds an **old** copy of `phase2_matrix.json`
-(seed 42, dim 10, 24 rows) and `phase2c_matrix.json` (96 rows, n_runs=3).
-Both are superseded and kept only as a fallback. The current 72-row
-`phase2_matrix.json` is **not** backed up — worth copying after any long build:
+`~/meta_learning_backup/` mirrors every file in this folder (verified by md5
+on 2026-09-23). It also keeps `phase2c_matrix.json` from the superseded 96-row
+n_runs=3 build, and a copy of `phase3_preregistration.md` (the live one is
+version-controlled at `docs/phase3_preregistration.md`).
+
+results/ is now TRACKED IN GIT, so the backup is a second line of defence
+rather than the only one. Re-sync after any long build:
 
 ```bash
-cp results/phase2_matrix.json ~/meta_learning_backup/phase2_matrix.multidim.json
+cp -f results/*.json results/*.txt results/*.csv results/*.md ~/meta_learning_backup/
 ```
