@@ -14,6 +14,7 @@ Reads cached JSON only. No optimiser is invoked.
 Each cell is scored on BOTH scales (rank and norm) so the four cells are
 directly comparable and neither scale is cherry-picked.
 """
+import argparse
 import json
 
 import numpy as np
@@ -101,7 +102,11 @@ def run(F, M, ranks, N, funcs, target, arch, trees=TREES, seed=SEED, prep=PREP):
 
 
 def main():
-    rows, algos, fkeys, F, M, funcs, seeds, dims = load("results/phase2c_matrix.json")
+    ap = argparse.ArgumentParser(description="Phase 3 2x2 ablation.")
+    ap.add_argument("--matrix", default="results/phase2c_matrix.json")
+    ap.add_argument("--out", default="results/phase3_ablation.json")
+    args = ap.parse_args()
+    rows, algos, fkeys, F, M, funcs, seeds, dims = load(args.matrix)
     n_row, n_alg = M.shape
     ranks = np.vstack([rankdata(M[i]) for i in range(n_row)])
     lo, hi = M.min(1, keepdims=True), M.max(1, keepdims=True)
@@ -151,7 +156,7 @@ def main():
 
     json.dump({"grid": results, "control_phase2_knobs": ctl,
                "trees": TREES, "seed": SEED, "prep": PREP},
-              open("results/phase3_ablation.json", "w", encoding="utf-8"), indent=2)
+              open(args.out, "w", encoding="utf-8"), indent=2)
 
 
 if __name__ == "__main__":

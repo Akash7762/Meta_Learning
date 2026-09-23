@@ -4,10 +4,10 @@ PHASE 3 -- Validate a learned per-instance algorithm selector.
 Reads results/phase2c_matrix.json ONLY. Never imports or calls
 build_algorithm; no optimiser is invoked anywhere in this file.
 
-DIMENSION IS A LIVE VARIABLE. The matrix currently holds dim=10 only, but
-dim is carried through row keys, the feature vector, the fold grouping and
-every dataframe-shaped structure below. Appending dims 5 and 20 to the
-matrix requires NO change to this file.
+DIMENSION IS A LIVE VARIABLE. dim is carried through row keys, the feature
+vector, the fold grouping and every structure below, and the dims actually
+present are read from the data. Adding or removing a dimension is a data
+change, not a code change.
 
 AGGREGATION ACROSS ROWS
 Raw best-fitness values differ by orders of magnitude across BBOB functions
@@ -140,12 +140,14 @@ def main():
     w("  seeds           : {}".format(sorted(set(seeds.tolist()))))
     w("  dims present    : {}   (dim kept as a live variable in code)".format(
         sorted(set(dims.tolist()))))
-    w("  n_runs per cell : 3  (median of 3; phase2_matrix.json n_runs=15 is authoritative)")
+    w("  n_runs per cell : {}  (from matrix meta; phase2_matrix.json is the"
+      " authoritative source for headline SBS/VBS figures)".format(
+          json.load(open(args.matrix, encoding="utf-8"))["meta"].get("n_runs", "?")))
     w("  seeds recorded  : RF_SEED={}, n_estimators={}".format(RF_SEED, RF_TREES))
     w("  scipy/sklearn   : {} / {}".format(__import__("scipy").__version__,
                                            __import__("sklearn").__version__))
     w("")
-    w("  MEAN RANK over held-out rows (1 = best of 22, lower is better)")
+    w("  MEAN RANK over held-out rows (1 = best of {}, lower is better)".format(n_alg))
     w("  " + "-" * 60)
     w("  {:<22}{:>10.4f}".format("VBS (oracle)", vbs_mean))
     w("  {:<22}{:>10.4f}".format("Selector (RF)", sel_mean))
@@ -156,7 +158,7 @@ def main():
     w("  mean norm score  selector={:.4f}  sbs={:.4f}".format(
         float(np.mean(sel_norm)), float(np.mean(sbs_norm))))
     w("")
-    w("  WILCOXON  selector vs SBS, paired over the 24 fold means")
+    w("  WILCOXON  selector vs SBS, paired over the {} fold means".format(len(ufuncs)))
     w("  signature: wilcoxon(x, y=None, zero_method='wilcox', correction=False,")
     w("             alternative='two-sided', method='auto', *, axis=0, ...)")
     w("  statistic={!r}  p={!r}".format(stat, pv))
@@ -168,7 +170,14 @@ def main():
     w("  HEADROOM: SBS already equals VBS on {} of {} functions".format(
         headroom, len(ufuncs)))
     w("")
-    w("  SCOPE: dim=10 only; {} training rows; the dimension axis is UNTESTED.".format(n_row))
+    udims = sorted(set(dims.tolist()))
+    # Derived, never asserted: an earlier version hardcoded "dim=10 only
+    # ... the dimension axis is UNTESTED", which became false the moment
+    # the matrix gained dims 5 and 20.
+    w("  SCOPE: dims {}; {} rows over {} functions.".format(
+        udims, n_row, len(ufuncs)))
+    if len(udims) == 1:
+        w("  The dimension axis is UNTESTED -- only dim {} is present.".format(udims[0]))
     w("=" * 78)
 
     txt = "\n".join(L)

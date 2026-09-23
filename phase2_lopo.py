@@ -8,7 +8,7 @@ number here is reproducible from that file.
 
 WHAT LOPO MEASURES
 ------------------
-For each of the 24 problems in turn: hide it, fit a selector on the other 23,
+For each fold in turn: hide one function's rows, fit a selector on the rest,
 ask the selector which algorithm to use on the hidden problem, then look up
 what that algorithm actually scored there. This estimates how the selector
 would behave on a problem it has never seen.
@@ -17,14 +17,14 @@ NO-LEAKAGE RULES (the things that quietly invalidate a LOPO result)
 -------------------------------------------------------------------
 1. SBS IS RECOMPUTED PER FOLD. The Single Best Solver is the algorithm with
    the best mean rank over the 23 TRAINING problems only. Using the global SBS
-   (MPA, chosen with all 24 problems visible) would let the baseline peek at
+   (the global SBS, chosen with every row visible) would let the baseline peek at
    the test problem and would understate the selector's achievement.
 2. THE FEATURE SCALER IS FIT ON TRAINING FOLDS ONLY.
 3. Constant features are dropped using the training fold's variance.
 
 SCORING
 -------
-Raw fitness is not comparable across problems (medians span ~20 orders of
+Raw fitness is not comparable across problems (medians span many orders of
 magnitude, and F5/F19/F20 have negative optima). Each problem is therefore
 scored on the same normalisation used in phase2_analyse_matrix.py:
 
@@ -42,7 +42,8 @@ depends on accepting the transform.
 FEATURE HANDLING
 ----------------
 The 9 landscape features include `dimension`, which is constant at 10.0 across
-all 24 problems and carries no signal, and several fitness_* features spanning
+every row it would carry no signal (checked at runtime), and several
+fitness_* features span
 15 orders of magnitude. Features are therefore signed-log1p compressed and
 standardised (both fit on the training fold), and zero-variance columns are
 dropped.
@@ -308,16 +309,54 @@ def report(P, A, M, N, names, picks, summ, data, groups=None, source=None):
         w(f"  {p:<34}{cells}{sc}")
 
     # --- significance vs SBS ---
+    grp = list(groups) if groups else list(P)
+    ugrp = sorted(set(grp))
+    clustered = len(ugrp) != len(P)
+    garr = np.array(grp)
+    sbs_scores = np.array(summ["SBS (fold-aware)"]["norm_scores"])
+    tested = [n for n in names
+              if n not in ("VBS (oracle)", "SBS (fold-aware)", "RF in-sample (ceiling)")]
+    bonf = 0.05 / max(len(tested), 1)
+
+    def _fold_means(v):
+        return np.array([v[garr == g].mean() for g in ugrp])
+
+    if clustered:
+        w("")
+        w(BAR)
+        w(f"  WILCOXON SIGNED-RANK vs SBS  --  PRIMARY TEST")
+        w(f"  paired over {len(ugrp)} FUNCTION MEANS (rows aggregated first)")
+        w(BAR)
+        w(f"  Each function contributes {len(P)//len(ugrp)} rows that are NOT")
+        w(f"  independent, so the rows of a function are averaged before pairing.")
+        w(f"  signature: wilcoxon(x, y=None, zero_method='wilcox', correction=False,")
+        w(f"             alternative='two-sided', method='auto', ...)")
+        w(f"  Bonferroni threshold for {len(tested)} selectors: {bonf:.4f}")
+        sbs_f = _fold_means(sbs_scores)
+        for name in tested:
+            xf = _fold_means(np.array(summ[name]["norm_scores"]))
+            d = xf - sbs_f
+            if np.all(d == 0):
+                w(f"  {name:<16} identical to SBS on every fold; test not applicable")
+                continue
+            stat, pv = wilcoxon(xf, sbs_f)
+            mark = "  *SIGNIFICANT*" if pv < 0.05 else ""
+            mark += " (survives Bonferroni)" if pv < bonf else ""
+            w(f"  {name:<16} statistic={stat!r:<10} p={pv!r:<24} "
+              f"better on {int((d < 0).sum())}, worse on {int((d > 0).sum())}, "
+              f"tied on {int((d == 0).sum())}{mark}")
+
     w("")
     w(BAR)
-    w(f"  WILCOXON SIGNED-RANK vs SBS  (paired over the {len(P)} rows)")
+    head = "SECONDARY -- INFLATED, DO NOT QUOTE" if clustered else "WILCOXON SIGNED-RANK vs SBS"
+    w(f"  {head}  (paired over the {len(P)} rows)")
     w(BAR)
+    if clustered:
+        w(f"  Pairs all {len(P)} rows as if independent. They are not -- see the")
+        w(f"  primary test above. Reported only so the inflation is visible.")
     w(f"  signature: wilcoxon(x, y=None, zero_method='wilcox', correction=False,")
     w(f"             alternative='two-sided', method='auto', ...)")
-    sbs_scores = np.array(summ["SBS (fold-aware)"]["norm_scores"])
-    for name in names:
-        if name in ("VBS (oracle)", "SBS (fold-aware)", "RF in-sample (ceiling)"):
-            continue
+    for name in tested:
         x = np.array(summ[name]["norm_scores"])
         diff = x - sbs_scores
         if np.all(diff == 0):
@@ -336,28 +375,42 @@ def report(P, A, M, N, names, picks, summ, data, groups=None, source=None):
     w(BAR)
     w(f"  - {len(P)} rows over {n_groups} folds. Each fold trains on the rows of")
     w(f"    the other {n_groups - 1} functions only.")
-    if n_groups != len(P):
+    if clustered:
         w("")
         w("  *** CLUSTERED OBSERVATIONS -- READ BEFORE QUOTING ANY p-VALUE ***")
-        w(f"  The Wilcoxon above pairs {len(P)} rows, but they are NOT independent:")
-        w(f"  they are {len(P)//n_groups} pseudo-instances within each of {n_groups}")
-        w("  functions. Treating clustered rows as independent inflates")
-        w("  significance. The honest test averages the rows of each function")
-        w("  first and pairs the resulting function means. Measured on this")
-        w("  data, RF-regression moves from p=0.0334 (96 rows) to p=0.4348")
-        w("  (24 function means) -- i.e. NOT significant. Use the aggregated")
-        w("  figure. Three selectors are compared, so a Bonferroni threshold")
-        w("  of 0.05/3 = 0.0167 applies as well.")
+        w(f"  Rows are NOT independent: {len(P)//len(ugrp)} rows sit inside each of")
+        w(f"  {len(ugrp)} functions. Quote the PRIMARY test (function means), not")
+        w(f"  the secondary per-row one -- the latter is reported only to make the")
+        w(f"  inflation visible. Bonferroni threshold for {len(tested)} selectors:")
+        w(f"  0.05/{len(tested)} = {bonf:.4f}.")
         w("")
-    w(f"  - the original concern stands: this is very")
-    w(f"    little data for a 22-way selection problem; treat these numbers as")
-    w(f"    indicative, not as a converged estimate.")
-    w(f"  - 'dimension' is constant (10.0) across all problems and is dropped")
-    w(f"    automatically by the zero-variance filter, leaving 8 usable features.")
-    w(f"  - On F5 LinearSlope 13 of 22 algorithms tie at the exact global")
-    w(f"    optimum, so that fold rewards almost any choice.")
-    w(f"  - SBS is a strong baseline here: it already equals VBS on 10 of 24")
-    w(f"    problems, so the headroom a selector can win is small by construction.")
+
+    # Every claim below is computed from THIS run's data. An earlier version
+    # hardcoded figures from a different matrix (96 rows, p=0.0334/0.4348,
+    # "dimension is constant at 10.0"), which silently became false the moment
+    # the matrix changed. Never hardcode a number that describes the data.
+    w(f"  - {len(P)} rows over {len(ugrp)} folds is little data for a "
+      f"{len(A)}-way selection")
+    w(f"    problem; treat these numbers as indicative, not converged.")
+
+    fk = sorted(data["features"][P[0]].keys())
+    Fall = np.array([[data["features"][r][k] for k in fk] for r in P], float)
+    const = [k for k, sd in zip(fk, Fall.std(axis=0)) if sd == 0]
+    if const:
+        w(f"  - constant feature column(s) {const} carry no signal and are")
+        w(f"    dropped by the zero-variance filter, leaving {len(fk)-len(const)} usable.")
+    else:
+        w(f"  - all {len(fk)} feature columns vary across rows; none dropped.")
+
+    ties = [(p_, int((M[i] == M[i].min()).sum())) for i, p_ in enumerate(P)]
+    worst = max(ties, key=lambda t: t[1])
+    if worst[1] > 1:
+        w(f"  - most-tied row: {worst[0]} has {worst[1]} of {len(A)} algorithms at")
+        w(f"    the exact optimum, so that row rewards almost any choice.")
+
+    hits = summ["SBS (fold-aware)"]["vbs_hits"]
+    w(f"  - SBS is a strong baseline: it already equals VBS on {hits} of {len(P)}")
+    w(f"    rows, bounding the headroom a selector can win.")
     w(BAR)
 
     return "\n".join(L)

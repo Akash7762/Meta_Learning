@@ -21,8 +21,8 @@ Contents
 
 AGGREGATING THE SBS-VBS GAP ACROSS PROBLEMS
 -------------------------------------------
-Raw fitness cannot be averaged across these problems: the medians span roughly
-20 orders of magnitude (1.37e-09 on F1 to 1.24e+11 on F6) and three problems
+Raw fitness cannot be averaged across these problems: the medians span many
+orders of magnitude (the exact range depends on the matrix) and some problems
 (F5, F19, F20) have NEGATIVE optima, which makes ratios and log-ratios
 undefined.
 
@@ -43,6 +43,7 @@ Run:
     .venv\\Scripts\\python.exe phase2_analyse_matrix.py
 """
 
+import argparse
 import csv
 import json
 import os
@@ -67,8 +68,22 @@ def load():
 
 
 def build_matrix(data):
-    """Return (problems, algorithms, M) with M[i, j] = median for problem i, algorithm j."""
-    P = data["meta"]["problems"]
+    """Return (rows, algorithms, M) with M[i, j] = median for row i, algorithm j.
+
+    Two layouts are supported:
+      old  -- meta.problems present, cell key "problem|algorithm"
+      new  -- per-dimension rows keyed "function|sSEED|dDIM", cell key
+              "<row>|algorithm". Row order is taken from meta.functions x
+              meta.dimensions so the printed tables stay in function order
+              rather than lexicographic (which would put d10 before d5).
+    """
+    meta = data["meta"]
+    if "problems" in meta:                      # pre-2026-09-22 single-dim
+        P = meta["problems"]
+    else:
+        seed = meta["problem_seed"]
+        P = [f"{fn}|s{seed}|d{dim}"
+             for fn in meta["functions"] for dim in meta["dimensions"]]
     A = data["meta"]["algorithms"]
     C = data["cells"]
 
@@ -122,10 +137,10 @@ def integrity_report(data, P, A, M, missing):
     return dupes
 
 
-def print_matrix(P, A, M):
+def print_matrix(P, A, M, n_runs="?"):
     print()
     print(BAR)
-    print("  PERFORMANCE MATRIX  (median best-fitness over 15 runs; lower is better)")
+    print(f"  PERFORMANCE MATRIX  (median best-fitness over {n_runs} runs; lower is better)")
     print(BAR)
     chunk = 7
     for s in range(0, len(A), chunk):
@@ -234,6 +249,11 @@ def analyse(P, A, M):
 
 
 def main() -> int:
+    global IN_PATH
+    ap = argparse.ArgumentParser(description="Analyse a cached matrix.")
+    ap.add_argument("--matrix", default=IN_PATH,
+                    help="matrix JSON to analyse (default: %(default)s)")
+    IN_PATH = ap.parse_args().matrix
     data = load()
     P, A, M, missing = build_matrix(data)
 
@@ -241,7 +261,7 @@ def main() -> int:
         print(f"WARNING: {len(missing)} cells missing. They are excluded, never imputed.")
 
     dupes = integrity_report(data, P, A, M, missing)
-    print_matrix(P, A, M)
+    print_matrix(P, A, M, data["meta"].get("n_runs", "?"))
     write_csv(P, A, M)
     analyse(P, A, M)
 
