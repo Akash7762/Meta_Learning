@@ -189,4 +189,4 @@ python phase2_lopo.py             # LOPO selector evaluation
 - `docs/phase0_decision.md` — the equal-budget protocol
 - `results/phase1b_screening.txt` — algorithm health screen
 - `results/phase2_lopo.txt` — full LOPO output
-- `results/phase3_preregistration.md` — Phase 3b pre-registration
+- `docs/phase3_preregistration.md` — Phase 3b pre-registration

@@ -1,7 +1,7 @@
 # Phase 3b — Pre-Registered Confirmation Run
 
 Status: **complete**. Script: `phase3b_holdout_confirm.py`.
-Pre-registration: `results/phase3_preregistration.md` (written **before** any
+Pre-registration: `docs/phase3_preregistration.md` (written **before** any
 confirmation code existed; amended only in its append-only section).
 Output: `results/phase3b_holdout_confirm.{txt,json}`.
 
