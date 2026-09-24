@@ -128,7 +128,13 @@ def main():
     else:
         stat, pv = wilcoxon(fold_sel, fold_sbs)
 
-    headroom = int(np.sum(np.isclose(fold_sbs, fold_vbs)))
+    # Headroom is measured PER ROW. Comparing per-function AVERAGE ranks
+    # breaks once a function has many rows: SBS must match the oracle on
+    # every one of them to tie on the average, so the count collapses to
+    # ~0 (it read "0 of 24" on the 720-row matrix while SBS actually
+    # matched the oracle on hundreds of rows).
+    headroom_rows = int(sum(np.isclose(r["sbs_rank"], r["vbs_rank"]) for r in out_rows))
+    headroom_funcs = int(np.sum(np.isclose(fold_sbs, fold_vbs)))
 
     L = []
     w = L.append
@@ -167,8 +173,10 @@ def main():
     w("  selector better on {} folds, worse on {}, tied on {}".format(
         int((diff < 0).sum()), int((diff > 0).sum()), int((diff == 0).sum())))
     w("")
-    w("  HEADROOM: SBS already equals VBS on {} of {} functions".format(
-        headroom, len(ufuncs)))
+    w("  HEADROOM: SBS already equals VBS on {} of {} rows ({:.0f}%)".format(
+        headroom_rows, n_row, 100.0 * headroom_rows / n_row))
+    w("            (on every row of a function: {} of {} functions)".format(
+        headroom_funcs, len(ufuncs)))
     w("")
     udims = sorted(set(dims.tolist()))
     # Derived, never asserted: an earlier version hardcoded "dim=10 only
@@ -182,8 +190,9 @@ def main():
 
     txt = "\n".join(L)
     print(txt)
-    open(args.out_stem + ".txt", "w", encoding="utf-8").write(txt + "\n")
-    json.dump({
+    with open(args.out_stem + ".txt", "w", encoding="utf-8") as fh:
+        fh.write(txt + "\n")
+    out = {
         "per_row": out_rows,
         "fold_selector": fold_sel.tolist(),
         "fold_sbs": fold_sbs.tolist(),
@@ -194,7 +203,9 @@ def main():
         "rf_trees": RF_TREES,
         "wilcoxon_statistic": None if stat != stat else float(stat),
         "wilcoxon_p": None if pv != pv else float(pv),
-    }, open(args.out_stem + ".json", "w", encoding="utf-8"), indent=2)
+    }
+    with open(args.out_stem + ".json", "w", encoding="utf-8") as fh:
+        json.dump(out, fh, indent=2)
 
 
 if __name__ == "__main__":

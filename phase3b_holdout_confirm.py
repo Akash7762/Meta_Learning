@@ -284,16 +284,18 @@ def main():
 
     txt = "\n".join(L)
     print(txt)
-    open(out_stem + ".txt", "w", encoding="utf-8").write(txt + "\n")
-    json.dump({"detail": detail, "selector_mean_rank": sel_m, "sbs_mean_rank": sbs_m,
+    with open(out_stem + ".txt", "w", encoding="utf-8") as fh:
+        fh.write(txt + "\n")
+    out = {"detail": detail, "selector_mean_rank": sel_m, "sbs_mean_rank": sbs_m,
                "vbs_mean_rank": vbs_m, "random_mean_rank": rnd_m,
                "gap_closed_pct": closed,
                "wilcoxon_statistic": None if stat != stat else float(stat),
                "wilcoxon_p": None if pv != pv else float(pv),
                "rf_seed": RF_SEED, "rf_trees": RF_TREES,
                "eval_dims": sorted(set(edim.tolist())), "eval_seed": eseed,
-               "independent_holdout": not args.allow_leakage},
-              open(out_stem + ".json", "w", encoding="utf-8"), indent=2)
+               "independent_holdout": not args.allow_leakage}
+    with open(out_stem + ".json", "w", encoding="utf-8") as fh:
+        json.dump(out, fh, indent=2)
 
 
 if __name__ == "__main__":
