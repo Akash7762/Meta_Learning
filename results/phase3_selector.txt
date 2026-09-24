@@ -1,0 +1,33 @@
+==============================================================================
+  PHASE 3 -- LEARNED SELECTOR vs SBS  (leave-one-FUNCTION-out)
+==============================================================================
+  matrix          : results/phase2c_matrix.json
+  rows            : 720   algorithms: 22   folds: 24
+  seeds           : [42, 43, 44, 45, 46, 47, 48, 49, 50, 51]
+  dims present    : [5, 10, 20]   (dim kept as a live variable in code)
+  n_runs per cell : 5  (from matrix meta; phase2_matrix.json is the authoritative source for headline SBS/VBS figures)
+  seeds recorded  : RF_SEED=20260916, n_estimators=300
+  scipy/sklearn   : 1.16.3 / 1.9.0
+
+  MEAN RANK over held-out rows (1 = best of 22, lower is better)
+  ------------------------------------------------------------
+  VBS (oracle)              1.2083
+  Selector (RF)             5.5333
+  SBS (fold-aware)          5.5208
+  Random (analytic)        11.5000
+
+  SBS->VBS gap closed by selector : -0.3%
+  mean norm score  selector=0.0787  sbs=0.0683
+
+  WILCOXON  selector vs SBS, paired over the 24 fold means
+  signature: wilcoxon(x, y=None, zero_method='wilcox', correction=False,
+             alternative='two-sided', method='auto', *, axis=0, ...)
+  statistic=np.float64(103.5)  p=np.float64(0.6765882259671506)
+  significant at alpha=0.05: NO
+  selector better on 13 folds, worse on 8, tied on 3
+
+  HEADROOM: SBS already equals VBS on 216 of 720 rows (30%)
+            (on every row of a function: 0 of 24 functions)
+
+  SCOPE: dims [5, 10, 20]; 720 rows over 24 functions.
+==============================================================================

@@ -1,0 +1,803 @@
+================================================================================================
+  PHASE 2 - LEAVE-ONE-PROBLEM-OUT (LOPO) SELECTOR EVALUATION
+================================================================================================
+  source            : results/phase2c_matrix.json (no optimiser invoked)
+  rows              : 720
+  folds (groups)    : 24
+  algorithms        : 22
+  scoring           : per-problem min-max, VBS=0, worst=1
+  SBS               : recomputed per fold from the training rows only
+  fold rule         : leave-one-GROUP-out -- all 30 rows of a function held out together
+  seeds             : RF=20260915, random baseline=20260915
+  scipy / sklearn   : 1.16.3 / 1.9.0
+
+================================================================================================
+  SUMMARY  (normalised score: 0 = oracle, 1 = worst; lower is better)
+================================================================================================
+  selector              mean norm    median  mean rank  VBS hits       gap closed vs SBS
+  --------------------------------------------------------------------------------------
+  VBS (oracle)             0.0000    0.0000      1.208       720      -- (is the target)
+  SBS (fold-aware)         0.0683    0.0007      5.521       235    -- (is the baseline)
+  Random                   0.2279    0.0675     11.781        48                 -233.5%
+  1-NN                     0.0910    0.0094      6.922       133                  -33.1%
+  3-NN                     0.0812    0.0033      6.728       151                  -18.8%
+  RF-regression            0.0840    0.0010      6.118       219                  -22.9%
+  RF in-sample (ceiling)     0.0028    0.0000      2.325       474                  +96.0%
+
+  'gap closed vs SBS' = (SBS mean - selector mean) / SBS mean.
+  Positive means the selector beat the single best solver; negative means
+  it did worse than just always picking that one algorithm.
+
+================================================================================================
+  PER-PROBLEM DETAIL
+================================================================================================
+  problem                                 VBS      SBS     1-NN     3-NN       RF  |  norm score (SBS / 1-NN / 3-NN / RF)
+  ----------------------------------------------------------------------------------------------
+  BBOB_F10_EllipsoidalRotated|s42|d10      MPA      MPA      PSO      PSO     JADE  |  0.000 / 0.037 / 0.037 / 0.042
+  BBOB_F10_EllipsoidalRotated|s42|d20       SA      MPA      PSO    SHADE      MPA  |  0.008 / 0.018 / 0.013 / 0.008
+  BBOB_F10_EllipsoidalRotated|s42|d5      MPA      MPA      PSO      MPA      MPA  |  0.000 / 0.008 / 0.000 / 0.000
+  BBOB_F10_EllipsoidalRotated|s43|d10      MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.017 / 0.017 / 0.000
+  BBOB_F10_EllipsoidalRotated|s43|d20      MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F10_EllipsoidalRotated|s43|d5      MPA      MPA       EO      MPA      MPA  |  0.000 / 0.004 / 0.000 / 0.000
+  BBOB_F10_EllipsoidalRotated|s44|d10      MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F10_EllipsoidalRotated|s44|d20      MPA      MPA      PSO  L_SHADE      MPA  |  0.000 / 0.066 / 0.036 / 0.000
+  BBOB_F10_EllipsoidalRotated|s44|d5      MPA      MPA      PSO      MPA      MPA  |  0.000 / 0.008 / 0.000 / 0.000
+  BBOB_F10_EllipsoidalRotated|s45|d10      MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.023 / 0.023 / 0.000
+  BBOB_F10_EllipsoidalRotated|s45|d20       SA      MPA      MPA      MPA      MPA  |  0.009 / 0.009 / 0.009 / 0.009
+  BBOB_F10_EllipsoidalRotated|s45|d5      MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.002 / 0.002 / 0.000
+  BBOB_F10_EllipsoidalRotated|s46|d10      MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F10_EllipsoidalRotated|s46|d20      MPA      MPA      PSO      PSO     JADE  |  0.000 / 0.013 / 0.013 / 0.020
+  BBOB_F10_EllipsoidalRotated|s46|d5      MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F10_EllipsoidalRotated|s47|d10      MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.005 / 0.005 / 0.000
+  BBOB_F10_EllipsoidalRotated|s47|d20       SA      MPA      PSO      PSO      MPA  |  0.007 / 0.067 / 0.067 / 0.007
+  BBOB_F10_EllipsoidalRotated|s47|d5      MPA      MPA       EO    SHADE      MPA  |  0.000 / 0.025 / 0.009 / 0.000
+  BBOB_F10_EllipsoidalRotated|s48|d10       SA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F10_EllipsoidalRotated|s48|d20       SA      MPA      PSO      MPA      MPA  |  0.001 / 0.026 / 0.001 / 0.001
+  BBOB_F10_EllipsoidalRotated|s48|d5      MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F10_EllipsoidalRotated|s49|d10       SA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F10_EllipsoidalRotated|s49|d20      GWO      MPA      PSO      PSO       ea  |  0.004 / 0.029 / 0.029 / 0.038
+  BBOB_F10_EllipsoidalRotated|s49|d5      MPA      MPA       EO      MPA      MPA  |  0.000 / 0.102 / 0.000 / 0.000
+  BBOB_F10_EllipsoidalRotated|s50|d10      MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.056 / 0.056 / 0.000
+  BBOB_F10_EllipsoidalRotated|s50|d20      MVO      MPA      PSO    SHADE      PSO  |  0.018 / 0.047 / 0.021 / 0.047
+  BBOB_F10_EllipsoidalRotated|s50|d5      MPA      MPA      PSO      MPA      MPA  |  0.000 / 0.003 / 0.000 / 0.000
+  BBOB_F10_EllipsoidalRotated|s51|d10      MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F10_EllipsoidalRotated|s51|d20      MPA      MPA      PSO      MPA      MPA  |  0.000 / 0.048 / 0.000 / 0.000
+  BBOB_F10_EllipsoidalRotated|s51|d5      MPA      MPA       EO    SHADE      MPA  |  0.000 / 0.000 / 0.002 / 0.000
+  BBOB_F11_Discus|s42|d10                 MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F11_Discus|s42|d20                 MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F11_Discus|s42|d5                  MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F11_Discus|s43|d10                 MPA      MPA      PSO      MPA      MPA  |  0.000 / 0.202 / 0.000 / 0.000
+  BBOB_F11_Discus|s43|d20                 HBA      MPA  L_SHADE     JADE      MPA  |  0.170 / 0.480 / 0.361 / 0.170
+  BBOB_F11_Discus|s43|d5                   EO      MPA      MPA      MPA      MPA  |  0.002 / 0.002 / 0.002 / 0.002
+  BBOB_F11_Discus|s44|d10                 MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F11_Discus|s44|d20                 HBA      MPA  L_SHADE     JADE      MPA  |  0.044 / 0.190 / 0.313 / 0.044
+  BBOB_F11_Discus|s44|d5              L_SHADE      MPA      PSO      MPA      MPA  |  0.002 / 0.010 / 0.002 / 0.002
+  BBOB_F11_Discus|s45|d10                 MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F11_Discus|s45|d20                 HBA      MPA  L_SHADE      MPA      MPA  |  0.047 / 0.071 / 0.047 / 0.047
+  BBOB_F11_Discus|s45|d5                  MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F11_Discus|s46|d10                 PSO      MPA      PSO      MPA      MPA  |  0.016 / 0.000 / 0.016 / 0.016
+  BBOB_F11_Discus|s46|d20                 MPA      MPA  L_SHADE      MVO      MPA  |  0.000 / 0.135 / 0.258 / 0.000
+  BBOB_F11_Discus|s46|d5                  MPA      MPA      PSO      MPA      MPA  |  0.000 / 0.090 / 0.000 / 0.000
+  BBOB_F11_Discus|s47|d10                 MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F11_Discus|s47|d20                 HBA      MPA  L_SHADE     JADE      MPA  |  0.018 / 0.321 / 0.206 / 0.018
+  BBOB_F11_Discus|s47|d5                SHADE      MPA      MPA      MPA      MPA  |  0.088 / 0.088 / 0.088 / 0.088
+  BBOB_F11_Discus|s48|d10                 MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F11_Discus|s48|d20                 HBA      MPA  L_SHADE      MPA      MPA  |  0.132 / 0.094 / 0.132 / 0.132
+  BBOB_F11_Discus|s48|d5                  MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F11_Discus|s49|d10                 SCA      MPA      MPA      MPA      MPA  |  0.012 / 0.012 / 0.012 / 0.012
+  BBOB_F11_Discus|s49|d20                 HBA      MPA  L_SHADE     JADE      MPA  |  0.035 / 0.194 / 0.192 / 0.035
+  BBOB_F11_Discus|s49|d5                  MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F11_Discus|s50|d10                 HBA      MPA      MPA      MPA      MPA  |  0.025 / 0.025 / 0.025 / 0.025
+  BBOB_F11_Discus|s50|d20                 HBA      MPA  L_SHADE     JADE      MPA  |  0.151 / 0.185 / 0.424 / 0.151
+  BBOB_F11_Discus|s50|d5                  MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F11_Discus|s51|d10                 MPA      MPA      PSO      MPA      MPA  |  0.000 / 0.248 / 0.000 / 0.000
+  BBOB_F11_Discus|s51|d20                  EO      MPA      MPA      MPA      MPA  |  0.007 / 0.007 / 0.007 / 0.007
+  BBOB_F11_Discus|s51|d5                 JADE      MPA      MPA      MPA      MPA  |  0.035 / 0.035 / 0.035 / 0.035
+  BBOB_F12_BentCigar|s42|d10               EO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F12_BentCigar|s42|d20               EO      MPA      MPA      MPA      MPA  |  0.001 / 0.001 / 0.001 / 0.001
+  BBOB_F12_BentCigar|s42|d5               PSO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F12_BentCigar|s43|d10              PSO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F12_BentCigar|s43|d20               EO      MPA      MPA      MPA      MPA  |  0.001 / 0.001 / 0.001 / 0.001
+  BBOB_F12_BentCigar|s43|d5               MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F12_BentCigar|s44|d10               EO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F12_BentCigar|s44|d20            SHADE      MPA      MPA      MPA      MPA  |  0.001 / 0.001 / 0.001 / 0.001
+  BBOB_F12_BentCigar|s44|d5               MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F12_BentCigar|s45|d10              PSO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F12_BentCigar|s45|d20            SHADE      MPA      MPA      MPA      MPA  |  0.001 / 0.001 / 0.001 / 0.001
+  BBOB_F12_BentCigar|s45|d5               PSO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F12_BentCigar|s46|d10               EO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F12_BentCigar|s46|d20              PSO      MPA      MPA      MPA      MPA  |  0.002 / 0.002 / 0.002 / 0.002
+  BBOB_F12_BentCigar|s46|d5                EO      MPA    SHADE      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F12_BentCigar|s47|d10               EO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F12_BentCigar|s47|d20               EO      MPA      MPA      MPA      MPA  |  0.001 / 0.001 / 0.001 / 0.001
+  BBOB_F12_BentCigar|s47|d5               WOA      MPA    SHADE      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F12_BentCigar|s48|d10               EO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F12_BentCigar|s48|d20               EO      MPA      MPA      MPA      MPA  |  0.001 / 0.001 / 0.001 / 0.001
+  BBOB_F12_BentCigar|s48|d5               PSO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F12_BentCigar|s49|d10               EO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F12_BentCigar|s49|d20               EO      MPA      MPA      MPA      MPA  |  0.001 / 0.001 / 0.001 / 0.001
+  BBOB_F12_BentCigar|s49|d5                EO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F12_BentCigar|s50|d10               EO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F12_BentCigar|s50|d20               EO      MPA      MPA      MPA      MPA  |  0.001 / 0.001 / 0.001 / 0.001
+  BBOB_F12_BentCigar|s50|d5                EO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F12_BentCigar|s51|d10               EO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F12_BentCigar|s51|d20               EO      MPA      MPA      MPA      MPA  |  0.001 / 0.001 / 0.001 / 0.001
+  BBOB_F12_BentCigar|s51|d5               HBA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F13_SharpRidge|s42|d10             MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F13_SharpRidge|s42|d20             MPA      MPA       SA       SA      MPA  |  0.000 / 0.176 / 0.176 / 0.000
+  BBOB_F13_SharpRidge|s42|d5              MPA      MPA       EO       EO      MPA  |  0.000 / 0.519 / 0.519 / 0.000
+  BBOB_F13_SharpRidge|s43|d10             MPA      MPA      PSO      MPA      MPA  |  0.000 / 0.450 / 0.000 / 0.000
+  BBOB_F13_SharpRidge|s43|d20             MPA      MPA       SA       SA      MPA  |  0.000 / 0.271 / 0.271 / 0.000
+  BBOB_F13_SharpRidge|s43|d5              MPA      MPA       EO       EO      MPA  |  0.000 / 0.051 / 0.051 / 0.000
+  BBOB_F13_SharpRidge|s44|d10             MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F13_SharpRidge|s44|d20             MVO      MPA       EO      MPA      MPA  |  0.010 / 0.032 / 0.010 / 0.010
+  BBOB_F13_SharpRidge|s44|d5              MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F13_SharpRidge|s45|d10             MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F13_SharpRidge|s45|d20             MPA      MPA       EO      MVO      MPA  |  0.000 / 0.144 / 0.083 / 0.000
+  BBOB_F13_SharpRidge|s45|d5             JADE      MPA      GWO       EO      MPA  |  0.004 / 0.198 / 0.133 / 0.004
+  BBOB_F13_SharpRidge|s46|d10             MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.163 / 0.163 / 0.000
+  BBOB_F13_SharpRidge|s46|d20             MPA      MPA       SA       SA      MPA  |  0.000 / 0.293 / 0.293 / 0.000
+  BBOB_F13_SharpRidge|s46|d5              MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F13_SharpRidge|s47|d10             MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F13_SharpRidge|s47|d20             MPA      MPA       EO      MPA      MPA  |  0.000 / 0.272 / 0.000 / 0.000
+  BBOB_F13_SharpRidge|s47|d5              MPA      MPA      GWO      GWO      MPA  |  0.000 / 0.025 / 0.025 / 0.000
+  BBOB_F13_SharpRidge|s48|d10             MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F13_SharpRidge|s48|d20             GWO      MPA       SA       SA      MPA  |  0.028 / 0.069 / 0.069 / 0.028
+  BBOB_F13_SharpRidge|s48|d5              MPA      MPA      GWO       EO      MPA  |  0.000 / 0.021 / 0.018 / 0.000
+  BBOB_F13_SharpRidge|s49|d10             MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F13_SharpRidge|s49|d20             MPA      MPA       SA       SA      MPA  |  0.000 / 0.197 / 0.197 / 0.000
+  BBOB_F13_SharpRidge|s49|d5              MPA      MPA      GWO      MPA      MPA  |  0.000 / 0.046 / 0.000 / 0.000
+  BBOB_F13_SharpRidge|s50|d10             MPA      MPA       SA      MPA      MPA  |  0.000 / 0.040 / 0.000 / 0.000
+  BBOB_F13_SharpRidge|s50|d20             MPA      MPA       SA       SA      MPA  |  0.000 / 0.037 / 0.037 / 0.000
+  BBOB_F13_SharpRidge|s50|d5              WOA      MPA      GWO      MPA      MPA  |  0.000 / 0.012 / 0.000 / 0.000
+  BBOB_F13_SharpRidge|s51|d10             MPA      MPA       SA      MPA      MPA  |  0.000 / 0.246 / 0.000 / 0.000
+  BBOB_F13_SharpRidge|s51|d20             MPA      MPA       EO      MPA      MPA  |  0.000 / 0.139 / 0.000 / 0.000
+  BBOB_F13_SharpRidge|s51|d5              MPA      MPA      GWO       EO      MPA  |  0.000 / 0.026 / 0.031 / 0.000
+  BBOB_F14_DifferentPowers|s42|d10        PSO      MPA       EO       EO      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F14_DifferentPowers|s42|d20    L_SHADE      MPA  L_SHADE  L_SHADE      MPA  |  0.007 / 0.000 / 0.000 / 0.007
+  BBOB_F14_DifferentPowers|s42|d5         MPA      MPA       EO       EO      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F14_DifferentPowers|s43|d10        PSO      MPA       EO       EO      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F14_DifferentPowers|s43|d20        MVO      MPA  L_SHADE  L_SHADE      MPA  |  0.003 / 0.000 / 0.000 / 0.003
+  BBOB_F14_DifferentPowers|s43|d5         MPA      MPA       EO      GWO      MPA  |  0.000 / 0.000 / 0.001 / 0.000
+  BBOB_F14_DifferentPowers|s44|d10        PSO      MPA       EO       EO      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F14_DifferentPowers|s44|d20    L_SHADE      MPA    SHADE  L_SHADE      MPA  |  0.007 / 0.000 / 0.000 / 0.007
+  BBOB_F14_DifferentPowers|s44|d5         MPA      MPA       EO       EO      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F14_DifferentPowers|s45|d10        PSO      MPA       EO       EO      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F14_DifferentPowers|s45|d20      SHADE      MPA       EO  L_SHADE      MPA  |  0.005 / 0.000 / 0.000 / 0.005
+  BBOB_F14_DifferentPowers|s45|d5         MPA      MPA       EO      GWO      MPA  |  0.000 / 0.000 / 0.006 / 0.000
+  BBOB_F14_DifferentPowers|s46|d10        PSO      MPA       EO       EO      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F14_DifferentPowers|s46|d20    L_SHADE      MPA    SHADE  L_SHADE      MPA  |  0.011 / 0.000 / 0.000 / 0.011
+  BBOB_F14_DifferentPowers|s46|d5         MPA      MPA      GWO       EO      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F14_DifferentPowers|s47|d10        PSO      MPA       EO       EO      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F14_DifferentPowers|s47|d20        MVO      MPA       EO  L_SHADE      MPA  |  0.004 / 0.000 / 0.000 / 0.004
+  BBOB_F14_DifferentPowers|s47|d5         MPA      MPA      GWO       EO      MPA  |  0.000 / 0.001 / 0.000 / 0.000
+  BBOB_F14_DifferentPowers|s48|d10        PSO      MPA    SHADE       EO      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F14_DifferentPowers|s48|d20    L_SHADE      MPA  L_SHADE  L_SHADE      MPA  |  0.003 / 0.000 / 0.000 / 0.003
+  BBOB_F14_DifferentPowers|s48|d5         PSO      MPA      MPA  L_SHADE      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F14_DifferentPowers|s49|d10        PSO      MPA       EO       EO      MPA  |  0.001 / 0.000 / 0.000 / 0.001
+  BBOB_F14_DifferentPowers|s49|d20    L_SHADE      MPA       EO  L_SHADE      MPA  |  0.006 / 0.001 / 0.000 / 0.006
+  BBOB_F14_DifferentPowers|s49|d5         MPA      MPA       EO       EO      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F14_DifferentPowers|s50|d10        PSO      MPA       EO       EO      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F14_DifferentPowers|s50|d20    L_SHADE      MPA  L_SHADE  L_SHADE      MPA  |  0.005 / 0.000 / 0.000 / 0.005
+  BBOB_F14_DifferentPowers|s50|d5         MPA      MPA       EO      GWO      MPA  |  0.000 / 0.000 / 0.001 / 0.000
+  BBOB_F14_DifferentPowers|s51|d10        PSO      MPA       EO       EO      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F14_DifferentPowers|s51|d20      SHADE      MPA       EO  L_SHADE      MPA  |  0.012 / 0.001 / 0.000 / 0.012
+  BBOB_F14_DifferentPowers|s51|d5         MPA      MPA       EO       EO      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F15_RastriginRotated|s42|d10       MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.014 / 0.014 / 0.000
+  BBOB_F15_RastriginRotated|s42|d20       MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.015 / 0.015 / 0.000
+  BBOB_F15_RastriginRotated|s42|d5        PSO      MPA    SHADE  L_SHADE      MPA  |  0.012 / 0.027 / 0.086 / 0.012
+  BBOB_F15_RastriginRotated|s43|d10       MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.037 / 0.037 / 0.000
+  BBOB_F15_RastriginRotated|s43|d20       MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.101 / 0.101 / 0.000
+  BBOB_F15_RastriginRotated|s43|d5        MVO      MPA    SHADE    SHADE      MPA  |  0.007 / 0.019 / 0.019 / 0.007
+  BBOB_F15_RastriginRotated|s44|d10       MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.005 / 0.005 / 0.000
+  BBOB_F15_RastriginRotated|s44|d20       MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.019 / 0.019 / 0.000
+  BBOB_F15_RastriginRotated|s44|d5         EO      MPA    SHADE  L_SHADE      MPA  |  0.011 / 0.024 / 0.039 / 0.011
+  BBOB_F15_RastriginRotated|s45|d10       MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.011 / 0.011 / 0.000
+  BBOB_F15_RastriginRotated|s45|d20        SA      MPA      PSO      PSO      MPA  |  0.006 / 0.058 / 0.058 / 0.006
+  BBOB_F15_RastriginRotated|s45|d5        MPA      MPA    SHADE  L_SHADE      MPA  |  0.000 / 0.001 / 0.002 / 0.000
+  BBOB_F15_RastriginRotated|s46|d10       MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.009 / 0.009 / 0.000
+  BBOB_F15_RastriginRotated|s46|d20       MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.021 / 0.021 / 0.000
+  BBOB_F15_RastriginRotated|s46|d5        MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F15_RastriginRotated|s47|d10        SA      MPA      PSO      PSO      MPA  |  0.002 / 0.060 / 0.060 / 0.002
+  BBOB_F15_RastriginRotated|s47|d20       MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.013 / 0.013 / 0.000
+  BBOB_F15_RastriginRotated|s47|d5        MPA      MPA      PSO  L_SHADE      MPA  |  0.000 / 0.034 / 0.011 / 0.000
+  BBOB_F15_RastriginRotated|s48|d10       MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F15_RastriginRotated|s48|d20       MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.047 / 0.047 / 0.000
+  BBOB_F15_RastriginRotated|s48|d5        MPA      MPA    SHADE    SHADE      MPA  |  0.000 / 0.012 / 0.012 / 0.000
+  BBOB_F15_RastriginRotated|s49|d10       PSO      MPA      PSO      PSO      MPA  |  0.001 / 0.000 / 0.000 / 0.001
+  BBOB_F15_RastriginRotated|s49|d20       MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.020 / 0.020 / 0.000
+  BBOB_F15_RastriginRotated|s49|d5       RIME      MPA    SHADE  L_SHADE      MPA  |  0.001 / 0.002 / 0.003 / 0.001
+  BBOB_F15_RastriginRotated|s50|d10       MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.010 / 0.010 / 0.000
+  BBOB_F15_RastriginRotated|s50|d20       MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.009 / 0.009 / 0.000
+  BBOB_F15_RastriginRotated|s50|d5        GWO      MPA     JADE      MPA      MPA  |  0.004 / 0.037 / 0.004 / 0.004
+  BBOB_F15_RastriginRotated|s51|d10       MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.026 / 0.026 / 0.000
+  BBOB_F15_RastriginRotated|s51|d20        SA      MPA      PSO      PSO      MPA  |  0.024 / 0.155 / 0.155 / 0.024
+  BBOB_F15_RastriginRotated|s51|d5        MPA      MPA    SHADE    SHADE      MPA  |  0.000 / 0.005 / 0.005 / 0.000
+  BBOB_F16_Weierstrass|s42|d10             EO      MPA       ea       ea  L_SHADE  |  0.001 / 0.364 / 0.364 / 0.522
+  BBOB_F16_Weierstrass|s42|d20            MVO      MPA      MPA      MPA      ARO  |  0.183 / 0.183 / 0.183 / 0.243
+  BBOB_F16_Weierstrass|s42|d5             MPA      MPA      MVO       EO  L_SHADE  |  0.000 / 0.028 / 0.030 / 0.128
+  BBOB_F16_Weierstrass|s43|d10            GWO      MPA       ea  L_SHADE  L_SHADE  |  0.155 / 0.279 / 0.758 / 0.758
+  BBOB_F16_Weierstrass|s43|d20            MVO      MPA      MPA      MPA      ARO  |  0.224 / 0.224 / 0.224 / 0.502
+  BBOB_F16_Weierstrass|s43|d5             MPA      MPA      MVO      MVO  L_SHADE  |  0.000 / 0.089 / 0.089 / 0.211
+  BBOB_F16_Weierstrass|s44|d10             EO      MPA       ea       ea  L_SHADE  |  0.056 / 0.135 / 0.135 / 0.396
+  BBOB_F16_Weierstrass|s44|d20             EO      MPA      MPA      MPA      ARO  |  0.207 / 0.207 / 0.207 / 0.057
+  BBOB_F16_Weierstrass|s44|d5             MPA      MPA      MVO      MVO      ARO  |  0.000 / 0.396 / 0.396 / 0.089
+  BBOB_F16_Weierstrass|s45|d10             EO      MPA       ea       ea      ARO  |  0.169 / 0.318 / 0.318 / 0.206
+  BBOB_F16_Weierstrass|s45|d20            MVO      MPA      MPA      MPA      ARO  |  0.376 / 0.376 / 0.376 / 0.597
+  BBOB_F16_Weierstrass|s45|d5             GWO      MPA      MVO       EO      ARO  |  0.014 / 0.116 / 0.070 / 0.121
+  BBOB_F16_Weierstrass|s46|d10             EO      MPA       ea       ea  L_SHADE  |  0.026 / 0.393 / 0.393 / 0.462
+  BBOB_F16_Weierstrass|s46|d20            MVO      MPA      MPA      MPA      ARO  |  0.211 / 0.211 / 0.211 / 0.385
+  BBOB_F16_Weierstrass|s46|d5             MPA      MPA      MVO      MVO      ARO  |  0.000 / 0.188 / 0.188 / 0.115
+  BBOB_F16_Weierstrass|s47|d10             EO      MPA       ea      SMA  L_SHADE  |  0.262 / 0.541 / 0.064 / 0.597
+  BBOB_F16_Weierstrass|s47|d20            SMA      MPA      MPA      MPA      ARO  |  0.196 / 0.196 / 0.196 / 0.483
+  BBOB_F16_Weierstrass|s47|d5             MPA      MPA      MVO      MVO  L_SHADE  |  0.000 / 0.047 / 0.047 / 0.361
+  BBOB_F16_Weierstrass|s48|d10             EO      MPA      HHO      HHO  L_SHADE  |  0.046 / 0.582 / 0.582 / 0.423
+  BBOB_F16_Weierstrass|s48|d20            MVO      MPA      MPA      MPA      ARO  |  0.198 / 0.198 / 0.198 / 0.335
+  BBOB_F16_Weierstrass|s48|d5             MPA      MPA      MVO      MVO      ARO  |  0.000 / 0.185 / 0.185 / 0.094
+  BBOB_F16_Weierstrass|s49|d10            MVO      MPA       ea       ea  L_SHADE  |  0.198 / 0.156 / 0.156 / 0.573
+  BBOB_F16_Weierstrass|s49|d20            GWO      MPA      MPA      MPA      ARO  |  0.053 / 0.053 / 0.053 / 0.387
+  BBOB_F16_Weierstrass|s49|d5             GWO      MPA      MVO      MVO      ARO  |  0.013 / 0.050 / 0.050 / 0.244
+  BBOB_F16_Weierstrass|s50|d10             EO      MPA       ea       ea  L_SHADE  |  0.240 / 0.248 / 0.248 / 0.590
+  BBOB_F16_Weierstrass|s50|d20            MVO      MPA       ea      MPA      ARO  |  0.223 / 0.307 / 0.223 / 0.350
+  BBOB_F16_Weierstrass|s50|d5              EO      MPA      MVO       EO  L_SHADE  |  0.041 / 0.111 / 0.000 / 0.180
+  BBOB_F16_Weierstrass|s51|d10            GJO      MPA       ea       ea  L_SHADE  |  0.180 / 0.206 / 0.206 / 0.566
+  BBOB_F16_Weierstrass|s51|d20             EO      MPA      MPA      MPA      ARO  |  0.236 / 0.236 / 0.236 / 0.434
+  BBOB_F16_Weierstrass|s51|d5            RIME      MPA      MVO      MVO  L_SHADE  |  0.027 / 0.309 / 0.309 / 0.384
+  BBOB_F17_SchaffersF7|s42|d10          SHADE      MPA      PSO      PSO       EO  |  0.047 / 0.315 / 0.315 / 0.005
+  BBOB_F17_SchaffersF7|s42|d20           JADE      MPA       EO       EO       GA  |  0.070 / 0.023 / 0.023 / 0.247
+  BBOB_F17_SchaffersF7|s42|d5              EO      MPA      MPA      MPA      SMA  |  0.006 / 0.006 / 0.006 / 0.022
+  BBOB_F17_SchaffersF7|s43|d10             EO      MPA      PSO      PSO      MVO  |  0.101 / 0.221 / 0.221 / 0.015
+  BBOB_F17_SchaffersF7|s43|d20          SHADE      MPA       EO       EO       GA  |  0.104 / 0.025 / 0.025 / 0.227
+  BBOB_F17_SchaffersF7|s43|d5             MPA      MPA      PSO       EO       EO  |  0.000 / 0.014 / 0.013 / 0.013
+  BBOB_F17_SchaffersF7|s44|d10             EO      MPA      PSO       EO      ARO  |  0.116 / 0.238 / 0.000 / 0.171
+  BBOB_F17_SchaffersF7|s44|d20             EO      MPA  L_SHADE       EO       EO  |  0.125 / 0.003 / 0.000 / 0.000
+  BBOB_F17_SchaffersF7|s44|d5             MPA      MPA      PSO      MPA      MPA  |  0.000 / 0.075 / 0.000 / 0.000
+  BBOB_F17_SchaffersF7|s45|d10             EO      MPA      PSO      PSO       GA  |  0.081 / 0.373 / 0.373 / 0.212
+  BBOB_F17_SchaffersF7|s45|d20             EO      MPA      MVO    SHADE      MVO  |  0.226 / 0.066 / 0.026 / 0.066
+  BBOB_F17_SchaffersF7|s45|d5             MVO      MPA      MPA       EO       SA  |  0.003 / 0.003 / 0.003 / 0.568
+  BBOB_F17_SchaffersF7|s46|d10             EO      MPA      PSO      PSO       GA  |  0.077 / 0.288 / 0.288 / 0.254
+  BBOB_F17_SchaffersF7|s46|d20             EO      MPA    SHADE    SHADE       EO  |  0.139 / 0.072 / 0.072 / 0.000
+  BBOB_F17_SchaffersF7|s46|d5             MPA      MPA      PSO      MPA      SMA  |  0.000 / 0.135 / 0.000 / 0.077
+  BBOB_F17_SchaffersF7|s47|d10             EO      MPA      PSO      PSO       EO  |  0.088 / 0.231 / 0.231 / 0.000
+  BBOB_F17_SchaffersF7|s47|d20          SHADE      MPA       EO       EO       GA  |  0.175 / 0.027 / 0.027 / 0.203
+  BBOB_F17_SchaffersF7|s47|d5         L_SHADE      MPA      PSO      MPA      MPA  |  0.008 / 0.021 / 0.008 / 0.008
+  BBOB_F17_SchaffersF7|s48|d10          SHADE      MPA       EO       EO       EO  |  0.067 / 0.043 / 0.043 / 0.043
+  BBOB_F17_SchaffersF7|s48|d20        L_SHADE      MPA      MVO    SHADE       EO  |  0.183 / 0.188 / 0.057 / 0.051
+  BBOB_F17_SchaffersF7|s48|d5              EO      MPA      MPA      MPA       EO  |  0.004 / 0.004 / 0.004 / 0.000
+  BBOB_F17_SchaffersF7|s49|d10             EO      MPA      PSO      PSO       EO  |  0.108 / 0.446 / 0.446 / 0.000
+  BBOB_F17_SchaffersF7|s49|d20        L_SHADE      MPA      MVO    SHADE      MVO  |  0.138 / 0.339 / 0.001 / 0.339
+  BBOB_F17_SchaffersF7|s49|d5             GWO      MPA      MPA      MPA      MPA  |  0.002 / 0.002 / 0.002 / 0.002
+  BBOB_F17_SchaffersF7|s50|d10             EO      MPA      PSO       EO       EO  |  0.050 / 0.394 / 0.000 / 0.000
+  BBOB_F17_SchaffersF7|s50|d20        L_SHADE      MPA  L_SHADE       EO       EO  |  0.182 / 0.000 / 0.010 / 0.010
+  BBOB_F17_SchaffersF7|s50|d5              EO      MPA      PSO      MPA      GJO  |  0.005 / 0.012 / 0.005 / 0.019
+  BBOB_F17_SchaffersF7|s51|d10          SHADE      MPA       EO      MPA       EO  |  0.022 / 0.059 / 0.022 / 0.059
+  BBOB_F17_SchaffersF7|s51|d20          SHADE      MPA  L_SHADE  L_SHADE      MVO  |  0.163 / 0.019 / 0.019 / 0.068
+  BBOB_F17_SchaffersF7|s51|d5             GWO      MPA      PSO       EO       EO  |  0.005 / 0.057 / 0.017 / 0.017
+  BBOB_F18_SchaffersF7IllConditioned|s42|d10      GWO      MPA       EO    SHADE  L_SHADE  |  0.013 / 0.005 / 0.055 / 0.068
+  BBOB_F18_SchaffersF7IllConditioned|s42|d20       EO      MPA     JADE    SHADE      HBA  |  0.103 / 0.075 / 0.097 / 0.330
+  BBOB_F18_SchaffersF7IllConditioned|s42|d5      MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F18_SchaffersF7IllConditioned|s43|d10       EO      MPA       EO    SHADE  L_SHADE  |  0.019 / 0.000 / 0.038 / 0.025
+  BBOB_F18_SchaffersF7IllConditioned|s43|d20       EO      MPA     JADE    SHADE      HBA  |  0.129 / 0.055 / 0.076 / 0.602
+  BBOB_F18_SchaffersF7IllConditioned|s43|d5      MPA      MPA      GWO      MPA    SHADE  |  0.000 / 0.014 / 0.000 / 0.028
+  BBOB_F18_SchaffersF7IllConditioned|s44|d10       EO      MPA       EO       EO  L_SHADE  |  0.102 / 0.000 / 0.000 / 0.096
+  BBOB_F18_SchaffersF7IllConditioned|s44|d20      GWO      MPA       EO  L_SHADE  L_SHADE  |  0.069 / 0.006 / 0.038 / 0.038
+  BBOB_F18_SchaffersF7IllConditioned|s44|d5       EO      MPA      GWO      MPA    SHADE  |  0.035 / 0.010 / 0.035 / 0.030
+  BBOB_F18_SchaffersF7IllConditioned|s45|d10       EO      MPA       EO       EO  L_SHADE  |  0.061 / 0.000 / 0.000 / 0.101
+  BBOB_F18_SchaffersF7IllConditioned|s45|d20       EO      MPA       EO    SHADE  L_SHADE  |  0.128 / 0.000 / 0.086 / 0.136
+  BBOB_F18_SchaffersF7IllConditioned|s45|d5      MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F18_SchaffersF7IllConditioned|s46|d10       EO      MPA       EO       EO  L_SHADE  |  0.012 / 0.000 / 0.000 / 0.030
+  BBOB_F18_SchaffersF7IllConditioned|s46|d20       EO      MPA  L_SHADE  L_SHADE      MPA  |  0.139 / 0.060 / 0.060 / 0.139
+  BBOB_F18_SchaffersF7IllConditioned|s46|d5      MPA      MPA      GWO    SHADE    SHADE  |  0.000 / 0.080 / 0.049 / 0.049
+  BBOB_F18_SchaffersF7IllConditioned|s47|d10       EO      MPA       EO       EO  L_SHADE  |  0.007 / 0.000 / 0.000 / 0.107
+  BBOB_F18_SchaffersF7IllConditioned|s47|d20       EO      MPA     JADE    SHADE  L_SHADE  |  0.068 / 0.078 / 0.055 / 0.035
+  BBOB_F18_SchaffersF7IllConditioned|s47|d5      MPA      MPA      PSO      MPA    SHADE  |  0.000 / 0.322 / 0.000 / 0.028
+  BBOB_F18_SchaffersF7IllConditioned|s48|d10       EO      MPA    SHADE    SHADE      HBA  |  0.004 / 0.026 / 0.026 / 0.238
+  BBOB_F18_SchaffersF7IllConditioned|s48|d20       EO      MPA  L_SHADE  L_SHADE      MPA  |  0.073 / 0.055 / 0.055 / 0.073
+  BBOB_F18_SchaffersF7IllConditioned|s48|d5      MPA      MPA      HBA      HBA  L_SHADE  |  0.000 / 0.256 / 0.256 / 0.020
+  BBOB_F18_SchaffersF7IllConditioned|s49|d10       EO      MPA       EO       EO  L_SHADE  |  0.019 / 0.000 / 0.000 / 0.033
+  BBOB_F18_SchaffersF7IllConditioned|s49|d20       EO      MPA       EO  L_SHADE      HBA  |  0.063 / 0.000 / 0.073 / 0.273
+  BBOB_F18_SchaffersF7IllConditioned|s49|d5      MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F18_SchaffersF7IllConditioned|s50|d10       EO      MPA       EO    SHADE      HBA  |  0.036 / 0.000 / 0.062 / 0.386
+  BBOB_F18_SchaffersF7IllConditioned|s50|d20       EO      MPA  L_SHADE       EO  L_SHADE  |  0.116 / 0.077 / 0.000 / 0.077
+  BBOB_F18_SchaffersF7IllConditioned|s50|d5       EO      MPA      GWO      MPA    SHADE  |  0.006 / 0.011 / 0.006 / 0.036
+  BBOB_F18_SchaffersF7IllConditioned|s51|d10       EO      MPA    SHADE    SHADE      HBA  |  0.016 / 0.056 / 0.056 / 0.230
+  BBOB_F18_SchaffersF7IllConditioned|s51|d20       EO      MPA  L_SHADE  L_SHADE      MPA  |  0.098 / 0.067 / 0.067 / 0.098
+  BBOB_F18_SchaffersF7IllConditioned|s51|d5      MPA      MPA      HBA      MPA    SHADE  |  0.000 / 0.073 / 0.000 / 0.028
+  BBOB_F19_GriewankRosenbrock|s42|d10      HHO      MPA       EO       EO       EO  |  0.249 / 0.126 / 0.126 / 0.126
+  BBOB_F19_GriewankRosenbrock|s42|d20      HHO      MPA      HBA      MPA       EO  |  0.460 / 0.396 / 0.460 / 0.385
+  BBOB_F19_GriewankRosenbrock|s42|d5      GJO      MPA       EO       EO       EO  |  0.222 / 0.109 / 0.109 / 0.109
+  BBOB_F19_GriewankRosenbrock|s43|d10      HHO      MPA       EO       EO      MPA  |  0.303 / 0.237 / 0.237 / 0.303
+  BBOB_F19_GriewankRosenbrock|s43|d20      HHO      MPA      MPA      MPA       EO  |  0.353 / 0.353 / 0.353 / 0.352
+  BBOB_F19_GriewankRosenbrock|s43|d5      ARO      MPA       EO      GWO       EO  |  0.080 / 0.124 / 0.088 / 0.124
+  BBOB_F19_GriewankRosenbrock|s44|d10      HHO      MPA       EO       EO      MPA  |  0.212 / 0.234 / 0.234 / 0.212
+  BBOB_F19_GriewankRosenbrock|s44|d20      HHO      MPA      MPA      MPA       EO  |  0.303 / 0.303 / 0.303 / 0.342
+  BBOB_F19_GriewankRosenbrock|s44|d5      GJO      MPA       EO      GWO       EO  |  0.126 / 0.094 / 0.132 / 0.094
+  BBOB_F19_GriewankRosenbrock|s45|d10      HHO      MPA       EO       EO       EO  |  0.156 / 0.128 / 0.128 / 0.128
+  BBOB_F19_GriewankRosenbrock|s45|d20      HHO      MPA      MPA      MPA       EO  |  0.246 / 0.246 / 0.246 / 0.316
+  BBOB_F19_GriewankRosenbrock|s45|d5      HHO      MPA      GWO      GWO       EO  |  0.140 / 0.169 / 0.169 / 0.013
+  BBOB_F19_GriewankRosenbrock|s46|d10      HHO      MPA       EO       EO      MPA  |  0.226 / 0.289 / 0.289 / 0.226
+  BBOB_F19_GriewankRosenbrock|s46|d20      HHO      MPA      MPA     JADE       EO  |  0.329 / 0.329 / 0.523 / 0.296
+  BBOB_F19_GriewankRosenbrock|s46|d5      ARO      MPA      GWO      GWO       EO  |  0.098 / 0.215 / 0.215 / 0.049
+  BBOB_F19_GriewankRosenbrock|s47|d10      HHO      MPA       EO       EO      MPA  |  0.134 / 0.161 / 0.161 / 0.134
+  BBOB_F19_GriewankRosenbrock|s47|d20      HHO      MPA  L_SHADE  L_SHADE       EO  |  0.393 / 0.425 / 0.425 / 0.336
+  BBOB_F19_GriewankRosenbrock|s47|d5      GJO      MPA       EO      GWO       EO  |  0.034 / 0.030 / 0.289 / 0.030
+  BBOB_F19_GriewankRosenbrock|s48|d10      HHO      MPA       EO       EO       EO  |  0.204 / 0.171 / 0.171 / 0.171
+  BBOB_F19_GriewankRosenbrock|s48|d20      HHO      MPA  L_SHADE  L_SHADE       EO  |  0.300 / 0.487 / 0.487 / 0.254
+  BBOB_F19_GriewankRosenbrock|s48|d5      HHO      MPA      GWO      GWO       EO  |  0.149 / 0.163 / 0.163 / 0.112
+  BBOB_F19_GriewankRosenbrock|s49|d10      HHO      MPA       EO       EO      MPA  |  0.180 / 0.075 / 0.075 / 0.180
+  BBOB_F19_GriewankRosenbrock|s49|d20      HHO      MPA      MPA      MPA       EO  |  0.323 / 0.323 / 0.323 / 0.361
+  BBOB_F19_GriewankRosenbrock|s49|d5      HHO      MPA      GWO      MPA       EO  |  0.074 / 0.092 / 0.074 / 0.059
+  BBOB_F19_GriewankRosenbrock|s50|d10      HHO      MPA       EO       EO      MPA  |  0.381 / 0.377 / 0.377 / 0.381
+  BBOB_F19_GriewankRosenbrock|s50|d20      HHO      MPA      MPA      MPA       EO  |  0.403 / 0.403 / 0.403 / 0.337
+  BBOB_F19_GriewankRosenbrock|s50|d5      GJO      MPA       EO      GWO       EO  |  0.142 / 0.055 / 0.088 / 0.055
+  BBOB_F19_GriewankRosenbrock|s51|d10      HHO      MPA       EO       EO       EO  |  0.235 / 0.263 / 0.263 / 0.263
+  BBOB_F19_GriewankRosenbrock|s51|d20      HHO      MPA      MPA      MPA       EO  |  0.389 / 0.389 / 0.389 / 0.379
+  BBOB_F19_GriewankRosenbrock|s51|d5      GJO      MPA      GWO      GWO       EO  |  0.164 / 0.215 / 0.215 / 0.212
+  BBOB_F1_Sphere|s42|d10                  PSO      MPA       ea       ea      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F1_Sphere|s42|d20                SHADE      MPA      MVO      MPA      MPA  |  0.001 / 0.000 / 0.001 / 0.001
+  BBOB_F1_Sphere|s42|d5                   PSO      MPA      MVO      MVO      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F1_Sphere|s43|d10                  PSO      MPA       ea       ea      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F1_Sphere|s43|d20                SHADE      MPA       ea       ea      MPA  |  0.002 / 0.002 / 0.002 / 0.002
+  BBOB_F1_Sphere|s43|d5                   PSO      MPA  L_SHADE      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F1_Sphere|s44|d10                  PSO      MPA       ea       ea      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F1_Sphere|s44|d20                SHADE      MPA       ea       ea      MPA  |  0.001 / 0.001 / 0.001 / 0.001
+  BBOB_F1_Sphere|s44|d5                   PSO      MPA       ea       ea      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F1_Sphere|s45|d10                  PSO      MPA       ea       ea      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F1_Sphere|s45|d20              L_SHADE      MPA       ea       ea      MPA  |  0.002 / 0.001 / 0.001 / 0.002
+  BBOB_F1_Sphere|s45|d5                   PSO      MPA       EO      ARO      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F1_Sphere|s46|d10                  PSO      MPA       ea       ea      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F1_Sphere|s46|d20                SHADE      MPA       ea       ea      MPA  |  0.001 / 0.001 / 0.001 / 0.001
+  BBOB_F1_Sphere|s46|d5                   PSO      MPA       EO       EO      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F1_Sphere|s47|d10                  PSO      MPA       ea       ea      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F1_Sphere|s47|d20                SHADE      MPA       ea       ea      MPA  |  0.001 / 0.001 / 0.001 / 0.001
+  BBOB_F1_Sphere|s47|d5                   PSO      MPA      ARO      ARO      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F1_Sphere|s48|d10                  PSO      MPA       ea       ea      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F1_Sphere|s48|d20                SHADE      MPA       ea       ea      MPA  |  0.001 / 0.002 / 0.002 / 0.001
+  BBOB_F1_Sphere|s48|d5                   PSO      MPA  L_SHADE      ARO      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F1_Sphere|s49|d10                  PSO      MPA       ea       ea      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F1_Sphere|s49|d20                SHADE      MPA       ea       ea      MPA  |  0.001 / 0.001 / 0.001 / 0.001
+  BBOB_F1_Sphere|s49|d5                   PSO      MPA      MVO      MVO      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F1_Sphere|s50|d10                  PSO      MPA       ea       ea      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F1_Sphere|s50|d20                SHADE      MPA       ea       ea      MPA  |  0.001 / 0.002 / 0.002 / 0.001
+  BBOB_F1_Sphere|s50|d5                   PSO      MPA       EO      ARO    SHADE  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F1_Sphere|s51|d10                  PSO      MPA       ea       ea      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F1_Sphere|s51|d20              L_SHADE      MPA       ea       ea      MPA  |  0.002 / 0.001 / 0.001 / 0.002
+  BBOB_F1_Sphere|s51|d5                   PSO      MPA       ea      MVO      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F20_Schwefel|s42|d10               ARO      MPA      ARO      ARO  L_SHADE  |  0.348 / 0.000 / 0.000 / 0.171
+  BBOB_F20_Schwefel|s42|d20               BBO      MPA      ARO      ARO      ARO  |  0.297 / 0.207 / 0.207 / 0.207
+  BBOB_F20_Schwefel|s42|d5                SMA      MPA      ABC      ABC      ARO  |  0.060 / 0.360 / 0.360 / 0.060
+  BBOB_F20_Schwefel|s43|d10              JADE      MPA      ARO      ARO  L_SHADE  |  0.411 / 0.165 / 0.165 / 0.286
+  BBOB_F20_Schwefel|s43|d20               BBO      MPA      ARO      ARO  L_SHADE  |  0.266 / 0.262 / 0.262 / 0.618
+  BBOB_F20_Schwefel|s43|d5               RIME      MPA      ABC      ABC      ARO  |  0.127 / 0.285 / 0.285 / 0.001
+  BBOB_F20_Schwefel|s44|d10               ARO      MPA      ARO      ARO  L_SHADE  |  0.275 / 0.000 / 0.000 / 0.170
+  BBOB_F20_Schwefel|s44|d20                GA      MPA      ARO      ARO      ARO  |  0.441 / 0.390 / 0.390 / 0.390
+  BBOB_F20_Schwefel|s44|d5            L_SHADE      MPA      ABC      ABC      ARO  |  0.223 / 0.446 / 0.446 / 0.136
+  BBOB_F20_Schwefel|s45|d10                GA      MPA      ARO      ARO  L_SHADE  |  0.246 / 0.097 / 0.097 / 0.249
+  BBOB_F20_Schwefel|s45|d20                GA      MPA      ARO      ARO      ARO  |  0.340 / 0.388 / 0.388 / 0.388
+  BBOB_F20_Schwefel|s45|d5              SHADE      MPA      ARO      ARO      ARO  |  0.416 / 0.150 / 0.150 / 0.150
+  BBOB_F20_Schwefel|s46|d10                GA      MPA      ARO      ARO  L_SHADE  |  0.503 / 0.193 / 0.193 / 0.388
+  BBOB_F20_Schwefel|s46|d20                GA      MPA      ARO      ARO      ARO  |  0.382 / 0.423 / 0.423 / 0.423
+  BBOB_F20_Schwefel|s46|d5            L_SHADE      MPA      ABC      ABC      ARO  |  0.391 / 0.570 / 0.570 / 0.315
+  BBOB_F20_Schwefel|s47|d10                GA      MPA      ARO      ARO  L_SHADE  |  0.360 / 0.065 / 0.065 / 0.270
+  BBOB_F20_Schwefel|s47|d20                GA      MPA      ARO      ARO  L_SHADE  |  0.594 / 0.410 / 0.410 / 0.701
+  BBOB_F20_Schwefel|s47|d5                 GA      MPA      ABC      ABC  L_SHADE  |  0.263 / 0.531 / 0.531 / 0.067
+  BBOB_F20_Schwefel|s48|d10              JADE      MPA      ARO      ARO  L_SHADE  |  0.150 / 0.089 / 0.089 / 0.457
+  BBOB_F20_Schwefel|s48|d20                GA      MPA      ARO      ARO      ARO  |  0.536 / 0.363 / 0.363 / 0.363
+  BBOB_F20_Schwefel|s48|d5               JADE      MPA      ARO      ARO  L_SHADE  |  0.159 / 0.034 / 0.034 / 0.006
+  BBOB_F20_Schwefel|s49|d10               ARO      MPA      ARO      ARO  L_SHADE  |  0.119 / 0.000 / 0.000 / 0.145
+  BBOB_F20_Schwefel|s49|d20                EO      MPA      ARO      ARO      ARO  |  0.202 / 0.013 / 0.013 / 0.013
+  BBOB_F20_Schwefel|s49|d5            L_SHADE      MPA      ABC      ABC  L_SHADE  |  0.271 / 0.321 / 0.321 / 0.000
+  BBOB_F20_Schwefel|s50|d10                GA      MPA      ARO      ARO  L_SHADE  |  0.378 / 0.060 / 0.060 / 0.373
+  BBOB_F20_Schwefel|s50|d20                GA      MPA      ARO      ARO      ARO  |  0.571 / 0.597 / 0.597 / 0.597
+  BBOB_F20_Schwefel|s50|d5                 EO      MPA      ARO      ARO      ARO  |  0.244 / 0.004 / 0.004 / 0.004
+  BBOB_F20_Schwefel|s51|d10              RIME      MPA      ARO      ARO  L_SHADE  |  0.318 / 0.214 / 0.214 / 0.410
+  BBOB_F20_Schwefel|s51|d20                GA      MPA      ARO      ARO  L_SHADE  |  0.482 / 0.338 / 0.338 / 0.714
+  BBOB_F20_Schwefel|s51|d5              SHADE      MPA      ARO      ARO  L_SHADE  |  0.210 / 0.098 / 0.098 / 0.003
+  BBOB_F21_Gallagher101|s42|d10            EO      MPA      PSO      MPA      MPA  |  0.000 / 0.102 / 0.000 / 0.000
+  BBOB_F21_Gallagher101|s42|d20          RIME      MPA  L_SHADE    SHADE      MPA  |  0.122 / 0.095 / 0.122 / 0.122
+  BBOB_F21_Gallagher101|s42|d5            MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F21_Gallagher101|s43|d10           PSO      MPA      PSO      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F21_Gallagher101|s43|d20           ARO      MPA  L_SHADE    SHADE      MPA  |  0.213 / 0.212 / 0.212 / 0.213
+  BBOB_F21_Gallagher101|s43|d5            MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F21_Gallagher101|s44|d10       L_SHADE      MPA      PSO      MPA      MPA  |  0.117 / 0.416 / 0.117 / 0.117
+  BBOB_F21_Gallagher101|s44|d20          JADE      MPA  L_SHADE    SHADE      MPA  |  0.001 / 0.011 / 0.053 / 0.001
+  BBOB_F21_Gallagher101|s44|d5            ARO      MPA      MPA      MPA      MPA  |  0.050 / 0.050 / 0.050 / 0.050
+  BBOB_F21_Gallagher101|s45|d10            EO      MPA      PSO      MPA      MPA  |  0.000 / 0.517 / 0.000 / 0.000
+  BBOB_F21_Gallagher101|s45|d20       L_SHADE      MPA  L_SHADE    SHADE      MPA  |  0.088 / 0.000 / 0.000 / 0.088
+  BBOB_F21_Gallagher101|s45|d5            MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F21_Gallagher101|s46|d10           MPA      MPA      PSO      ARO      MPA  |  0.000 / 0.261 / 0.003 / 0.000
+  BBOB_F21_Gallagher101|s46|d20           MPA      MPA  L_SHADE    SHADE      MPA  |  0.000 / 0.029 / 0.029 / 0.000
+  BBOB_F21_Gallagher101|s46|d5             EO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F21_Gallagher101|s47|d10           MPA      MPA      PSO      MPA      MPA  |  0.000 / 0.107 / 0.000 / 0.000
+  BBOB_F21_Gallagher101|s47|d20           MVO      MPA  L_SHADE    SHADE      MPA  |  0.003 / 0.001 / 0.001 / 0.003
+  BBOB_F21_Gallagher101|s47|d5            SMA      MPA      MPA      MPA      MPA  |  0.047 / 0.047 / 0.047 / 0.047
+  BBOB_F21_Gallagher101|s48|d10            EO      MPA      MPA      ARO      ARO  |  0.016 / 0.016 / 0.003 / 0.003
+  BBOB_F21_Gallagher101|s48|d20           PSO      MPA  L_SHADE       ea  L_SHADE  |  0.059 / 0.058 / 0.105 / 0.058
+  BBOB_F21_Gallagher101|s48|d5            MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F21_Gallagher101|s49|d10           PSO      MPA      PSO      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F21_Gallagher101|s49|d20       L_SHADE      MPA  L_SHADE       ea       ea  |  0.010 / 0.000 / 0.002 / 0.002
+  BBOB_F21_Gallagher101|s49|d5            MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F21_Gallagher101|s50|d10            EO      MPA      PSO      ARO      MPA  |  0.000 / 0.563 / 0.123 / 0.000
+  BBOB_F21_Gallagher101|s50|d20       L_SHADE      MPA  L_SHADE    SHADE      MPA  |  0.068 / 0.000 / 0.001 / 0.068
+  BBOB_F21_Gallagher101|s50|d5          SHADE      MPA      MPA      MPA      MPA  |  0.242 / 0.242 / 0.242 / 0.242
+  BBOB_F21_Gallagher101|s51|d10           PSO      MPA      PSO      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F21_Gallagher101|s51|d20       L_SHADE      MPA  L_SHADE      SMA     JADE  |  0.001 / 0.000 / 0.001 / 0.000
+  BBOB_F21_Gallagher101|s51|d5             EO      MPA      MPA      MPA      MPA  |  0.049 / 0.049 / 0.049 / 0.049
+  BBOB_F22_Gallagher21|s42|d10        L_SHADE      MPA      MPA      MPA       ea  |  0.067 / 0.067 / 0.067 / 0.068
+  BBOB_F22_Gallagher21|s42|d20        L_SHADE      MPA      PSO      PSO  L_SHADE  |  0.001 / 0.004 / 0.004 / 0.000
+  BBOB_F22_Gallagher21|s42|d5              EO      MPA      SMA    SHADE      MPA  |  0.000 / 0.961 / 0.000 / 0.000
+  BBOB_F22_Gallagher21|s43|d10            MPA      MPA      MPA      MPA     RIME  |  0.000 / 0.000 / 0.000 / 0.245
+  BBOB_F22_Gallagher21|s43|d20        L_SHADE      MPA  L_SHADE      PSO  L_SHADE  |  0.001 / 0.000 / 0.517 / 0.000
+  BBOB_F22_Gallagher21|s43|d5              EO      MPA      SMA     JADE      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F22_Gallagher21|s44|d10            PSO      MPA       EO      MPA       ea  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F22_Gallagher21|s44|d20        L_SHADE      MPA  L_SHADE      PSO  L_SHADE  |  0.002 / 0.000 / 0.452 / 0.000
+  BBOB_F22_Gallagher21|s44|d5             PSO      MPA      SMA    SHADE      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F22_Gallagher21|s45|d10            PSO      MPA       EO  L_SHADE      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F22_Gallagher21|s45|d20        L_SHADE      MPA      ARO     RIME       ea  |  0.001 / 0.046 / 0.000 / 0.002
+  BBOB_F22_Gallagher21|s45|d5             ARO      MPA      SMA     JADE      ARO  |  0.163 / 0.241 / 0.527 / 0.000
+  BBOB_F22_Gallagher21|s46|d10            MPA      MPA       EO      MPA     RIME  |  0.000 / 0.362 / 0.000 / 0.362
+  BBOB_F22_Gallagher21|s46|d20        L_SHADE      MPA  L_SHADE      PSO  L_SHADE  |  0.000 / 0.000 / 0.010 / 0.000
+  BBOB_F22_Gallagher21|s46|d5             PSO      MPA      MPA      ARO      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F22_Gallagher21|s47|d10            PSO      MPA      MPA      MPA     RIME  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F22_Gallagher21|s47|d20          SHADE      MPA      ARO     RIME       ea  |  0.001 / 0.074 / 0.001 / 0.002
+  BBOB_F22_Gallagher21|s47|d5             PSO      MPA      SMA    SHADE      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F22_Gallagher21|s48|d10            PSO      MPA       EO      GWO     JADE  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F22_Gallagher21|s48|d20            SMA      MPA  L_SHADE      PSO  L_SHADE  |  0.002 / 0.429 / 0.564 / 0.429
+  BBOB_F22_Gallagher21|s48|d5             MPA      MPA      SMA  L_SHADE      MPA  |  0.000 / 0.162 / 0.162 / 0.000
+  BBOB_F22_Gallagher21|s49|d10        L_SHADE      MPA  L_SHADE      PSO     RIME  |  0.000 / 0.000 / 0.413 / 0.413
+  BBOB_F22_Gallagher21|s49|d20          SHADE      MPA  L_SHADE      PSO    SHADE  |  0.005 / 0.000 / 0.000 / 0.000
+  BBOB_F22_Gallagher21|s49|d5              EO      MPA      MPA      ARO      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F22_Gallagher21|s50|d10            PSO      MPA      MPA      MPA     RIME  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F22_Gallagher21|s50|d20          SHADE      MPA  L_SHADE      PSO  L_SHADE  |  0.001 / 0.000 / 0.001 / 0.000
+  BBOB_F22_Gallagher21|s50|d5              EO      MPA      SMA     JADE      ARO  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F22_Gallagher21|s51|d10             EO      MPA      MPA      MPA       ea  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F22_Gallagher21|s51|d20          SHADE      MPA  L_SHADE      PSO     RIME  |  0.001 / 0.000 / 0.001 / 0.000
+  BBOB_F22_Gallagher21|s51|d5             MPA      MPA      SMA      ARO    SHADE  |  0.000 / 0.504 / 0.000 / 0.001
+  BBOB_F23_Katsuura|s42|d10               MPA       EO       EO       EO      SMA  |  0.391 / 0.391 / 0.391 / 0.398
+  BBOB_F23_Katsuura|s42|d20               MPA       EO      MVO      MVO      SMA  |  0.488 / 1.000 / 1.000 / 0.091
+  BBOB_F23_Katsuura|s42|d5                MPA       EO      MPA      MPA      SMA  |  0.226 / 0.000 / 0.000 / 0.200
+  BBOB_F23_Katsuura|s43|d10               WOA       EO       EO       EO      SMA  |  0.852 / 0.852 / 0.852 / 0.701
+  BBOB_F23_Katsuura|s43|d20               MPA       EO      GWO      SMA      SMA  |  0.464 / 0.630 / 0.768 / 0.768
+  BBOB_F23_Katsuura|s43|d5                MPA       EO     RIME      MPA      SMA  |  0.301 / 0.229 / 0.000 / 0.453
+  BBOB_F23_Katsuura|s44|d10               MPA       EO       EO       EO      SMA  |  0.440 / 0.440 / 0.440 / 0.301
+  BBOB_F23_Katsuura|s44|d20               MPA       EO      MVO      MVO      SMA  |  0.776 / 0.764 / 0.764 / 0.638
+  BBOB_F23_Katsuura|s44|d5                MPA       EO       EO      MPA      SMA  |  0.500 / 0.500 / 0.000 / 0.290
+  BBOB_F23_Katsuura|s45|d10               WOA       EO       EO       EO      SMA  |  0.508 / 0.508 / 0.508 / 0.503
+  BBOB_F23_Katsuura|s45|d20                ea       EO      MVO      MVO      SMA  |  0.565 / 0.591 / 0.591 / 0.324
+  BBOB_F23_Katsuura|s45|d5                MPA       EO      MPA      MPA      SMA  |  0.542 / 0.000 / 0.000 / 0.053
+  BBOB_F23_Katsuura|s46|d10           L_SHADE       EO       EO       EO      SMA  |  0.329 / 0.329 / 0.329 / 0.448
+  BBOB_F23_Katsuura|s46|d20               HBA       EO      MVO      GWO      SMA  |  0.795 / 0.968 / 0.422 / 0.684
+  BBOB_F23_Katsuura|s46|d5                MPA       EO       EO      MPA      SMA  |  0.412 / 0.412 / 0.000 / 0.489
+  BBOB_F23_Katsuura|s47|d10               SCA       EO       EO       EO      SMA  |  0.489 / 0.489 / 0.489 / 0.400
+  BBOB_F23_Katsuura|s47|d20               WOA       EO      MVO      MVO      SMA  |  0.472 / 0.281 / 0.281 / 0.289
+  BBOB_F23_Katsuura|s47|d5                MPA       EO      MPA      MPA      SMA  |  0.288 / 0.000 / 0.000 / 0.479
+  BBOB_F23_Katsuura|s48|d10               WOA       EO       EO       EO      SMA  |  0.340 / 0.340 / 0.340 / 0.919
+  BBOB_F23_Katsuura|s48|d20               MPA       EO      SMA      GWO      SMA  |  0.656 / 0.494 / 0.286 / 0.494
+  BBOB_F23_Katsuura|s48|d5                WOA       EO     RIME      MPA      SMA  |  0.225 / 0.479 / 0.193 / 0.371
+  BBOB_F23_Katsuura|s49|d10               MPA       EO       EO       EO      SMA  |  0.425 / 0.425 / 0.425 / 0.404
+  BBOB_F23_Katsuura|s49|d20               MPA       EO      MVO      SMA      SMA  |  0.596 / 0.209 / 0.421 / 0.421
+  BBOB_F23_Katsuura|s49|d5                MPA       EO       EO      MPA      SMA  |  0.996 / 0.996 / 0.000 / 0.156
+  BBOB_F23_Katsuura|s50|d10           L_SHADE       EO       EO       EO      SMA  |  0.637 / 0.637 / 0.637 / 0.649
+  BBOB_F23_Katsuura|s50|d20               MPA       EO      SMA      MVO      SMA  |  0.313 / 0.620 / 0.532 / 0.620
+  BBOB_F23_Katsuura|s50|d5                MPA       EO     RIME      MPA      SMA  |  0.563 / 0.355 / 0.000 / 0.404
+  BBOB_F23_Katsuura|s51|d10               MPA       EO       EO       EO      SMA  |  0.340 / 0.340 / 0.340 / 0.075
+  BBOB_F23_Katsuura|s51|d20               MPA       EO      GWO      MVO      SMA  |  0.548 / 0.253 / 1.000 / 0.730
+  BBOB_F23_Katsuura|s51|d5                HHO       EO      MPA      MPA      SMA  |  0.674 / 0.217 / 0.217 / 0.343
+  BBOB_F24_LunacekBiRastrigin|s42|d10       EO      MPA       ea       ea       ea  |  0.001 / 0.149 / 0.149 / 0.149
+  BBOB_F24_LunacekBiRastrigin|s42|d20      MPA      MPA       ea       ea       GA  |  0.000 / 0.097 / 0.097 / 0.383
+  BBOB_F24_LunacekBiRastrigin|s42|d5  L_SHADE      MPA      MVO      MVO       ea  |  0.029 / 0.063 / 0.063 / 0.067
+  BBOB_F24_LunacekBiRastrigin|s43|d10       EO      MPA       ea       ea       ea  |  0.085 / 0.096 / 0.096 / 0.096
+  BBOB_F24_LunacekBiRastrigin|s43|d20      MVO      MPA       ea       ea       GA  |  0.057 / 0.207 / 0.207 / 0.262
+  BBOB_F24_LunacekBiRastrigin|s43|d5       EO      MPA       ea       ea       ea  |  0.072 / 0.363 / 0.363 / 0.363
+  BBOB_F24_LunacekBiRastrigin|s44|d10       EO      MPA       ea       ea       ea  |  0.015 / 0.120 / 0.120 / 0.120
+  BBOB_F24_LunacekBiRastrigin|s44|d20      MPA      MPA       ea       ea       GA  |  0.000 / 0.118 / 0.118 / 0.307
+  BBOB_F24_LunacekBiRastrigin|s44|d5      ARO      MPA       ea      MVO       ea  |  0.066 / 0.034 / 0.117 / 0.034
+  BBOB_F24_LunacekBiRastrigin|s45|d10       EO      MPA       ea       ea       ea  |  0.101 / 0.196 / 0.196 / 0.196
+  BBOB_F24_LunacekBiRastrigin|s45|d20      MPA      MPA       ea       ea       GA  |  0.000 / 0.173 / 0.173 / 0.353
+  BBOB_F24_LunacekBiRastrigin|s45|d5       EO      MPA       ea      MVO       ea  |  0.058 / 0.265 / 0.153 / 0.265
+  BBOB_F24_LunacekBiRastrigin|s46|d10      GWO      MPA       ea       ea       ea  |  0.129 / 0.317 / 0.317 / 0.317
+  BBOB_F24_LunacekBiRastrigin|s46|d20       EO      MPA       ea       ea       GA  |  0.010 / 0.174 / 0.174 / 0.189
+  BBOB_F24_LunacekBiRastrigin|s46|d5       EO      MPA      MVO      MVO       ea  |  0.151 / 0.161 / 0.161 / 0.184
+  BBOB_F24_LunacekBiRastrigin|s47|d10      MPA      MPA       ea       ea       ea  |  0.000 / 0.185 / 0.185 / 0.185
+  BBOB_F24_LunacekBiRastrigin|s47|d20      MPA      MPA       ea       ea       GA  |  0.000 / 0.102 / 0.102 / 0.235
+  BBOB_F24_LunacekBiRastrigin|s47|d5      MPA      MPA      MVO      MVO       ea  |  0.000 / 0.021 / 0.021 / 0.121
+  BBOB_F24_LunacekBiRastrigin|s48|d10       ea      MPA       ea       ea       ea  |  0.208 / 0.000 / 0.000 / 0.000
+  BBOB_F24_LunacekBiRastrigin|s48|d20      MPA      MPA       ea       ea       GA  |  0.000 / 0.116 / 0.116 / 0.184
+  BBOB_F24_LunacekBiRastrigin|s48|d5       EO      MPA      MVO       EO       ea  |  0.084 / 0.250 / 0.000 / 0.573
+  BBOB_F24_LunacekBiRastrigin|s49|d10       EO      MPA       ea       ea       ea  |  0.162 / 0.224 / 0.224 / 0.224
+  BBOB_F24_LunacekBiRastrigin|s49|d20      MVO      MPA       ea       ea       GA  |  0.009 / 0.082 / 0.082 / 0.202
+  BBOB_F24_LunacekBiRastrigin|s49|d5      ARO      MPA      MVO      MVO       ea  |  0.069 / 0.297 / 0.297 / 0.254
+  BBOB_F24_LunacekBiRastrigin|s50|d10       EO      MPA       ea       ea       ea  |  0.069 / 0.087 / 0.087 / 0.087
+  BBOB_F24_LunacekBiRastrigin|s50|d20      MVO      MPA       ea       ea       GA  |  0.010 / 0.145 / 0.145 / 0.158
+  BBOB_F24_LunacekBiRastrigin|s50|d5      HHO      MPA       ea       ea       ea  |  0.093 / 0.251 / 0.251 / 0.251
+  BBOB_F24_LunacekBiRastrigin|s51|d10       EO      MPA       ea       ea       ea  |  0.071 / 0.118 / 0.118 / 0.118
+  BBOB_F24_LunacekBiRastrigin|s51|d20      MPA      MPA       ea       ea       GA  |  0.000 / 0.116 / 0.116 / 0.264
+  BBOB_F24_LunacekBiRastrigin|s51|d5      MPA      MPA      MVO      MVO       ea  |  0.000 / 0.111 / 0.111 / 0.094
+  BBOB_F2_EllipsoidalSeparable|s42|d10      PSO      MPA      MPA      MPA      MPA  |  0.001 / 0.001 / 0.001 / 0.001
+  BBOB_F2_EllipsoidalSeparable|s42|d20      PSO      MPA      MVO       SA       SA  |  0.009 / 0.012 / 0.032 / 0.032
+  BBOB_F2_EllipsoidalSeparable|s42|d5      PSO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F2_EllipsoidalSeparable|s43|d10      PSO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F2_EllipsoidalSeparable|s43|d20      PSO      MPA      GWO       SA      MPA  |  0.003 / 0.012 / 0.007 / 0.003
+  BBOB_F2_EllipsoidalSeparable|s43|d5      PSO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F2_EllipsoidalSeparable|s44|d10      PSO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F2_EllipsoidalSeparable|s44|d20      PSO      MPA      MVO       SA       SA  |  0.002 / 0.004 / 0.005 / 0.005
+  BBOB_F2_EllipsoidalSeparable|s44|d5      PSO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F2_EllipsoidalSeparable|s45|d10      PSO      MPA      MPA      MPA      MPA  |  0.001 / 0.001 / 0.001 / 0.001
+  BBOB_F2_EllipsoidalSeparable|s45|d20    SHADE      MPA      MVO       SA       SA  |  0.004 / 0.004 / 0.015 / 0.015
+  BBOB_F2_EllipsoidalSeparable|s45|d5      PSO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F2_EllipsoidalSeparable|s46|d10      PSO      MPA      MPA      MPA       SA  |  0.000 / 0.000 / 0.000 / 0.007
+  BBOB_F2_EllipsoidalSeparable|s46|d20  L_SHADE      MPA      GWO       SA       SA  |  0.006 / 0.010 / 0.020 / 0.020
+  BBOB_F2_EllipsoidalSeparable|s46|d5      PSO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F2_EllipsoidalSeparable|s47|d10      PSO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F2_EllipsoidalSeparable|s47|d20      PSO      MPA      MPA       SA       SA  |  0.001 / 0.001 / 0.014 / 0.014
+  BBOB_F2_EllipsoidalSeparable|s47|d5      PSO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F2_EllipsoidalSeparable|s48|d10      PSO      MPA      MPA      MPA      MPA  |  0.001 / 0.001 / 0.001 / 0.001
+  BBOB_F2_EllipsoidalSeparable|s48|d20      PSO      MPA      MPA       SA      MVO  |  0.007 / 0.007 / 0.025 / 0.011
+  BBOB_F2_EllipsoidalSeparable|s48|d5      PSO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F2_EllipsoidalSeparable|s49|d10      PSO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F2_EllipsoidalSeparable|s49|d20  L_SHADE      MPA      MPA       SA       SA  |  0.003 / 0.003 / 0.018 / 0.018
+  BBOB_F2_EllipsoidalSeparable|s49|d5      PSO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F2_EllipsoidalSeparable|s50|d10      PSO      MPA      MPA      MPA      MPA  |  0.001 / 0.001 / 0.001 / 0.001
+  BBOB_F2_EllipsoidalSeparable|s50|d20      PSO      MPA      MPA       SA      MVO  |  0.007 / 0.007 / 0.026 / 0.006
+  BBOB_F2_EllipsoidalSeparable|s50|d5      PSO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F2_EllipsoidalSeparable|s51|d10      PSO      MPA      MVO      MPA       SA  |  0.000 / 0.001 / 0.000 / 0.030
+  BBOB_F2_EllipsoidalSeparable|s51|d20      PSO      MPA      GWO       SA      MPA  |  0.004 / 0.034 / 0.020 / 0.004
+  BBOB_F2_EllipsoidalSeparable|s51|d5      PSO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F3_RastriginSeparable|s42|d10      PSO      MPA       SA      MPA      MPA  |  0.000 / 0.007 / 0.000 / 0.000
+  BBOB_F3_RastriginSeparable|s42|d20      PSO      MPA      MPA      MPA      MPA  |  0.001 / 0.001 / 0.001 / 0.001
+  BBOB_F3_RastriginSeparable|s42|d5   L_SHADE      MPA      MPA       SA      MPA  |  0.000 / 0.000 / 0.002 / 0.000
+  BBOB_F3_RastriginSeparable|s43|d10      PSO      MPA       SA      MPA      MPA  |  0.000 / 0.036 / 0.000 / 0.000
+  BBOB_F3_RastriginSeparable|s43|d20      PSO      MPA      MPA       SA      MPA  |  0.000 / 0.000 / 0.002 / 0.000
+  BBOB_F3_RastriginSeparable|s43|d5        EO      MPA      MPA       SA      MPA  |  0.000 / 0.000 / 0.019 / 0.000
+  BBOB_F3_RastriginSeparable|s44|d10      PSO      MPA       SA      MPA      MPA  |  0.000 / 0.025 / 0.000 / 0.000
+  BBOB_F3_RastriginSeparable|s44|d20      PSO      MPA      MPA      MPA      MPA  |  0.001 / 0.001 / 0.001 / 0.001
+  BBOB_F3_RastriginSeparable|s44|d5       PSO      MPA      MPA       SA      MPA  |  0.000 / 0.000 / 0.017 / 0.000
+  BBOB_F3_RastriginSeparable|s45|d10      PSO      MPA       SA      MPA      MPA  |  0.000 / 0.007 / 0.000 / 0.000
+  BBOB_F3_RastriginSeparable|s45|d20      PSO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F3_RastriginSeparable|s45|d5     SHADE      MPA      MPA       SA      MPA  |  0.000 / 0.000 / 0.010 / 0.000
+  BBOB_F3_RastriginSeparable|s46|d10      PSO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F3_RastriginSeparable|s46|d20      PSO      MPA      MPA       SA      MPA  |  0.000 / 0.000 / 0.028 / 0.000
+  BBOB_F3_RastriginSeparable|s46|d5        EO      MPA      MPA       SA      MPA  |  0.000 / 0.000 / 0.010 / 0.000
+  BBOB_F3_RastriginSeparable|s47|d10      PSO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F3_RastriginSeparable|s47|d20      PSO      MPA      MPA       SA      MPA  |  0.000 / 0.000 / 0.019 / 0.000
+  BBOB_F3_RastriginSeparable|s47|d5   L_SHADE      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F3_RastriginSeparable|s48|d10      PSO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F3_RastriginSeparable|s48|d20      PSO      MPA      MPA       SA      MPA  |  0.002 / 0.002 / 0.022 / 0.002
+  BBOB_F3_RastriginSeparable|s48|d5        EO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F3_RastriginSeparable|s49|d10      PSO      MPA       SA      MPA      MPA  |  0.000 / 0.009 / 0.000 / 0.000
+  BBOB_F3_RastriginSeparable|s49|d20      PSO      MPA      MPA       SA      MPA  |  0.000 / 0.000 / 0.009 / 0.000
+  BBOB_F3_RastriginSeparable|s49|d5       PSO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F3_RastriginSeparable|s50|d10      PSO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F3_RastriginSeparable|s50|d20      PSO      MPA      MPA       SA      MPA  |  0.001 / 0.001 / 0.044 / 0.001
+  BBOB_F3_RastriginSeparable|s50|d5   L_SHADE      MPA      MPA       SA      MPA  |  0.000 / 0.000 / 0.026 / 0.000
+  BBOB_F3_RastriginSeparable|s51|d10      PSO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F3_RastriginSeparable|s51|d20      PSO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F3_RastriginSeparable|s51|d5   L_SHADE      MPA      MPA       SA      MPA  |  0.000 / 0.000 / 0.009 / 0.000
+  BBOB_F4_BucheRastrigin|s42|d10           ea      MPA       EO       EO       EO  |  0.228 / 0.135 / 0.135 / 0.135
+  BBOB_F4_BucheRastrigin|s42|d20           ea      MPA      MPA      MPA      MPA  |  0.132 / 0.132 / 0.132 / 0.132
+  BBOB_F4_BucheRastrigin|s42|d5           MVO      MPA      ARO      ARO     JADE  |  0.154 / 0.034 / 0.034 / 0.024
+  BBOB_F4_BucheRastrigin|s43|d10           ea      MPA       ea       EO       EO  |  0.228 / 0.000 / 0.178 / 0.178
+  BBOB_F4_BucheRastrigin|s43|d20           ea      MPA      MVO      MPA       EO  |  0.179 / 0.200 / 0.179 / 0.150
+  BBOB_F4_BucheRastrigin|s43|d5           MVO      MPA      ARO      ARO       EO  |  0.095 / 0.070 / 0.070 / 0.096
+  BBOB_F4_BucheRastrigin|s44|d10           ea      MPA       EO       EO       EO  |  0.230 / 0.137 / 0.137 / 0.137
+  BBOB_F4_BucheRastrigin|s44|d20           ea      MPA      MPA      MPA      MPA  |  0.160 / 0.160 / 0.160 / 0.160
+  BBOB_F4_BucheRastrigin|s44|d5           MVO      MPA       EO      ARO       EO  |  0.075 / 0.075 / 0.088 / 0.075
+  BBOB_F4_BucheRastrigin|s45|d10           ea      MPA      MPA       EO       EO  |  0.234 / 0.234 / 0.096 / 0.096
+  BBOB_F4_BucheRastrigin|s45|d20           ea      MPA       EO      MPA       EO  |  0.252 / 0.197 / 0.252 / 0.197
+  BBOB_F4_BucheRastrigin|s45|d5            ea      MPA       EO      ARO       EO  |  0.078 / 0.118 / 0.066 / 0.118
+  BBOB_F4_BucheRastrigin|s46|d10           ea      MPA      MPA       EO       EO  |  0.255 / 0.255 / 0.189 / 0.189
+  BBOB_F4_BucheRastrigin|s46|d20           ea      MPA      MVO      MPA       EO  |  0.296 / 0.204 / 0.296 / 0.182
+  BBOB_F4_BucheRastrigin|s46|d5           MVO      MPA      ARO      ARO       EO  |  0.147 / 0.153 / 0.153 / 0.147
+  BBOB_F4_BucheRastrigin|s47|d10           ea      MPA       ea       EO       EO  |  0.211 / 0.000 / 0.177 / 0.177
+  BBOB_F4_BucheRastrigin|s47|d20           ea      MPA      MVO      MPA       EO  |  0.248 / 0.121 / 0.248 / 0.158
+  BBOB_F4_BucheRastrigin|s47|d5           MVO      MPA      ARO      ARO       EO  |  0.080 / 0.072 / 0.072 / 0.080
+  BBOB_F4_BucheRastrigin|s48|d10           ea      MPA       EO       EO       EO  |  0.204 / 0.175 / 0.175 / 0.175
+  BBOB_F4_BucheRastrigin|s48|d20           ea      MPA       EO      MPA       EO  |  0.134 / 0.188 / 0.134 / 0.188
+  BBOB_F4_BucheRastrigin|s48|d5           MVO      MPA      ARO      ARO       EO  |  0.147 / 0.042 / 0.042 / 0.147
+  BBOB_F4_BucheRastrigin|s49|d10           ea      MPA       ea       EO       EO  |  0.286 / 0.000 / 0.184 / 0.184
+  BBOB_F4_BucheRastrigin|s49|d20           ea      MPA      MVO      MPA       EO  |  0.209 / 0.212 / 0.209 / 0.151
+  BBOB_F4_BucheRastrigin|s49|d5           MVO      MPA       EO      ARO       EO  |  0.100 / 0.100 / 0.062 / 0.100
+  BBOB_F4_BucheRastrigin|s50|d10           ea      MPA       ea       EO       EO  |  0.211 / 0.000 / 0.074 / 0.074
+  BBOB_F4_BucheRastrigin|s50|d20           ea      MPA      MVO      MPA       EO  |  0.224 / 0.247 / 0.224 / 0.238
+  BBOB_F4_BucheRastrigin|s50|d5           MVO      MPA      ARO      ARO       EO  |  0.131 / 0.048 / 0.048 / 0.065
+  BBOB_F4_BucheRastrigin|s51|d10           ea      MPA       ea       EO       EO  |  0.224 / 0.000 / 0.155 / 0.155
+  BBOB_F4_BucheRastrigin|s51|d20           ea      MPA      MPA      MPA      MPA  |  0.183 / 0.183 / 0.183 / 0.183
+  BBOB_F4_BucheRastrigin|s51|d5           MVO      MPA      ARO      ARO       EO  |  0.182 / 0.095 / 0.095 / 0.072
+  BBOB_F5_LinearSlope|s42|d10             ARO      MPA      ARO       GA      HBA  |  0.000 / 0.000 / 0.052 / 0.000
+  BBOB_F5_LinearSlope|s42|d20             ARO      MPA       GA       GA       GA  |  0.002 / 0.087 / 0.087 / 0.087
+  BBOB_F5_LinearSlope|s42|d5              ABC      MPA  L_SHADE  L_SHADE  L_SHADE  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F5_LinearSlope|s43|d10             ARO      MPA     JADE      ARO      HBA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F5_LinearSlope|s43|d20             ARO      MPA       GA      BBO       GA  |  0.000 / 0.086 / 0.141 / 0.086
+  BBOB_F5_LinearSlope|s43|d5              ABC      MPA  L_SHADE  L_SHADE  L_SHADE  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F5_LinearSlope|s44|d10             ARO      MPA       GA       GA      HBA  |  0.000 / 0.062 / 0.062 / 0.000
+  BBOB_F5_LinearSlope|s44|d20             ARO      MPA      BBO       GA       GA  |  0.000 / 0.100 / 0.075 / 0.075
+  BBOB_F5_LinearSlope|s44|d5              ABC      MPA      SMA    SHADE  L_SHADE  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F5_LinearSlope|s45|d10             ARO      MPA       GA       GA      HBA  |  0.000 / 0.090 / 0.090 / 0.000
+  BBOB_F5_LinearSlope|s45|d20             ARO      MPA       GA       GA       GA  |  0.001 / 0.071 / 0.071 / 0.071
+  BBOB_F5_LinearSlope|s45|d5              ABC      MPA  L_SHADE  L_SHADE  L_SHADE  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F5_LinearSlope|s46|d10             ARO      MPA       GA       GA      HBA  |  0.000 / 0.105 / 0.105 / 0.000
+  BBOB_F5_LinearSlope|s46|d20             ARO      MPA       GA       GA       GA  |  0.000 / 0.089 / 0.089 / 0.089
+  BBOB_F5_LinearSlope|s46|d5              ABC      MPA      SMA    SHADE      HBA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F5_LinearSlope|s47|d10             ARO      MPA       GA       GA      HBA  |  0.000 / 0.133 / 0.133 / 0.000
+  BBOB_F5_LinearSlope|s47|d20             ARO      MPA       GA       GA       GA  |  0.001 / 0.089 / 0.089 / 0.089
+  BBOB_F5_LinearSlope|s47|d5              ABC      MPA      SMA    SHADE  L_SHADE  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F5_LinearSlope|s48|d10             ARO      MPA       GA       GA      HBA  |  0.000 / 0.107 / 0.107 / 0.000
+  BBOB_F5_LinearSlope|s48|d20             ARO      MPA       EO      MVO       GA  |  0.000 / 0.000 / 0.003 / 0.083
+  BBOB_F5_LinearSlope|s48|d5              ABC      MPA  L_SHADE  L_SHADE  L_SHADE  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F5_LinearSlope|s49|d10             ARO      MPA     JADE       GA      HBA  |  0.000 / 0.000 / 0.141 / 0.000
+  BBOB_F5_LinearSlope|s49|d20             ARO      MPA       GA       GA       GA  |  0.000 / 0.091 / 0.091 / 0.091
+  BBOB_F5_LinearSlope|s49|d5              ABC      MPA  L_SHADE  L_SHADE  L_SHADE  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F5_LinearSlope|s50|d10             ARO      MPA      ARO       GA      HBA  |  0.000 / 0.000 / 0.074 / 0.000
+  BBOB_F5_LinearSlope|s50|d20             ARO      MPA       GA       GA       GA  |  0.001 / 0.089 / 0.089 / 0.089
+  BBOB_F5_LinearSlope|s50|d5              ABC      MPA  L_SHADE  L_SHADE  L_SHADE  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F5_LinearSlope|s51|d10             ARO      MPA       GA       GA      HBA  |  0.000 / 0.118 / 0.118 / 0.000
+  BBOB_F5_LinearSlope|s51|d20             ARO      MPA       GA       GA       GA  |  0.004 / 0.106 / 0.106 / 0.106
+  BBOB_F5_LinearSlope|s51|d5              ABC      MPA      SMA    SHADE  L_SHADE  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F6_AttractiveSector|s42|d10        MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.001 / 0.001 / 0.000
+  BBOB_F6_AttractiveSector|s42|d20        MPA      MPA      PSO      MPA      MPA  |  0.000 / 0.109 / 0.000 / 0.000
+  BBOB_F6_AttractiveSector|s42|d5         MPA      MPA      MVO      MPA      MVO  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F6_AttractiveSector|s43|d10        MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.252 / 0.252 / 0.000
+  BBOB_F6_AttractiveSector|s43|d20        MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.056 / 0.056 / 0.000
+  BBOB_F6_AttractiveSector|s43|d5         MPA      MPA      MVO      MPA      MPA  |  0.000 / 0.021 / 0.000 / 0.000
+  BBOB_F6_AttractiveSector|s44|d10        MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.090 / 0.090 / 0.000
+  BBOB_F6_AttractiveSector|s44|d20        MPA      MPA      PSO      MPA      MPA  |  0.000 / 0.113 / 0.000 / 0.000
+  BBOB_F6_AttractiveSector|s44|d5         WOA      MPA  L_SHADE  L_SHADE      MPA  |  0.000 / 0.003 / 0.003 / 0.000
+  BBOB_F6_AttractiveSector|s45|d10        MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.006 / 0.006 / 0.000
+  BBOB_F6_AttractiveSector|s45|d20        MPA      MPA      PSO      MPA      MPA  |  0.000 / 0.016 / 0.000 / 0.000
+  BBOB_F6_AttractiveSector|s45|d5         MPA      MPA      PSO  L_SHADE      MPA  |  0.000 / 0.001 / 0.000 / 0.000
+  BBOB_F6_AttractiveSector|s46|d10        MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.018 / 0.018 / 0.000
+  BBOB_F6_AttractiveSector|s46|d20        MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.034 / 0.034 / 0.000
+  BBOB_F6_AttractiveSector|s46|d5         MPA      MPA  L_SHADE  L_SHADE      MPA  |  0.000 / 0.002 / 0.002 / 0.000
+  BBOB_F6_AttractiveSector|s47|d10        MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F6_AttractiveSector|s47|d20        MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.137 / 0.137 / 0.000
+  BBOB_F6_AttractiveSector|s47|d5         MPA      MPA  L_SHADE      MPA      MPA  |  0.000 / 0.001 / 0.000 / 0.000
+  BBOB_F6_AttractiveSector|s48|d10        MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.001 / 0.001 / 0.000
+  BBOB_F6_AttractiveSector|s48|d20        MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.079 / 0.079 / 0.000
+  BBOB_F6_AttractiveSector|s48|d5         MPA      MPA      MVO       SA      MPA  |  0.000 / 0.010 / 0.168 / 0.000
+  BBOB_F6_AttractiveSector|s49|d10        GWO      MPA      PSO      PSO      MPA  |  0.000 / 0.004 / 0.004 / 0.000
+  BBOB_F6_AttractiveSector|s49|d20        MPA      MPA      PSO      MPA      MPA  |  0.000 / 0.097 / 0.000 / 0.000
+  BBOB_F6_AttractiveSector|s49|d5         MPA      MPA  L_SHADE      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F6_AttractiveSector|s50|d10        MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.041 / 0.041 / 0.000
+  BBOB_F6_AttractiveSector|s50|d20        MPA      MPA      PSO      MPA      MPA  |  0.000 / 0.097 / 0.000 / 0.000
+  BBOB_F6_AttractiveSector|s50|d5         MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F6_AttractiveSector|s51|d10        MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.001 / 0.001 / 0.000
+  BBOB_F6_AttractiveSector|s51|d20        MPA      MPA      PSO      PSO      MPA  |  0.000 / 0.001 / 0.001 / 0.000
+  BBOB_F6_AttractiveSector|s51|d5         WOA      MPA  L_SHADE       SA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F7_StepEllipsoidal|s42|d10         MPA      MPA       SA      MPA      MPA  |  0.000 / 0.040 / 0.000 / 0.000
+  BBOB_F7_StepEllipsoidal|s42|d20         MPA      MPA       SA       SA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F7_StepEllipsoidal|s42|d5          MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F7_StepEllipsoidal|s43|d10         MPA      MPA       SA      MPA      MPA  |  0.000 / 0.007 / 0.000 / 0.000
+  BBOB_F7_StepEllipsoidal|s43|d20         MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F7_StepEllipsoidal|s43|d5          MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F7_StepEllipsoidal|s44|d10         MPA      MPA       SA      MPA      MPA  |  0.000 / 0.045 / 0.000 / 0.000
+  BBOB_F7_StepEllipsoidal|s44|d20         MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F7_StepEllipsoidal|s44|d5         JADE      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F7_StepEllipsoidal|s45|d10         MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F7_StepEllipsoidal|s45|d20         MPA      MPA       SA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F7_StepEllipsoidal|s45|d5          MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F7_StepEllipsoidal|s46|d10         MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F7_StepEllipsoidal|s46|d20         MPA      MPA       SA       SA      MPA  |  0.000 / 0.002 / 0.002 / 0.000
+  BBOB_F7_StepEllipsoidal|s46|d5          MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F7_StepEllipsoidal|s47|d10         MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F7_StepEllipsoidal|s47|d20         MPA      MPA       SA      MPA      MPA  |  0.000 / 0.002 / 0.000 / 0.000
+  BBOB_F7_StepEllipsoidal|s47|d5          MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F7_StepEllipsoidal|s48|d10         MPA      MPA       SA      MPA      MPA  |  0.000 / 0.008 / 0.000 / 0.000
+  BBOB_F7_StepEllipsoidal|s48|d20          SA      MPA       SA      MPA      MPA  |  0.002 / 0.000 / 0.002 / 0.002
+  BBOB_F7_StepEllipsoidal|s48|d5          MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F7_StepEllipsoidal|s49|d10         MPA      MPA       SA      MPA      MPA  |  0.000 / 0.011 / 0.000 / 0.000
+  BBOB_F7_StepEllipsoidal|s49|d20         MPA      MPA      GWO      MPA      MPA  |  0.000 / 0.006 / 0.000 / 0.000
+  BBOB_F7_StepEllipsoidal|s49|d5          MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F7_StepEllipsoidal|s50|d10         MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F7_StepEllipsoidal|s50|d20         MPA      MPA       SA       SA      MPA  |  0.000 / 0.008 / 0.008 / 0.000
+  BBOB_F7_StepEllipsoidal|s50|d5          MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F7_StepEllipsoidal|s51|d10         MPA      MPA       SA      MPA      MPA  |  0.000 / 0.016 / 0.000 / 0.000
+  BBOB_F7_StepEllipsoidal|s51|d20         MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F7_StepEllipsoidal|s51|d5          MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F8_Rosenbrock|s42|d10              PSO      MPA      SMA      SMA       EO  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F8_Rosenbrock|s42|d20            SHADE      MPA  L_SHADE       EO      MVO  |  0.003 / 0.000 / 0.001 / 0.001
+  BBOB_F8_Rosenbrock|s42|d5             SHADE      MPA      MPA      MPA      MPA  |  0.001 / 0.001 / 0.001 / 0.001
+  BBOB_F8_Rosenbrock|s43|d10              PSO      MPA      SMA      SMA       EO  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F8_Rosenbrock|s43|d20          L_SHADE      MPA  L_SHADE       EO      MVO  |  0.001 / 0.000 / 0.001 / 0.000
+  BBOB_F8_Rosenbrock|s43|d5               PSO      MPA      MPA      MPA      MPA  |  0.003 / 0.003 / 0.003 / 0.003
+  BBOB_F8_Rosenbrock|s44|d10              MVO      MPA      SMA      SMA      SMA  |  0.000 / 0.001 / 0.001 / 0.001
+  BBOB_F8_Rosenbrock|s44|d20            SHADE      MPA  L_SHADE       EO      MVO  |  0.003 / 0.000 / 0.002 / 0.000
+  BBOB_F8_Rosenbrock|s44|d5               PSO      MPA      MPA      MPA      MPA  |  0.002 / 0.002 / 0.002 / 0.002
+  BBOB_F8_Rosenbrock|s45|d10              MVO      MPA      PSO      PSO       EO  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F8_Rosenbrock|s45|d20              MVO      MPA  L_SHADE       EO      MVO  |  0.004 / 0.000 / 0.000 / 0.000
+  BBOB_F8_Rosenbrock|s45|d5               PSO      MPA      MPA      MPA      MPA  |  0.006 / 0.006 / 0.006 / 0.006
+  BBOB_F8_Rosenbrock|s46|d10              PSO      MPA      SMA      SMA       EO  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F8_Rosenbrock|s46|d20              MVO      MPA  L_SHADE       EO      MVO  |  0.003 / 0.000 / 0.001 / 0.000
+  BBOB_F8_Rosenbrock|s46|d5               PSO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F8_Rosenbrock|s47|d10              PSO      MPA      SMA      SMA      HBA  |  0.002 / 0.001 / 0.001 / 0.006
+  BBOB_F8_Rosenbrock|s47|d20              MVO      MPA  L_SHADE       EO      MVO  |  0.003 / 0.000 / 0.001 / 0.000
+  BBOB_F8_Rosenbrock|s47|d5               MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F8_Rosenbrock|s48|d10              PSO      MPA      SMA      SMA      SMA  |  0.001 / 0.001 / 0.001 / 0.001
+  BBOB_F8_Rosenbrock|s48|d20          L_SHADE      MPA  L_SHADE       EO      MVO  |  0.004 / 0.000 / 0.002 / 0.002
+  BBOB_F8_Rosenbrock|s48|d5               MPA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F8_Rosenbrock|s49|d10              PSO      MPA      SMA      SMA      HBA  |  0.000 / 0.004 / 0.004 / 0.000
+  BBOB_F8_Rosenbrock|s49|d20          L_SHADE      MPA  L_SHADE       EO      MVO  |  0.001 / 0.000 / 0.001 / 0.000
+  BBOB_F8_Rosenbrock|s49|d5               WOA      MPA      MPA      MPA      MPA  |  0.002 / 0.002 / 0.002 / 0.002
+  BBOB_F8_Rosenbrock|s50|d10              MVO      MPA      SMA      SMA      SMA  |  0.001 / 0.001 / 0.001 / 0.001
+  BBOB_F8_Rosenbrock|s50|d20          L_SHADE      MPA  L_SHADE       EO      MVO  |  0.002 / 0.000 / 0.002 / 0.000
+  BBOB_F8_Rosenbrock|s50|d5               MPA      MPA      PSO      MPA      MPA  |  0.000 / 0.004 / 0.000 / 0.000
+  BBOB_F8_Rosenbrock|s51|d10              PSO      MPA      SMA      SMA       EO  |  0.001 / 0.001 / 0.001 / 0.001
+  BBOB_F8_Rosenbrock|s51|d20             JADE      MPA  L_SHADE       EO      MVO  |  0.007 / 0.001 / 0.004 / 0.002
+  BBOB_F8_Rosenbrock|s51|d5               PSO      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F9_RosenbrockRotated|s42|d10       SMA      MPA      PSO      PSO      MPA  |  0.062 / 0.044 / 0.044 / 0.062
+  BBOB_F9_RosenbrockRotated|s42|d20   L_SHADE      MPA      MVO  L_SHADE      MVO  |  0.004 / 0.001 / 0.000 / 0.001
+  BBOB_F9_RosenbrockRotated|s42|d5        MPA      MPA      MPA      MPA       EO  |  0.000 / 0.000 / 0.000 / 0.008
+  BBOB_F9_RosenbrockRotated|s43|d10       HBA      MPA      PSO      PSO      MPA  |  0.059 / 0.035 / 0.035 / 0.059
+  BBOB_F9_RosenbrockRotated|s43|d20   L_SHADE      MPA  L_SHADE     JADE      MVO  |  0.027 / 0.000 / 0.001 / 0.001
+  BBOB_F9_RosenbrockRotated|s43|d5        PSO      MPA      MPA      MPA       EO  |  0.045 / 0.045 / 0.045 / 0.038
+  BBOB_F9_RosenbrockRotated|s44|d10       HBA      MPA      PSO      PSO      MPA  |  0.043 / 1.000 / 1.000 / 0.043
+  BBOB_F9_RosenbrockRotated|s44|d20        EO      MPA  L_SHADE     JADE      MPA  |  0.004 / 0.001 / 0.001 / 0.004
+  BBOB_F9_RosenbrockRotated|s44|d5        HBA      MPA      MPA      MPA      MPA  |  0.003 / 0.003 / 0.003 / 0.003
+  BBOB_F9_RosenbrockRotated|s45|d10       SMA      MPA      PSO      PSO      MPA  |  0.057 / 0.041 / 0.041 / 0.057
+  BBOB_F9_RosenbrockRotated|s45|d20   L_SHADE      MPA  L_SHADE     JADE      MPA  |  0.003 / 0.000 / 0.001 / 0.003
+  BBOB_F9_RosenbrockRotated|s45|d5        MPA      MPA      PSO      MPA       EO  |  0.000 / 0.016 / 0.000 / 0.049
+  BBOB_F9_RosenbrockRotated|s46|d10       SMA      MPA      PSO      PSO      MPA  |  0.089 / 0.085 / 0.085 / 0.089
+  BBOB_F9_RosenbrockRotated|s46|d20        EO      MPA  L_SHADE     JADE      MPA  |  0.003 / 0.000 / 0.001 / 0.003
+  BBOB_F9_RosenbrockRotated|s46|d5        ARO      MPA    SHADE      MPA    SHADE  |  0.003 / 0.038 / 0.003 / 0.038
+  BBOB_F9_RosenbrockRotated|s47|d10       SMA      MPA      PSO      PSO      MPA  |  0.073 / 0.052 / 0.052 / 0.073
+  BBOB_F9_RosenbrockRotated|s47|d20   L_SHADE      MPA  L_SHADE     JADE      MPA  |  0.013 / 0.000 / 0.000 / 0.013
+  BBOB_F9_RosenbrockRotated|s47|d5        SCA      MPA      MPA      MPA      MPA  |  0.000 / 0.000 / 0.000 / 0.000
+  BBOB_F9_RosenbrockRotated|s48|d10       HBA      MPA      PSO      PSO      MPA  |  0.029 / 0.024 / 0.024 / 0.029
+  BBOB_F9_RosenbrockRotated|s48|d20        EO      MPA  L_SHADE     JADE      MPA  |  0.004 / 0.001 / 0.001 / 0.004
+  BBOB_F9_RosenbrockRotated|s48|d5      SHADE      MPA    SHADE      MPA       EO  |  0.002 / 0.000 / 0.002 / 0.015
+  BBOB_F9_RosenbrockRotated|s49|d10       HBA      MPA      PSO      PSO      MPA  |  0.058 / 0.049 / 0.049 / 0.058
+  BBOB_F9_RosenbrockRotated|s49|d20        EO      MPA  L_SHADE     JADE      MPA  |  0.004 / 0.000 / 0.001 / 0.004
+  BBOB_F9_RosenbrockRotated|s49|d5        MPA      MPA    SHADE      MPA       EO  |  0.000 / 0.114 / 0.000 / 0.101
+  BBOB_F9_RosenbrockRotated|s50|d10       SMA      MPA      PSO      PSO      MPA  |  0.050 / 0.047 / 0.047 / 0.050
+  BBOB_F9_RosenbrockRotated|s50|d20        EO      MPA  L_SHADE  L_SHADE      MVO  |  0.016 / 0.001 / 0.001 / 0.001
+  BBOB_F9_RosenbrockRotated|s50|d5        MPA      MPA    SHADE      MPA      MPA  |  0.000 / 0.046 / 0.000 / 0.000
+  BBOB_F9_RosenbrockRotated|s51|d10       SMA      MPA       EO      MPA      MPA  |  0.112 / 0.024 / 0.112 / 0.112
+  BBOB_F9_RosenbrockRotated|s51|d20        EO      MPA  L_SHADE  L_SHADE      MPA  |  0.012 / 0.000 / 0.000 / 0.012
+  BBOB_F9_RosenbrockRotated|s51|d5        MPA      MPA    SHADE      MPA       EO  |  0.000 / 0.007 / 0.000 / 0.017
+
+================================================================================================
+  WILCOXON SIGNED-RANK vs SBS  --  PRIMARY TEST
+  paired over 24 FUNCTION MEANS (rows aggregated first)
+================================================================================================
+  Each function contributes 30 rows that are NOT
+  independent, so the rows of a function are averaged before pairing.
+  signature: wilcoxon(x, y=None, zero_method='wilcox', correction=False,
+             alternative='two-sided', method='auto', ...)
+  Bonferroni threshold for 4 selectors: 0.0125
+  Random           statistic=np.float64(1.0) p=np.float64(2.384185791015625e-07) better on 1, worse on 23, tied on 0  *SIGNIFICANT* (survives Bonferroni)
+  1-NN             statistic=np.float64(69.0) p=np.float64(0.019441962242126465) better on 6, worse on 18, tied on 0  *SIGNIFICANT*
+  3-NN             statistic=np.float64(77.0) p=np.float64(0.06355166456894228) better on 7, worse on 16, tied on 1
+  RF-regression    statistic=np.float64(57.0) p=np.float64(0.3559586988465746) better on 7, worse on 10, tied on 7
+
+================================================================================================
+  SECONDARY -- INFLATED, DO NOT QUOTE  (paired over the 720 rows)
+================================================================================================
+  Pairs all 720 rows as if independent. They are not -- see the
+  primary test above. Reported only so the inflation is visible.
+  signature: wilcoxon(x, y=None, zero_method='wilcox', correction=False,
+             alternative='two-sided', method='auto', ...)
+  Random           statistic=np.float64(30180.0) p=np.float64(4.0806347952685845e-61) better on 128, worse on 545, tied on 47
+  1-NN             statistic=np.float64(41512.0) p=np.float64(2.989326496920575e-11) better on 178, worse on 324, tied on 218
+  3-NN             statistic=np.float64(36569.0) p=np.float64(2.1261402341590206e-06) better on 163, worse on 281, tied on 276
+  RF-regression    statistic=np.float64(17986.0) p=np.float64(0.0007086851401331559) better on 129, worse on 175, tied on 416
+
+================================================================================================
+  INTERPRETATION LIMITS
+================================================================================================
+  - 720 rows over 24 folds. Each fold trains on the rows of
+    the other 23 functions only.
+
+  *** CLUSTERED OBSERVATIONS -- READ BEFORE QUOTING ANY p-VALUE ***
+  Rows are NOT independent: 30 rows sit inside each of
+  24 functions. Quote the PRIMARY test (function means), not
+  the secondary per-row one -- the latter is reported only to make the
+  inflation visible. Bonferroni threshold for 4 selectors:
+  0.05/4 = 0.0125.
+
+  - 720 rows over 24 folds is little data for a 22-way selection
+    problem; treat these numbers as indicative, not converged.
+  - all 9 feature columns vary across rows; none dropped.
+  - most-tied row: BBOB_F5_LinearSlope|s43|d5 has 18 of 22 algorithms at
+    the exact optimum, so that row rewards almost any choice.
+  - SBS is a strong baseline: it already equals VBS on 235 of 720
+    rows, bounding the headroom a selector can win.
+================================================================================================
