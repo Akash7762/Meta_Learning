@@ -183,6 +183,43 @@ def sel_rf(Xtr, Xte, N_train, seed, **_):
 
 # ---------------------------------------------------------------------------
 
+def fit_prep(F_train):
+    """First half of prep_features(): fit on TRAIN only, return the transform.
+
+    Identical maths to prep_features() -- signed-log1p, drop columns that are
+    constant on the training rows, standardise -- split so a fold's transform
+    can be fitted once and applied to each of its test rows.
+    """
+    def slog(X):
+        return np.sign(X) * np.log1p(np.abs(X))
+
+    Xtr = slog(F_train)
+    keep = Xtr.std(axis=0) > 0
+    Xtr = Xtr[:, keep]
+    sc = StandardScaler().fit(Xtr)
+    return sc.transform(Xtr), (keep, sc)
+
+
+def apply_prep(F_test, prep):
+    keep, sc = prep
+    return sc.transform((np.sign(F_test) * np.log1p(np.abs(F_test)))[:, keep])
+
+
+def fit_rf(Xtr, N_train, seed):
+    """First half of sel_rf(): the per-algorithm forests, fitted once."""
+    models = []
+    for j in range(N_train.shape[1]):
+        rf = RandomForestRegressor(n_estimators=RF_TREES, random_state=seed)
+        rf.fit(Xtr, N_train[:, j])
+        models.append(rf)
+    return models
+
+
+def predict_rf(models, Xte):
+    """Second half of sel_rf(): argmin of the predicted normalised score."""
+    return int(np.argmin([m.predict(Xte)[0] for m in models]))
+
+
 def run_lopo(P, A, M, F, groups):
     """
     Leave-one-GROUP-out. Every row whose group matches the held-out group is
@@ -199,18 +236,42 @@ def run_lopo(P, A, M, F, groups):
     picks = {n: [] for n in names}
     rng = np.random.default_rng(RANDOM_SEED)
 
+    # PERFORMANCE. Every row of a held-out function shares an IDENTICAL
+    # training set, and the ceiling trains on ALL rows -- identical for every
+    # row. A forest with a fixed random_state on identical data is
+    # deterministic, so refitting per row rebuilds the same model again and
+    # again. At 720 rows / 24 folds that was 31,680 forest fits (~8.8 h); it
+    # is now 24x22 + 22 = 550 fits. Results are unchanged -- verified
+    # bit-identical against the per-row implementation on phase2_matrix.json.
+    #
+    # The row loop itself is KEPT, and in row order, because the Random
+    # baseline draws from a seeded RNG once per row; reordering would change
+    # its picks. Only the current fold's forests are held in memory, so a
+    # non-contiguous group ordering stays correct (it merely refits).
+    cur_held, fold = None, None
+    ceil = None
+    n_groups = len(set(groups))
+    done = 0
+
     for i in range(n_prob):
         held = groups[i]
-        train_idx = [t for t in range(n_prob) if groups[t] != held]
-        Xtr, Xte, _ = prep_features(F[train_idx], F[i:i + 1])
-        N_train = N[train_idx]
+        if held != cur_held:
+            train_idx = [t for t in range(n_prob) if groups[t] != held]
+            Xtr, prep = fit_prep(F[train_idx])
+            N_train = N[train_idx]
+            fold = (train_idx, Xtr, prep, N_train, fit_rf(Xtr, N_train, RF_SEED))
+            cur_held = held
+            done += 1
+            print(f"  fold {done:>3}/{n_groups}  held out {held}", flush=True)
+        train_idx, Xtr, prep, N_train, rf_models = fold
+        Xte = apply_prep(F[i:i + 1], prep)
 
         picks["VBS (oracle)"].append(int(np.argmin(M[i])))
         picks["SBS (fold-aware)"].append(sel_sbs(train_idx, M))
         picks["Random"].append(sel_random(rng, n_alg))
         picks["1-NN"].append(sel_knn(1, Xtr, Xte, N_train))
         picks["3-NN"].append(sel_knn(3, Xtr, Xte, N_train))
-        picks["RF-regression"].append(sel_rf(Xtr, Xte, N_train, RF_SEED))
+        picks["RF-regression"].append(predict_rf(rf_models, Xte))
 
         # DIAGNOSTIC, NOT A SELECTOR. Deliberately trains on every row,
         # including the held-out one, so the model is allowed to memorise
@@ -218,8 +279,12 @@ def run_lopo(P, A, M, F, groups):
         # problems AT ALL. If this stalls near the LOPO score the features
         # carry no usable signal; if it approaches VBS the features are
         # fine and the loss is in generalising across functions.
-        Xa_tr, Xa_te, _ = prep_features(F, F[i:i + 1])
-        picks["RF in-sample (ceiling)"].append(sel_rf(Xa_tr, Xa_te, N, RF_SEED))
+        # Trained on ALL rows, so it is fitted exactly once.
+        if ceil is None:
+            Xa_tr, ceil_prep = fit_prep(F)
+            ceil = (ceil_prep, fit_rf(Xa_tr, N, RF_SEED))
+        picks["RF in-sample (ceiling)"].append(
+            predict_rf(ceil[1], apply_prep(F[i:i + 1], ceil[0])))
 
     return N, ranks, names, picks
 

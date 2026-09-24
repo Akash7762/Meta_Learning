@@ -16,12 +16,15 @@ directly comparable and neither scale is cherry-picked.
 """
 import argparse
 import json
+import warnings
 
 import numpy as np
 from scipy.stats import rankdata, wilcoxon
 from sklearn.ensemble import RandomForestRegressor
 
 from phase3_selector_validation import load
+
+warnings.filterwarnings("ignore", message=".*sklearn.utils.parallel.delayed.*")
 
 TREES = 300
 SEED = 20260916
@@ -61,21 +64,77 @@ def pick_per_algo(Ftr, Fte, Ytr, n_alg, trees, seed):
     return int(np.argmin(preds))
 
 
-def run(F, M, ranks, N, funcs, target, arch, trees=TREES, seed=SEED, prep=PREP):
+def fit_prep(F_train):
+    """First half of prep_features(): signed-log1p, drop train-constant
+    columns, standardise -- all fitted on TRAIN only."""
+    from sklearn.preprocessing import StandardScaler
+    Xtr = np.sign(F_train) * np.log1p(np.abs(F_train))
+    keep = Xtr.std(axis=0) > 0
+    Xtr = Xtr[:, keep]
+    sc = StandardScaler().fit(Xtr)
+    return sc.transform(Xtr), (keep, sc)
+
+
+def apply_prep(F_test, pp):
+    keep, sc = pp
+    return sc.transform((np.sign(F_test) * np.log1p(np.abs(F_test)))[:, keep])
+
+
+def fit_single(Ftr, Ytr, n_alg, trees, seed):
+    Xtr = np.hstack([np.repeat(Ftr, n_alg, axis=0), np.tile(np.eye(n_alg), (len(Ftr), 1))])
+    rf = RandomForestRegressor(n_estimators=trees, random_state=seed, n_jobs=-1)
+    rf.fit(Xtr, Ytr.reshape(-1))
+    return rf
+
+
+def predict_single(rf, Fte, n_alg):
+    Xte = np.hstack([np.repeat(Fte, n_alg, axis=0), np.eye(n_alg)])
+    return int(np.argmin(rf.predict(Xte)))
+
+
+def fit_per_algo(Ftr, Ytr, n_alg, trees, seed):
+    models = []
+    for j in range(n_alg):
+        rf = RandomForestRegressor(n_estimators=trees, random_state=seed, n_jobs=-1)
+        rf.fit(Ftr, Ytr[:, j])
+        models.append(rf)
+    return models
+
+
+def predict_per_algo(models, Fte, n_alg):
+    return int(np.argmin([m.predict(Fte)[0] for m in models]))
+
+
+def run(F, M, ranks, N, funcs, target, arch, trees=TREES, seed=SEED, prep=PREP,
+        verbose=True):
     n_row, n_alg = M.shape
     Y = ranks if target == "rank" else N
-    picker = pick_single if arch == "single" else pick_per_algo
+    fitter, predictor = ((fit_single, predict_single) if arch == "single"
+                         else (fit_per_algo, predict_per_algo))
     ufuncs = sorted(set(funcs.tolist()))
 
+    # PERFORMANCE. Every test row of a held-out function shares an IDENTICAL
+    # training set (all rows of the other functions), and a forest with a
+    # fixed random_state on identical data is deterministic. Refitting per row
+    # rebuilt the same model 30 times per fold -- ~47,500 fits (~20 h) on the
+    # 720-row matrix. Models are now fitted once per fold. Results are
+    # unchanged: verified bit-identical against the per-row implementation.
     sel_r, sbs_r, sel_n, sbs_n, fold_of = [], [], [], [], []
-    for f in ufuncs:
+    for k, f in enumerate(ufuncs, 1):
         te = np.where(funcs == f)[0]
         tr = np.where(funcs != f)[0]
         sbs_j = int(np.argmin(ranks[tr].mean(axis=0)))      # TRAIN rows only
+        if prep:
+            Ftr, pp = fit_prep(F[tr])
+        else:
+            Ftr, pp = F[tr], None
+        model = fitter(Ftr, Y[tr], n_alg, trees, seed)
+        if verbose:
+            print(f"    [{target}|{arch}{'|prep' if prep else ''}] fold "
+                  f"{k:>2}/{len(ufuncs)}", flush=True)
         for i in te:
-            Ftr, Fte = (prep_features(F[tr], F[i:i + 1]) if prep
-                        else (F[tr], F[i:i + 1]))
-            j = picker(Ftr, Fte, Y[tr], n_alg, trees, seed)
+            Fte = apply_prep(F[i:i + 1], pp) if prep else F[i:i + 1]
+            j = predictor(model, Fte, n_alg)
             sel_r.append(ranks[i, j]); sbs_r.append(ranks[i, sbs_j])
             sel_n.append(N[i, j]);     sbs_n.append(N[i, sbs_j])
             fold_of.append(f)
@@ -154,9 +213,9 @@ def main():
           " norm closed={:+.1f}% p={:.6f}".format(
               ctl["norm"]["closed_pct"], ctl["norm"]["p"]))
 
-    json.dump({"grid": results, "control_phase2_knobs": ctl,
-               "trees": TREES, "seed": SEED, "prep": PREP},
-              open(args.out, "w", encoding="utf-8"), indent=2)
+    with open(args.out, "w", encoding="utf-8") as fh:
+        json.dump({"grid": results, "control_phase2_knobs": ctl,
+                   "trees": TREES, "seed": SEED, "prep": PREP}, fh, indent=2)
 
 
 if __name__ == "__main__":
