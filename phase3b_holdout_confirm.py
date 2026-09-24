@@ -5,10 +5,10 @@ Method fixed in advance; see docs/phase3_preregistration.md. Nothing in
 this file deviates from it. Reads cached JSON only; no optimiser is invoked
 and build_algorithm is never called.
 
-TRAIN : results/phase2c_matrix.json  (selector training, n_runs=3)
-EVAL  : results/phase2_matrix.json   (held out,          n_runs=15)
-Both overridable with --train-matrix / --eval-matrix. Row counts, seeds and
-dims are read from the files, never assumed here.
+TRAIN : results/phase2c_matrix.json  (selector training, fewer runs per cell)
+EVAL  : results/phase2_matrix.json   (held out, n_runs=15)
+Both overridable with --train-matrix / --eval-matrix. Row counts, run counts,
+seeds and dims are read from the files, never assumed here.
 
 INDEPENDENCE IS CHECKED, NOT ASSUMED. assert_no_leakage() refuses to run if
 the eval matrix's problem_seed appears in the training matrix's
@@ -183,18 +183,34 @@ def main():
     ranks_te = np.vstack([rankdata(Mte[i]) for i in range(Mte.shape[0])])
     vbs_rank = ranks_te.min(axis=1)
 
+    # PERFORMANCE, NOT METHOD. Every eval row of the same held-out function
+    # trains on an IDENTICAL set -- all training rows of the other functions --
+    # and a forest with a fixed random_state on identical data is
+    # deterministic. Refitting per eval row rebuilt the same model once per
+    # dimension: 72 single-threaded fits (~46 min) where 24 suffice
+    # (~15 min). The pre-registered method is untouched; only how often the
+    # identical forest is rebuilt changed. Output verified bit-identical
+    # against the per-row version before this ran on the pre-registered data.
+    # The row loop keeps its original order, so `detail` is unchanged too.
     sel_rank, sbs_rank, detail = [], [], []
+    cur_f, fold = None, None
+    n_folds, done = len(set(fte.tolist())), 0
     for i, f in enumerate(fte):
-        tr = np.where(ftr != f)[0]          # LOFO ACROSS FILES
-        if len(tr) == len(ftr):
-            sys.exit("Function " + str(f) + " absent from training file -- stopping.")
+        if f != cur_f:
+            tr = np.where(ftr != f)[0]          # LOFO ACROSS FILES
+            if len(tr) == len(ftr):
+                sys.exit("Function " + str(f) + " absent from training file -- stopping.")
 
-        sbs_j = int(np.argmin(ranks_tr[tr].mean(axis=0)))    # TRAIN rows only
+            sbs_j = int(np.argmin(ranks_tr[tr].mean(axis=0)))    # TRAIN rows only
 
-        Xtr = np.hstack([np.repeat(Ftr_all[tr], n_alg, axis=0),
-                         np.tile(np.eye(n_alg), (len(tr), 1))])
-        rf = RandomForestRegressor(n_estimators=RF_TREES, random_state=RF_SEED)
-        rf.fit(Xtr, ranks_tr[tr].reshape(-1))
+            Xtr = np.hstack([np.repeat(Ftr_all[tr], n_alg, axis=0),
+                             np.tile(np.eye(n_alg), (len(tr), 1))])
+            rf = RandomForestRegressor(n_estimators=RF_TREES, random_state=RF_SEED)
+            rf.fit(Xtr, ranks_tr[tr].reshape(-1))
+            fold, cur_f = (tr, sbs_j, rf), f
+            done += 1
+            print(f"  fold {done:>2}/{n_folds}  held out {f}", flush=True)
+        tr, sbs_j, rf = fold
 
         Xte = np.hstack([np.repeat(Fte_all[i:i + 1], n_alg, axis=0), np.eye(n_alg)])
         j = int(np.argmin(rf.predict(Xte)))

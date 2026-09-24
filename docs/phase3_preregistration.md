@@ -87,3 +87,78 @@ What the run therefore tests: (a) generalisation to an unseen function, and
 (b) robustness of the result to 15-run versus 3-run targets. What it does
 NOT do: resolve the post-hoc selection risk arising from the 8-cell
 ablation. No independent instance set exists in this project's data.
+
+### 2026-09-25 — registered method to be re-applied to rebuilt, independent data
+
+Recorded before the registered test was run on the full rebuilt data, and
+committed before that run. A subset run used only to verify code is disclosed
+below. Nothing above this line has been edited.
+
+**Why the data changed.** The 2026-09-17 entry found the evaluation set was
+not independent. Both matrices were since rebuilt, partly to create an
+independent evaluation set and partly to add dimensions 5 and 20:
+
+| | As registered (2026-09-17) | Rebuilt |
+|---|---|---|
+| Training, `phase2c_matrix.json` | 96 rows; dim 10; seeds 42–45; n_runs=3 | 720 rows = 24 functions × dims 5/10/20 × seeds 42–51; n_runs=5; 15,840 cells; built 2026-09-24 in 112,514.4 s |
+| Evaluation, `phase2_matrix.json` | 24 rows; dim 10; seed 42; n_runs=15 | 72 rows = 24 functions × dims 5/10/20; seed 100; n_runs=15; 1,584 cells; built 2026-09-23 in 30,420.5 s |
+
+In both rebuilt matrices every cell is complete, every run is finite and
+nothing is imputed. Both use feature_seed=20260915 and feature_samples=300,
+and both record library versions in `meta.env` (python 3.11.9, numpy 2.4.6,
+scipy 1.16.3, mealpy 3.0.2).
+
+**The split is now independent.** Evaluation seed 100 is not among training
+seeds 42–51, so no evaluation row re-measures a training configuration. This
+supersedes the 2026-09-17 statement that no independent set exists.
+`phase3b_holdout_confirm.py` now checks this and refuses to run if the seeds
+overlap.
+
+The confirmation run on the original data (2026-09-17: +52.8% gap closed,
+p=0.0072, reported in `docs/phase3b_report.md`) stands as the result for that
+data. The coming run is a second application of the same registered method to
+new data, not a re-analysis of the first.
+
+**The method is unchanged.** Model, rank target, argmin prediction,
+leave-one-function-out validation, SBS from training rows only, VBS as the
+per-row oracle, one two-sided Wilcoxon at alpha=0.05, and the pre-specified
+interpretation all apply exactly as written above. Two consequences of the new
+data follow, neither of them a choice:
+
+1. Each held-out function now has 3 evaluation rows, one per dimension. These
+   are not independent, so each function's rows are averaged before pairing,
+   and the test runs over the 24 held-out functions, as registered. With one
+   row per function, as in the original data, this is identical to pairing
+   rows.
+2. Training cells are medians of 5 runs rather than 3. The justification for
+   the rank target (robustness to median noise; scale invariance) applies
+   unchanged.
+
+**Code changes to `phase3b_holdout_confirm.py` since the original run**, none
+altering the method: per-row dimensions when loading the evaluation matrix;
+the seed-overlap guard; `--train-matrix` / `--eval-matrix` arguments; and the
+function-mean aggregation in item 1 (commit `fb3f35e`); output files closed
+properly (commit `c5ab097`); and fitting the forest once per held-out function
+instead of once per evaluation row (committed with this entry). The last is
+computational only. Run end-to-end on a subset, the old and new scripts
+produced identical output in every field.
+
+**Already known when this was written, disclosed for transparency:**
+
+- The registered method has already been evaluated **within the rebuilt
+  training matrix** (leave-one-function-out on `phase2c_matrix.json` alone,
+  via `phase3_selector_validation.py`): −0.3% gap closed, p=0.677. Related
+  designs on the same matrix: normalised target with 22 per-algorithm forests,
+  −22.9% (p=0.356); and a target × architecture 2×2 in which no cell
+  significantly beats SBS on either scoring scale (best +0.8%, p=0.823). None
+  of these is the registered cross-file test.
+- The rebuilt evaluation matrix has been analysed on its own: rankings and the
+  SBS–VBS gap (`phase2_analyse_matrix.py`), and within-matrix
+  leave-one-function-out with a normalised target (RF-regression +30.8%,
+  p=0.053).
+- To verify the per-fold change, `phase3b_holdout_confirm.py` was run on a
+  subset of both matrices: the first 5 functions in sorted order
+  (F10_EllipsoidalRotated to F14_DifferentPowers), selected by name before any
+  output was seen. Observed: selector mean rank 4.9333 against SBS 2.9333,
+  Wilcoxon statistic 0.0, p=0.25 over those 5 functions. No method choice was
+  made from it.
