@@ -48,26 +48,27 @@ re-run those two scripts. Nothing in Phase 0–3b depends on them.
 
 ## Backup — `~/meta_learning_backup/`
 
-**Currently behind.** It mirrors the files as of 2026-09-23 and lacks
-everything built since: the new `phase2c_matrix.json`, `phase2c_lopo.*`,
-`phase3_selector.*` and `phase3_ablation.json`.
+**In sync as of 2026-09-25:** every file in this folder is mirrored there,
+verified by md5 (13 of 13 matching). The `.jsonl` crash journal is not copied.
 
-**It also holds a file that exists nowhere else.** Its `phase2c_matrix.json`
-is the superseded **96-row, dim-10, n_runs=3** build — the data behind the
-original Phase 3 result (+38.2%, p=0.0149), and the training half of the
-original Phase 3b result (+52.8%, p=0.0072). The seed-42, dim-10 evaluation
-matrix that Phase 3b was scored on no longer exists anywhere: it was
-overwritten in the backup on 2026-09-23. This file predates `results/` being
-tracked, so it was never committed. It can be
-regenerated from the code at commit `90c2e9f` (~2.4 h), but that build did not
-record library versions, so bit-identical regeneration is not guaranteed.
-Keep it if the thesis reports those original figures.
+**It also holds a file that exists nowhere else:**
+`phase2c_matrix.96row_n3_legacy.json`, the superseded **96-row, dim-10,
+n_runs=3** build (md5 `9a158b9363d249935bb659580998ad63`, identical to the
+original of 2026-09-16). It is the data behind the original Phase 3 result
+(+38.2%, p=0.0149), and the training half of the original Phase 3b result
+(+52.8%, p=0.0072). The seed-42, dim-10 evaluation matrix that Phase 3b was
+scored on no longer exists anywhere: it was overwritten in the backup on
+2026-09-23. The legacy file predates `results/` being tracked, so it was never
+committed. It can be regenerated from the code at commit `90c2e9f` (~2.4 h),
+but that build did not record library versions, so bit-identical
+regeneration is not guaranteed. Keep it if the thesis reports the original
+figures.
 
-A plain `cp -f results/*.json` into the backup would overwrite it. Sync with
-this instead. The first line renames the legacy copy once, and is skipped on
-every later run:
+The legacy copy has its own name, so a plain re-sync cannot overwrite it.
+Re-sync after any long build:
 
 ```bash
-[ -e ~/meta_learning_backup/phase2c_matrix.96row_n3_legacy.json ] || mv ~/meta_learning_backup/phase2c_matrix.json ~/meta_learning_backup/phase2c_matrix.96row_n3_legacy.json
 cp -f results/*.json results/*.txt results/*.csv results/*.md ~/meta_learning_backup/
 ```
+
+Do not rename or delete `phase2c_matrix.96row_n3_legacy.json`.
