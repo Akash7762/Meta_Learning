@@ -28,27 +28,27 @@ Thresholds on median fitness (Sphere optimum = 0.0):
 ```
   algorithm verdict             median           min           max   sec/run
   --------------------------------------------------------------------------
-  PSO       excellent       3.8026e-09    1.3677e-09    1.0808e-08      0.37
-  EO        excellent       4.0633e-07    5.5781e-08    8.5700e-07      0.48
-  SHADE     moderate        2.4651e-06    2.0325e-06    6.7458e-06      1.18
-  L_SHADE   moderate        7.3852e-06    3.4526e-06    8.1830e-06      1.12
-  JADE      moderate        3.1291e-05    2.9110e-05    7.6058e-05      1.54
-  MPA       moderate        5.3832e-05    1.5072e-05    4.0986e-04      0.29
-  MVO       moderate        5.2051e-04    3.7159e-04    8.6136e-04      0.76
-  RIME      moderate        1.8861e-03    4.9565e-04    3.9716e-03      0.29
-  GWO       moderate        2.0159e-03    4.1747e-04    2.8437e-03      0.55
-  SMA       moderate        4.8067e-03    2.7706e-03    5.1832e-03      1.98
-  ARO       POOR            2.6220e-02    2.0845e-02    2.0170e-01      0.53
-  HBA       POOR            2.7588e-02    1.4201e-02    4.4608e-02      0.51
-  SA        POOR            3.1864e-02    2.7138e-02    3.2753e-02      9.38
-  ABC       POOR            4.4414e-02    2.6994e-02    5.2052e-02      0.68
-  GA        POOR            7.5727e-02    3.7303e-02    1.3425e-01      0.85
-  BBO       POOR            2.7146e-01    1.0450e-01    3.4986e-01      1.21
-  WOA       POOR            2.8133e-01    1.2523e-01    4.8929e-01      0.28
-  SCA       POOR            5.6468e-01    5.2920e-01    6.7395e-01      1.12
-  GJO       POOR            1.6622e+00    1.3203e+00    2.1983e+00      0.62
-  HHO       POOR            8.4488e+00    4.5354e+00    8.5540e+00      0.37
-  AO        POOR            2.9659e+01    2.8909e+01    2.9825e+01      0.47
+  PSO       excellent       3.8026e-09    1.3677e-09    1.0808e-08      0.30
+  EO        excellent       4.0633e-07    5.5781e-08    8.5700e-07      0.35
+  SHADE     moderate        2.4651e-06    2.0325e-06    6.7458e-06      0.88
+  L_SHADE   moderate        7.3852e-06    3.4526e-06    8.1830e-06      0.89
+  JADE      moderate        3.1291e-05    2.9110e-05    7.6058e-05      0.87
+  MPA       moderate        5.3832e-05    1.5072e-05    4.0986e-04      0.25
+  MVO       moderate        5.2051e-04    3.7159e-04    8.6136e-04      0.65
+  RIME      moderate        1.8861e-03    4.9565e-04    3.9716e-03      0.26
+  GWO       moderate        2.0159e-03    4.1747e-04    2.8437e-03      0.31
+  SMA       moderate        4.8067e-03    2.7706e-03    5.1832e-03      1.42
+  ARO       POOR            2.6220e-02    2.0845e-02    2.0170e-01      0.58
+  HBA       POOR            2.7588e-02    1.4201e-02    4.4608e-02      0.41
+  SA        POOR            3.1864e-02    2.7138e-02    3.2753e-02      8.16
+  ABC       POOR            4.4414e-02    2.6994e-02    5.2052e-02      0.47
+  GA        POOR            7.5727e-02    3.7303e-02    1.3425e-01      0.55
+  BBO       POOR            2.7146e-01    1.0450e-01    3.4986e-01      0.65
+  WOA       POOR            2.8133e-01    1.2523e-01    4.8929e-01      0.23
+  SCA       POOR            5.6468e-01    5.2920e-01    6.7395e-01      0.68
+  GJO       POOR            1.6622e+00    1.3203e+00    2.1983e+00      0.29
+  HHO       POOR            8.4488e+00    4.5354e+00    8.5540e+00      0.20
+  AO        POOR            2.9659e+01    2.8909e+01    2.9825e+01      0.43
 ```
 
 ```
@@ -83,9 +83,12 @@ This leaves **22 algorithms** (21 mealpy + built-in `ea`) for Phase 2.
 
 ## Timing note
 
-`SA` is the runtime outlier at 9.38 s/run — roughly 25× the fastest algorithm —
-because it is a single-solution method spending ~1 evaluation per step. It
-accounts for a disproportionate share of later matrix build times.
+`SA` is the runtime outlier at 8.16 s/run, about 40 times the fastest
+algorithm (HHO, 0.20 s/run), because it is a single-solution method that
+spends about one evaluation per step. It takes a large share of every
+matrix build. The seconds-per-run column is wall-clock time from the
+2026-09-22 run and varies from run to run; the fitness values are
+identical to the earlier run.
 
 ## Limitations
 

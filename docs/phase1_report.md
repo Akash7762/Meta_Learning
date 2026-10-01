@@ -1,7 +1,10 @@
 # Phase 1 — Baseline Comparison: PSO vs GA
 
 Status: **complete**. Script: `phase1_baseline_comparison.py`.
-Figures below are literal output from a re-run on 2026-09-17.
+Figures below are literal output from a re-run on 2026-09-17. Re-run again
+on 2026-10-01: the output was identical. Phase 1 uses its own fixed problem
+(`BBOB_F1_Sphere`, dim 10, seed 42), so the later matrix rebuilds do not
+affect it.
 
 ## Purpose
 

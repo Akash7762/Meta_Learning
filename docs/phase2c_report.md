@@ -1,147 +1,185 @@
-# Phase 2c — Matrix Expansion Along the Problem Axis
+# Phase 2c: Selector training matrix
 
-Status: **complete, with two documented deviations from spec.**
-Script: `phase2c_expand_matrix.py`. Output: `results/phase2c_matrix.json`.
-Evaluation: `phase2_lopo.py --matrix results/phase2c_matrix.json`.
+Status: **complete**. Script: `phase2c_expand_matrix.py`. Output:
+`results/phase2c_matrix.json`. Evaluation:
+`phase2_lopo.py --matrix results/phase2c_matrix.json --out-stem results/phase2c_lopo`.
 
-> **This matrix is not authoritative.** Its own metadata states:
-> *"SELECTOR TRAINING ONLY. n_runs=3 makes per-cell medians noisier than
-> Phase 2. results/phase2_matrix.json (n_runs=15) remains the AUTHORITATIVE
-> source."* Any SBS/VBS headline figure for the thesis should cite Phase 2.
+Updated 2026-10-01 for the rebuilt matrix. Every figure below is literal output
+from those scripts, or from the checks named next to it, run against the
+current files. An earlier version of this report described an older,
+smaller matrix (96 rows, dim 10 only). That matrix has been replaced. It is
+kept in the backup folder as `phase2c_matrix.96row_n3_legacy.json` (see
+`results/MANIFEST.md`) and its figures no longer apply.
+
+> **This matrix is for selector training only.** Its cells are medians of 5
+> runs, against 15 in `results/phase2_matrix.json`, which remains the
+> authoritative source for any SBS/VBS figure quoted in the thesis.
 
 ## Purpose
 
-Phase 2's negative result — no learned selector beats the SBS — was attributed
-to having only 24 training rows for a 22-way choice. Phase 2c multiplies rows
-without changing the algorithm set, to test whether the bottleneck was simply
-training-set size.
+A selector needs many training rows. Phase 2c multiplies the rows along the
+problem axis, using more seeds and more dimensions, while keeping the same 22
+algorithms and the same budget as Phase 2.
 
-## Ground truth established first
+## What a "pseudo-instance" is
 
-`aad/problems.py` has **no BBOB instance concept**. There is no instance index.
-The `seed` parameter varies `xopt` and the rotation matrices; `dim` varies
-dimensionality. Rows are therefore labelled **pseudo-instances** (`sNN`), and
-the metadata records this explicitly so they are never mistaken for
-COCO/BBOB instances.
+`aad/problems.py` has no BBOB instance concept. Its `seed` parameter moves the
+optimum `xopt` and the rotation matrices `R` and `Q`. That is similar to a
+BBOB instance (same function family, different optimum and rotation), but it
+is not the official COCO instance scheme: there is no f_opt offset and none of
+the COCO per-instance transformations. Rows are therefore called
+pseudo-instances, labelled `sNN`, and should not be called BBOB instances in
+the thesis.
 
 ## Setup as built
 
 | Parameter | Value |
 |---|---|
 | Functions | 24 |
-| Pseudo-instance seeds | 42, 43, 44, 45 |
-| Dimensions | **[10]** |
-| Algorithms | 22 — identical set to Phase 2 (verified) |
-| `n_runs` | **3**, seeds 1000–1002 |
-| `max_fe` | 5000, `population_size=50` |
-| Row key | `{function}\|s{seed}\|d{dim}` |
-| Cell key | `{function}\|s{seed}\|d{dim}\|{algorithm}` |
-| Rows | 96 |
-| Cells | 2112 |
-| Build time | 8508.251 s = 2.36 hours |
+| Pseudo-instance seeds | 42–51 (10 seeds) |
+| Dimensions | 5, 10, 20 |
+| Algorithms | 22, the same set as Phase 2 |
+| Runs per cell | 5, run seeds 1000–1004 |
+| Budget | `max_fe=5000`, `population_size=50` |
+| Rows | 24 × 10 × 3 = **720** |
+| Cells | 720 × 22 = **15,840** |
+| Build time | 112,514.4 s = 31.25 hours |
+| Library versions (`meta.env`) | python 3.11.9, numpy 2.4.6, scipy 1.16.3, mealpy 3.0.2 |
 
-Features are re-extracted per row, not reused across pseudo-instances.
-Writes are incremental, so a restart skips completed cells.
-`results/phase2_matrix.json` is never overwritten.
-
-## Deviations from specification
-
-| Spec | Built | Impact |
-|---|---|---|
-| `n_runs=15` | **3** | Per-cell medians are noisier. Became the binding limitation on every Phase 3 claim. |
-| dims 5, 10, 20 | **[10] only** | The dimension axis is entirely untested; the `dimension` feature is constant. |
-| 15 pseudo-instances (planned) | **4** | 96 rows instead of the ~360 target. |
-
-Both deviations are recorded here rather than silently absorbed.
+Features are extracted separately for every row, so no feature vector is
+reused across seeds or dimensions. Rows are keyed `{function}|s{seed}|d{dim}`.
 
 ## Integrity
 
-```
-cells: 2112  expected 96*22 = 2112
-cells with errors or zero finite runs: 0
-distinct functions : 24
-distinct seeds     : [42, 43, 44, 45]
-distinct dims      : [10]
-distinct (func,seed,dim) combinations: 96
-```
-
-No missing cells, no failed cells, no imputation.
-
-## Feature variance check
+From `results/phase2c_matrix.json`:
 
 ```
-  dimension                       0.000000  <-- CONSTANT
-  fitness_max           1303764352904908.250000
-  fitness_mean          213527587125356.656250
-  fitness_min           734275224820.737183
-  fitness_std           223956232672173.343750
-  fitness_variance               17.251027
-  gradient_magnitude     89076291606391.625000
-  modality                        2.034012
-  ruggedness                      0.144403
+rows=720 cells=15840 build_s=112514.4 (31.25 h)
+runs/cell [5] finite [5] errors 0 nonfinite 0
 ```
 
-**The `dimension` column has exactly zero variance**, because only dim 10 was
-built. This is the structural defect the check was designed to catch. It causes
-no harm in practice — `phase2_lopo.py` drops zero-variance columns before
-fitting — but it carries no learning signal, and the dimension axis the
-expansion was partly meant to test was never exercised.
+Every cell is complete, every run is finite, and nothing is imputed.
 
-## Results — LOPO selector evaluation
+## Feature check
 
-Leave-one-**function**-out, all 4 rows of a held-out function withheld together.
+`phase2c_expand_matrix.py --verify-only`:
+
+```
+  feature                            std             min             max  distinct  status
+  ----------------------------------------------------------------------------------------
+  dimension                       6.2361               5              20         3  near-degenerate (few distinct values)
+  fitness_max                1.94092e+15         29.2152     1.97114e+16       720  ok
+  fitness_mean               3.08778e+14        -19.2059     3.48413e+15       720  ok
+  fitness_min                7.12086e+12        -885.867     1.29803e+14       720  ok
+  fitness_std                3.28948e+14        0.104363      3.1249e+15       718  ok
+  fitness_variance               103.053      0.00120609         2527.27       718  ok
+  gradient_magnitude         1.23024e+14       0.0309881     1.16204e+15       718  ok
+  modality                       2.61487        -11.9175         16.6917       720  ok
+  ruggedness                     0.16457        0.194401         1.22686       718  ok
+
+  No constant feature columns. Every feature varies across rows.
+```
+
+All 9 features vary. `dimension` is flagged "near-degenerate" only because it
+has exactly 3 values, one per dimension built. That is expected, not a defect.
+
+## Independence from the evaluation matrix
+
+The evaluation matrix (`results/phase2_matrix.json`) uses `problem_seed=100`,
+which is not among this matrix's seeds:
+
+```
+split: eval seed 100 in train seeds [42, 43, 44, 45, 46, 47, 48, 49, 50, 51] -> False
+```
+
+So no evaluation row is a re-measurement of a training row.
+`phase3b_holdout_confirm.py` checks this and refuses to run if the seeds
+overlap. Both matrices use `feature_seed=20260915` and `feature_samples=300`.
+
+## Selectors on this matrix
+
+`phase2_lopo.py`, leave-one-function-out: all 30 rows of a function (10 seeds ×
+3 dimensions) are held out together, giving 24 folds. The selectors predict a
+per-row min-max normalised score using 22 separate per-algorithm forests.
 
 | Selector | Mean norm | Median | Mean rank | VBS hits | Gap closed vs SBS |
 |---|---|---|---|---|---|
-| VBS (oracle) | 0.0000 | 0.0000 | 1.255 | 96 | — (target) |
-| SBS (fold-aware) | 0.0934 | 0.0152 | 6.495 | 14 | — (baseline) |
-| Random | 0.2465 | 0.0786 | 12.344 | 7 | −164.1% |
-| 1-NN | 0.0885 | 0.0106 | 7.490 | 16 | +5.2% |
-| 3-NN | 0.0816 | 0.0016 | 6.234 | 26 | +12.6% |
-| RF-regression | 0.0801 | 0.0005 | 5.734 | 25 | +14.2% |
-| RF in-sample (ceiling) | 0.0027 | 0.0000 | 2.984 | 54 | +97.1% |
+| VBS (oracle) | 0.0000 | 0.0000 | 1.208 | 720 | target |
+| SBS (fold-aware) | 0.0683 | 0.0007 | 5.521 | 235 | baseline |
+| Random | 0.2279 | 0.0675 | 11.781 | 48 | −233.5% |
+| 1-NN | 0.0910 | 0.0094 | 6.922 | 133 | −33.1% |
+| 3-NN | 0.0812 | 0.0033 | 6.728 | 151 | −18.8% |
+| RF-regression | 0.0840 | 0.0010 | 6.118 | 219 | −22.9% |
+| RF in-sample (ceiling) | 0.0028 | 0.0000 | 2.325 | 474 | +96.0% |
 
-## The statistical trap — pseudo-replication
-
-Wilcoxon over the **96 raw rows**:
+Primary test, pairing the 24 function means (Bonferroni threshold for 4
+selectors: 0.0125):
 
 ```
-  1-NN             statistic=np.float64(1582.0) p=np.float64(0.8553795410111338) better on 38, worse on 42, tied on 16
-  3-NN             statistic=np.float64(895.0)  p=np.float64(0.1787250089823328) better on 37, worse on 29, tied on 30
-  RF-regression    statistic=np.float64(626.0)  p=np.float64(0.03337829011618602) better on 39, worse on 21, tied on 36
+  1-NN             statistic=np.float64(69.0) p=np.float64(0.019441962242126465) better on 6, worse on 18, tied on 0  *SIGNIFICANT*
+  3-NN             statistic=np.float64(77.0) p=np.float64(0.06355166456894228) better on 7, worse on 16, tied on 1
+  RF-regression    statistic=np.float64(57.0) p=np.float64(0.3559586988465746) better on 7, worse on 10, tied on 7
 ```
 
-RF-regression appears significant at `p = 0.0334`. **It is not.** The 96 rows
-are not independent — they are 4 pseudo-instances within each of 24 functions.
-Treating clustered rows as independent inflates significance.
+**Every learned selector does worse than SBS on this matrix.** The 1-NN result
+flagged as significant is significant in the wrong direction: 1-NN is worse
+than SBS on 18 of 24 functions. It also does not survive the Bonferroni
+threshold. The rows are not independent (30 per function), which is why the
+test pairs function means rather than the 720 rows.
 
-Aggregating to 24 function means first, then pairing, gives
-**`p = 0.434756`** (reproduced this session as the control cell in
-`phase3_ablation.py`). With three selectors compared, a Bonferroni threshold of
-0.05/3 = 0.0167 applies as well.
+The in-sample ceiling again reaches +96.0%. The features can identify the best
+algorithm when the function has been seen. What fails is transfer to a
+function the model has not seen.
 
-**Correct conclusion: no learned selector beats SBS significantly on Phase 2c
-data either.** The Phase 2 negative result replicates at 4× the rows.
+SBS already matches the oracle on 235 of 720 rows.
+
+## Limitations
+
+1. **5 runs per cell gives noisy labels.** Using the 15 stored runs per cell in
+   `results/phase2_matrix.json`, the algorithm picked from fewer runs lands
+   within 1% of the 15-run best this often (computed 2026-10-01):
+
+   ```
+   n_runs=3  pick within 1% of the 15-run best: 76.4%
+   n_runs=5  pick within 1% of the 15-run best: 83.3%
+   n_runs=10 pick within 1% of the 15-run best: 97.2%
+   ```
+
+   At 5 runs, roughly 1 row in 6 carries a "best algorithm" label that is off by
+   more than 1%. That noise is in the training labels. The 15-run "truth" is
+   itself a median, so the curve is somewhat optimistic past 10 runs.
+2. **The extra rows do not add independent evidence.** Rows within one function
+   are related, so every test still rests on 24 function means.
+3. **F5 LinearSlope barely discriminates.** On `BBOB_F5_LinearSlope|s43|d5`, 18
+   of 22 algorithms tie at the exact optimum.
 
 ## Conclusions
 
-1. Quadrupling training rows (24 → 96) **did not** achieve significance.
-2. The ceiling diagnostic again reaches ~97%, so features carry signal; the
-   failure remains one of **transfer across functions**.
-3. More pseudo-instances of the same 24 functions is therefore unlikely to
-   help — they add rows but no new landscape families.
-4. `n_runs=3` became the binding limitation on all downstream claims.
+1. The matrix is complete and clean: 720 rows, 15,840 cells, no errors, no
+   missing or non-finite values.
+2. All 9 features vary, so the dimension axis now carries signal.
+3. The split against the evaluation matrix is independent (seeds 42–51 against
+   100).
+4. With a normalised-score target and per-algorithm forests, no selector beats
+   SBS on this matrix. RF-regression closes −22.9% (p=0.356).
+5. The features carry the information (ceiling +96.0%); transfer to unseen
+   functions is what fails.
 
 ## Reproducing
 
 ```bash
-python phase2c_expand_matrix.py
+python phase2c_expand_matrix.py                # ~31 hours, writes results/phase2c_matrix.json
+python phase2c_expand_matrix.py --verify-only  # seconds; feature-variance check
 python phase2_lopo.py --matrix results/phase2c_matrix.json --out-stem results/phase2c_lopo
 ```
 
-The build takes ~2.4 hours. The LOPO evaluation exceeds 10 minutes.
+The build writes incrementally and resumes safely. It refuses to resume a file
+built with a different `n_runs`, `feature_seed` or `feature_samples`, because
+those are not part of the cell key and mixing them would corrupt the matrix
+silently.
 
 ## Related
 
-- [`phase2_report.md`](phase2_report.md) — the authoritative matrix
-- [`phase3_report.md`](phase3_report.md) — what was built on this data
+- [`phase2_report.md`](phase2_report.md): the authoritative evaluation matrix
+- [`phase3_report.md`](phase3_report.md): selectors trained on this matrix
+- [`phase3b_report.md`](phase3b_report.md): the independent confirmation test
