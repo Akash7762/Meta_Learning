@@ -19,6 +19,9 @@ rebuild does not touch, and were re-checked.
 | 3 | [phase3_report.md](phase3_report.md) | Rank-target selector ties SBS (−0.3%, p=0.677); no cell of the 2×2 ablation beats SBS |
 | 3b | [phase3b_report.md](phase3b_report.md) | Pre-registered test on independent data: +2.1%, p=0.526, so the Phase 3 result **does not replicate** |
 
+The full plan, including Phases 4 and 5 and the thesis write-up, is in
+[project_plan.md](project_plan.md).
+
 ## Authoritative sources
 
 - **`results/phase2_matrix.json`**: 72 rows, seed 100, `n_runs=15`. The source
