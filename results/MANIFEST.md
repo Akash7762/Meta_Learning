@@ -1,6 +1,6 @@
 # results/ — what is needed and what is not
 
-Updated 2026-10-01. `results/` is **tracked in git** (since commit `b102067`),
+Updated 2026-10-06. `results/` is **tracked in git** (since commit `b102067`),
 except for transient files listed under LOCAL ONLY. Everything marked KEEP is
 either expensive to rebuild or is the current evidence for a thesis claim.
 
@@ -20,6 +20,7 @@ Regenerate anything from the scripts; see `docs/README.md` for the run order.
 | `phase3_selector.json` / `.txt` | Step 11, rank-target selector. −0.3% gap closed, p=0.677. | minutes |
 | `phase3_ablation.json` | Step 12, target × architecture 2×2. No design beats SBS; best cell +0.8%. | ~23 min |
 | `phase3b_holdout_confirm.json` / `.txt` | Step 13, the pre-registered test: train on the 720-row matrix, evaluate on the independent 72-row matrix. +2.1% gap closed, p=0.526: the Phase 3 result does not replicate. | ~15 min |
+| `phase2c_label_noise.png` / `.txt` / `_rows.csv` / `_functions.csv` | How noisy the training labels are: each row's best algorithm re-picked from 1,000 bootstrap resamples of its 5 stored runs (`phase2c_label_noise.py`). Mean label agreement 66.5%; 30.1% of rows unstable; 16.9% of re-picks more than 1% worse than the best. | seconds |
 | `phase1b_screening.json` / `.txt` | Algorithm health screen; evidence for removing CMA_ES, AOA and DE. | minutes |
 
 Each full rebuild of `phase2c_matrix.json` adds ~13 MB to the repository:
@@ -47,8 +48,8 @@ re-run those two scripts. Nothing in Phase 0–3b depends on them.
 
 ## Backup — `~/meta_learning_backup/`
 
-**In sync as of 2026-10-01:** every file in this folder is mirrored there,
-verified by md5 (15 of 15 matching). The `.jsonl` crash journal is not copied.
+**In sync as of 2026-10-06:** every file in this folder is mirrored there,
+verified by md5 (19 of 19 matching). The `.jsonl` crash journal is not copied.
 
 **It also holds a file that exists nowhere else:**
 `phase2c_matrix.96row_n3_legacy.json`, the superseded **96-row, dim-10,

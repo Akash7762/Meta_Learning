@@ -1,0 +1,21 @@
+==============================================================================
+  PHASE 2c TRAINING LABELS -- HOW NOISY ARE THEY?
+==============================================================================
+  matrix          : results/phase2c_matrix.json
+  rows            : 720   algorithms: 22   runs per cell: 5
+  dims / seeds    : [5, 10, 20] / [42, 43, 44, 45, 46, 47, 48, 49, 50, 51]
+  bootstrap       : B=1000 resamples per row, seed 20261005
+  harmful flip    : re-pick more than 1% worse than the original best
+  rows with a tie at the best median: 30
+
+  label agreement over all rows: mean 66.5%, median 66.2%
+  harmful flips over all resamples: 16.9%  (so 83.1% of re-picks land within 1% of the best)
+
+  group          rows   stable      shaky   unstable  harmful flips
+  all             720    27.4%      42.5%      30.1%          16.9%
+  dim 5           240    23.3%      42.5%      34.2%          19.0%
+  dim 10          240    39.2%      34.6%      26.2%          16.0%
+  dim 20          240    19.6%      50.4%      30.0%          15.8%
+
+  stable = agreement >= 90%, shaky = 50-90%, unstable = below 50%
+==============================================================================
