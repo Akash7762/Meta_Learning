@@ -29,6 +29,11 @@ class SurrogateModel:
     ----------
     model_type : str, default ``"rf"``
         Backend: ``"rf"`` for Random Forest, ``"gp"`` for Gaussian Process.
+    n_jobs : int, default -1
+        Threads for the Random Forest. With ``-1`` the trees' predictions
+        are summed in thread order, so repeated predictions can differ in
+        the last bits (measured 2026-10-06: up to 1.4e-14). Pass ``1`` for
+        bit-for-bit repeatable output. Ignored by ``"gp"``.
 
     Attributes
     ----------
@@ -36,7 +41,7 @@ class SurrogateModel:
         True after at least one call to :meth:`fit`.
     """
 
-    def __init__(self, model_type: str = "rf"):
+    def __init__(self, model_type: str = "rf", n_jobs: int = -1):
         self.model_type = model_type
         self.is_fitted = False
         self._scaler_X = StandardScaler()
@@ -47,7 +52,7 @@ class SurrogateModel:
                 n_estimators=50,
                 min_samples_leaf=2,
                 random_state=42,
-                n_jobs=-1,
+                n_jobs=n_jobs,
             )
         elif model_type == "gp":
             kernel = ConstantKernel(1.0) * Matern(length_scale=1.0, nu=2.5)

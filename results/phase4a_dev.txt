@@ -1,0 +1,28 @@
+==============================================================================
+  PHASE 4a -- DEVELOPMENT REPLAY (exploratory; chooses the variant for 4b)
+==============================================================================
+  matrix          : results/phase2c_matrix.json  (md5 fc090989610d07fa37461f880e589c2d, unchanged after)
+  rows            : 720 rows = 24 functions x dims [5, 10, 20] x seeds [42, 43, 44, 45, 46, 47, 48, 49, 50, 51]; 5 stored runs per cell
+  budget          : 15 runs per row for every method (each 5000 evaluations; 'ea' about 5050)
+  replays per row : 1  (seed = 10000 + row x 1 + replay)
+  EA_Designer     : search space = the 22 algorithms, runs_per_eval=1, generation cap 50,
+                    use_features=False, surrogate n_jobs=1, fresh object per replay
+  wall time       : 1496.4 s, 8 parallel workers
+
+  mean score: 0 = best algorithm median on the row, 1 = worst; lower is better
+  variant  pop  surrogate   score   d5      d10     d20     distinct  reused/draws  leftover  gens
+  v1         5  True      -0.0010   -0.0034  0.0005  -0.0001      6.17   2884/10800        699  48.87
+  v2         5  False     -0.0102   -0.0047  -0.0108  -0.0151     11.03      1/10800          0   2.00
+  v3        10  True      -0.0116   -0.0136  -0.0062  -0.0150      9.47    537/10800        293  22.71
+  v4        10  False     -0.0101   -0.0103  -0.0059  -0.0143     11.06      0/10800          0   1.00
+
+  CHOSEN FOR PHASE 4b: v3 (lowest mean score over 24 function means)
+
+  NOTES
+  - Exploratory. No claim is made from these numbers.
+  - The training matrix stores 5 runs per cell, fewer than the budget of 15.
+    A replay that asks for more runs of one algorithm than are stored gets a used
+    run again ('reused'). That can only make a variant look worse, never better.
+  - No SBS comparison here: the SBS's best of 15 needs 15 stored runs per cell.
+  - v2 and v4 differ only in population size with the surrogate off. Every candidate
+    is then a uniform random algorithm and is run, so both are 15 random draws.
