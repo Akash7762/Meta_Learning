@@ -1,6 +1,6 @@
 # Project plan
 
-Written 2026-10-01. This file lists every phase of the project from start to
+Written 2026-10-01, updated 2026-10-08 after Phase 4. This file lists every phase of the project from start to
 end: what each one asks, what it produced, and what is still to do. Completed
 phases link to their reports, where every figure is traced to a result file.
 Planned phases say where the plan comes from and what is not decided yet.
@@ -29,7 +29,7 @@ total, after Phase 1b removed three that do not optimise.
 | 2c | Build a larger training matrix for selectors | done | [phase2c_report.md](phase2c_report.md) |
 | 3 | Does a rank-target, single-forest selector beat the single best solver? | done | [phase3_report.md](phase3_report.md) |
 | 3b | Does that result hold in a pre-registered test on independent data? | done | [phase3b_report.md](phase3b_report.md) |
-| 4 | Meta-learner over the full grid | **not started, needs a plan** | — |
+| 4 | Does trying algorithms on the problem itself (`EA_Designer`) beat the SBS at an equal budget? | done | [phase4_report.md](phase4_report.md) |
 | 5 | LLM ablations | **not started, needs a plan** | — |
 | Write-up | Thesis chapters from the phase reports | not started | — |
 
@@ -103,55 +103,32 @@ requires p < 0.05 and a positive gap, so **the Phase 3 result does not
 replicate**.
 Script: `phase3b_holdout_confirm.py`. Output: `results/phase3b_holdout_confirm.{txt,json}`.
 
+### Phase 4: meta-learner at an equal budget
+
+Tested the other route: instead of guessing from features, spend the budget
+trying algorithms on the problem itself. The method is `EA_Designer`,
+searching over the 22 algorithms, with every method given exactly 15 runs of
+5,000 evaluations per problem. No new data: runs were replayed from the two
+existing matrices, which were not changed. `EA_Designer` was first fixed:
+equal budget, seeds, and a penalty bug that let a never-run candidate become
+the best when values are negative. A development run on the training matrix
+chose the variant (meta-population 10, surrogate on); the method was then
+pre-registered and committed, and tested once on the 72-row matrix. Result:
+−46.0% gap closed, p=0.252. It **does not beat SBS**, and is worse on
+average. The test set was also Phase 3b's.
+Plan: `docs/phase4_plan.md`. Pre-registration: `docs/phase4_preregistration.md`.
+Script: `phase4_replay.py`. Output: `results/phase4a_dev.{txt,json}`,
+`results/phase4b_confirm.{txt,json}`.
+
 ### Main finding so far
 
 From features alone, a selector trained on other functions does not beat
 always running the single best solver (MPA or EO) on an unseen function. The
 features do identify the best algorithm for functions the model has seen. What
-fails is transfer.
+fails is transfer. Trying algorithms on the problem itself does not beat the
+SBS either, at an equal budget of 15 runs (Phase 4).
 
 ## Phases still to do
-
-### Phase 4: meta-learner over the full grid
-
-**Where the plan comes from.** The Phase 3 brief named it "meta-learner over the
-full grid", to come after Phase 3 was confirmed. No project file defines it
-further.
-
-**Not decided yet: which approach.** The project has two candidates:
-
-1. `EA_Designer` in `aad/meta_learner.py`. It tries candidate algorithms by
-   running them on the problem ("Evaluate each by running the EA on the target
-   problem N times", from its docstring) and can use a surrogate to screen
-   candidates. It does not depend on transfer across functions, so Phase 3's
-   result does not rule it out.
-2. The global surrogate in `user_model_runner.py` (its own "Phase 4"). It
-   predicts how every algorithm will do, much like the Phase 3 selector. Its
-   docstring already warns that predictions for algorithms it has not seen are
-   "extrapolation, not evidence". Expect it to struggle in the same way.
-
-**Rules that carry over from Phases 0–3b.** These are recommendations drawn
-from the earlier results, to be confirmed in the Phase 4 plan.
-
-- **Baseline.** Phase 4 must beat always running MPA or EO.
-- **Equal budget.** `EA_Designer` defaults to `population_size=10`,
-  `generations=5` and `runs_per_eval=3`, so its first generation alone runs
-  at least 30 full algorithm runs, against one run for the baseline. Compare
-  both at the same total number of function evaluations.
-- **No cross-problem transfer.** Learning within one problem is fine. Reusing
-  knowledge from other problems (for example the persistent memory bank or
-  surrogate warm-starting, both reverted earlier) is the kind of transfer
-  Phase 3b found does not work.
-- **Same evaluation discipline.** Leave-one-function-out where training is
-  involved, function-mean aggregation before testing, and the 72-row matrix as
-  the evaluation set.
-
-**Steps.**
-
-1. Choose between candidates 1 and 2.
-2. Write the Phase 4 plan: question, baseline, budget, success rule.
-3. Pre-register it, as in Phase 3b, before any result is seen.
-4. Run it, write `docs/phase4_report.md`, commit and back up.
 
 ### Phase 5: LLM ablations
 
@@ -193,9 +170,10 @@ These came up in discussion. None is scheduled.
 
 | Item | Status, checked 2026-10-01 |
 |---|---|
-| Operator-dimension masking (`docs/phase0_decision.md` §7, item 6) | still open: `aad/meta_learner.py` and `aad/config_space.py` do not mask operator keys when `algorithm != "ea"`. Relevant to Phase 4 option 1. |
+| Operator-dimension masking (`docs/phase0_decision.md` §7, item 6) | still open: `aad/meta_learner.py` and `aad/config_space.py` do not mask operator keys when `algorithm != "ea"`. Phase 4 did not need it, because it searched the algorithm only. Relevant to the secondary `ea` operator-tuning experiment. |
+| `experiment_runner.py` has no equal budget (checked 2026-10-08) | it builds `EA_Designer` without `max_runs` or `max_fe`, so run budgets vary. It is the file to run at the very end, so it must follow the equal-budget rule first. |
 | `load_dotenv()` at import in `aad/llm_designer.py:25` | still present, so a bare `LLMDesigner()` picks up a key from `.env`. Relevant to Phase 5. |
-| `user_model_runner.py` docstring says 24 algorithms | the registry has 21 mealpy algorithms plus `ea`. Check before using it in Phase 4. |
+| `user_model_runner.py` docstring says 24 algorithms | the registry has 21 mealpy algorithms plus `ea`. Not used in Phase 4. |
 | `pytest` missing, stray `pydantic` import, empty-key bug (Phase 0 §7c) | fixed |
 
 ## Rules for every phase
@@ -229,6 +207,8 @@ These came up in discussion. None is scheduled.
 | 11 | `python phase3_selector_validation.py` | 8 |
 | 12 | `python phase3_ablation.py` | 8 |
 | 13 | `python phase3b_holdout_confirm.py` | 5 and 8 |
+| 14 | `python phase4_replay.py --stage dev` | 8 |
+| 15 | `python phase4_replay.py --stage test` | 5, 8, 14 and `docs/phase4_preregistration.md` |
 
 ## A note on numbering
 

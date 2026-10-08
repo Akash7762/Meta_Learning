@@ -144,3 +144,14 @@ better. A negative score means the best of 15 runs beat the best median.
 ## Deviations and observations recorded after writing the above
 
 (To be appended only. Nothing above this line is edited.)
+
+### 2026-10-08: test run once, as registered
+
+Run after commit `0953353`, which added this file:
+`python phase4_replay.py --stage test`, 4232.7 s on 8 workers. No deviation
+from the method above. Both matrices had the same md5 before and after.
+Result: gap closed −46.0%, Wilcoxon statistic 109.0,
+p = 0.2522493600845337, 10 functions better and 14 worse, so by the rule
+above `EA_Designer` **does not beat SBS**. An independent recomputation from
+the raw files matched exactly. Details: `results/phase4b_confirm.{txt,json}`
+and `docs/phase4_report.md`.

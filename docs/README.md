@@ -7,7 +7,8 @@ the files in `results/`. No recalled or hand-computed numbers.
 Updated 2026-10-01 for the rebuilt data: a 72-row evaluation matrix and a
 720-row training matrix, both covering dims 5, 10 and 20. Reports for Phases
 2, 2c, 3 and 3b were rewritten. Phases 0, 1 and 1b use fixed setups that the
-rebuild does not touch, and were re-checked.
+rebuild does not touch, and were re-checked. Phase 4 was added on 2026-10-08;
+it uses the same two matrices and changes neither.
 
 | Phase | Report | Headline |
 |---|---|---|
@@ -18,6 +19,7 @@ rebuild does not touch, and were re-checked.
 | 2c | [phase2c_report.md](phase2c_report.md) | 720-row training matrix, all 9 features live; no selector beats SBS on it (RF-regression −22.9%, p=0.356) |
 | 3 | [phase3_report.md](phase3_report.md) | Rank-target selector ties SBS (−0.3%, p=0.677); no cell of the 2×2 ablation beats SBS |
 | 3b | [phase3b_report.md](phase3b_report.md) | Pre-registered test on independent data: +2.1%, p=0.526, so the Phase 3 result **does not replicate** |
+| 4 | [phase4_report.md](phase4_report.md) · [plan](phase4_plan.md) · [pre-registration](phase4_preregistration.md) | Meta-learner `EA_Designer`, trying algorithms on the problem itself, against SBS at an equal budget of 15 runs: −46.0%, p=0.252, so it **does not beat SBS** |
 
 The full plan, including Phases 4 and 5 and the thesis write-up, is in
 [project_plan.md](project_plan.md).
@@ -42,6 +44,12 @@ functions does not beat always running the single best solver on an unseen
 function. That holds in every analysis of the rebuilt data, including the
 pre-registered confirmation test.
 
+Phase 4 tried the other route: spend the budget trying algorithms on the
+problem itself. At an equal budget of 15 runs, the meta-learner `EA_Designer`
+was worse than the SBS on average (−46.0% gap closed), though not
+significantly (p=0.252). Neither guessing from features nor trying on the
+problem beats the single best solver.
+
 ## Open caveats carried forward
 
 1. **Training labels are noisy.** Training cells are medians of 5 runs. At 5
@@ -54,6 +62,8 @@ pre-registered confirmation test.
    (seed 100) per function and dimension.
 4. **F5 LinearSlope barely discriminates.** Up to 18 of 22 algorithms tie at its
    exact optimum.
+5. **Phase 4 reused the Phase 3b test set.** Only the existing matrices were
+   used, by choice, so the Phase 4 test ran on the same 72 rows as Phase 3b.
 
 ## Note on `results/`
 

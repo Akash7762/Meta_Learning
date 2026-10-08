@@ -1,0 +1,46 @@
+==============================================================================
+  PHASE 4b -- PRE-REGISTERED TEST (docs/phase4_preregistration.md)
+==============================================================================
+  train (SBS)     : results/phase2c_matrix.json  (md5 fc090989610d07fa37461f880e589c2d)
+  test            : results/phase2_matrix.json  (md5 fb4c2a5efdb5d86b51da86e4afb6a2d8)
+                    both unchanged after the run
+  rows            : 72 rows = 24 functions x dims [5, 10, 20] x seeds [100]; 15 stored runs per cell
+  budget          : 15 runs per row for every method (each 5000 evaluations; 'ea' about 5050)
+  replays per row : 30  (seed = 4000 + row x 30 + replay)
+  EA_Designer     : search space = the 22 algorithms, runs_per_eval=1, generation cap 50,
+                    use_features=False, surrogate n_jobs=1, fresh object per replay
+  primary variant : v3 (chosen in Phase 4a, results/phase4a_dev.json)
+  SBS per row     : {'MPA': 69, 'EO': 3} (training ranks, test function left out)
+  wall time       : 4232.7 s, 8 parallel workers
+
+  mean score: 0 = best algorithm median on the row, 1 = worst; lower is better
+  method                       all         d5      d10      d20
+  oracle (VBS), best of 15 -0.0569    -0.0224  -0.0607  -0.0876
+  SBS, best of 15          -0.0323    -0.0085  -0.0576  -0.0309
+  v1 (pop 5, surr on)      -0.0171    -0.0053  -0.0233  -0.0228
+  v2 (pop 5, surr off)     -0.0193    -0.0072  -0.0273  -0.0233
+  v3 (pop 10, surr on)     -0.0210    -0.0068  -0.0290  -0.0273
+  v4 (pop 10, surr off)    -0.0205    -0.0061  -0.0270  -0.0284
+
+  PRIMARY: v3 vs SBS, paired over 24 function means
+    gap closed      : -46.0%
+    Wilcoxon        : statistic 109.0, p = 0.2522493600845337 (two-sided)
+    signature       : wilcoxon(x, y=None, zero_method='wilcox', correction=False,
+                      alternative='two-sided', method='auto', ...)
+    functions       : 10 better / 14 worse / 0 tied
+    rule            : p < 0.05 AND gap closed > 0
+    VERDICT         : DOES NOT BEAT SBS
+
+  SECONDARY (descriptive, no claims)
+  variant  gap closed        p   b/w/t     pick=VBS  distinct  leftover  gens
+  v1          -62.0%    0.2076   9/15/0         0.188      6.13      2102  49.10
+  v2          -53.2%    0.3449   11/13/0         0.299     11.01         0   2.00
+  v3          -46.0%    0.2522   10/14/0         0.265      9.39       849  22.18
+  v4          -48.2%    0.3029   11/13/0         0.305     11.02         0   1.00
+
+  how v3 spent its 15 runs (mean per replay, top 8): EO 0.94, PSO 0.85, MPA 0.84, L_SHADE 0.79, SHADE 0.78, JADE 0.73, MVO 0.72, SMA 0.69
+
+  NOTES
+  - The test matrix was used before: Phase 3b's test set, and studied since Phase 2.
+  - Only the primary comparison is a test. Every other number is descriptive.
+  - 24 functions bound the test, so a small benefit cannot be ruled out.

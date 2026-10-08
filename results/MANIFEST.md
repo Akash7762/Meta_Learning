@@ -1,6 +1,6 @@
 # results/ — what is needed and what is not
 
-Updated 2026-10-06. `results/` is **tracked in git** (since commit `b102067`),
+Updated 2026-10-08. `results/` is **tracked in git** (since commit `b102067`),
 except for transient files listed under LOCAL ONLY. Everything marked KEEP is
 either expensive to rebuild or is the current evidence for a thesis claim.
 
@@ -22,13 +22,15 @@ Regenerate anything from the scripts; see `docs/README.md` for the run order.
 | `phase3b_holdout_confirm.json` / `.txt` | Step 13, the pre-registered test: train on the 720-row matrix, evaluate on the independent 72-row matrix. +2.1% gap closed, p=0.526: the Phase 3 result does not replicate. | ~15 min |
 | `phase2c_label_noise.png` / `.txt` / `_rows.csv` / `_functions.csv` | How noisy the training labels are: each row's best algorithm re-picked from 1,000 bootstrap resamples of its 5 stored runs (`phase2c_label_noise.py`). Mean label agreement 66.5%; 30.1% of rows unstable; 16.9% of re-picks more than 1% worse than the best. | seconds |
 | `phase1b_screening.json` / `.txt` | Algorithm health screen; evidence for removing CMA_ES, AOA and DE. | minutes |
+| `phase4a_dev.json` / `.txt` | Phase 4a development replay on the training matrix: 4 `EA_Designer` variants, 1 replay per row. Chose v3 (meta-population 10, surrogate on), mean score −0.0116. | 1496.4 s on 8 workers |
+| `phase4b_confirm.json` / `.txt` | Phase 4b, the pre-registered test on the evaluation matrix, 30 replays per row: `EA_Designer` does not beat SBS at an equal budget of 15 runs (−46.0% gap closed, p=0.252). | 4232.7 s on 8 workers |
 
 Each full rebuild of `phase2c_matrix.json` adds ~13 MB to the repository:
 git stores a whole new blob per change, not a delta.
 
 ## ⏳ EXPECTED
 
-Nothing. Steps 1–13 have all been run.
+Nothing. Steps 1–15 have all been run.
 
 ## 💾 LOCAL ONLY — gitignored
 
@@ -48,8 +50,10 @@ re-run those two scripts. Nothing in Phase 0–3b depends on them.
 
 ## Backup — `~/meta_learning_backup/`
 
-**In sync as of 2026-10-06:** every file in this folder is mirrored there,
-verified by md5 (19 of 19 matching). The `.jsonl` crash journal is not copied.
+**In sync as of 2026-10-08:** every file in this folder is mirrored there,
+verified by md5 (23 of 23 matching). The `.jsonl` crash journal is not copied.
+The folder also keeps copies of `docs/phase3_preregistration.md` and
+`docs/phase4_preregistration.md`.
 
 **It also holds a file that exists nowhere else:**
 `phase2c_matrix.96row_n3_legacy.json`, the superseded **96-row, dim-10,
@@ -68,7 +72,11 @@ The legacy copy has its own name, so a plain re-sync cannot overwrite it.
 Re-sync after any long build:
 
 ```bash
-cp -f results/*.json results/*.txt results/*.csv results/*.md ~/meta_learning_backup/
+cp -f results/*.json results/*.txt results/*.csv results/*.md results/*.png ~/meta_learning_backup/
+```
+
+```bash
+cp -f docs/phase3_preregistration.md docs/phase4_preregistration.md ~/meta_learning_backup/
 ```
 
 Do not rename or delete `phase2c_matrix.96row_n3_legacy.json`.
