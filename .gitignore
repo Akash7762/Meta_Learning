@@ -24,6 +24,10 @@ venv/
 env/
 .env/
 
+# Secrets: .env holds the Gemini API key. "/.env/" above matches only a
+# folder, so the file itself needs its own line.
+.env
+
 # Distribution / packaging
 *.egg-info/
 dist/
