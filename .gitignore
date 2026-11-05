@@ -10,6 +10,9 @@ results/*.tmp
 results/*.jsonl
 results/_tmp_*
 results/*_dryrun.*
+# Configuration-grid dataset (grid_build_matrix.py): far too large for git.
+# Back it up by copying the folder.
+results/config_grid/
 
 # Python cache
 __pycache__/
@@ -24,7 +27,7 @@ venv/
 env/
 .env/
 
-# Secrets: .env holds the Gemini API key. "/.env/" above matches only a
+# Secrets: .env holds the Gemini API key. ".env/" above matches only a
 # folder, so the file itself needs its own line.
 .env
 
