@@ -23,6 +23,9 @@ __pycache__/
 
 # Virtual environments
 .venv/
+# Separate environment for pflacco features only (its numpy/scipy/sklearn
+# pins are older than the main .venv's, so it is kept apart).
+.venv-pflacco/
 venv/
 env/
 .env/
