@@ -162,8 +162,8 @@ def run(F, M, ranks, N, funcs, target, arch, trees=TREES, seed=SEED, prep=PREP,
 
 def main():
     ap = argparse.ArgumentParser(description="Phase 3 2x2 ablation.")
-    ap.add_argument("--matrix", default="results/phase2c_matrix.json")
-    ap.add_argument("--out", default="results/phase3_ablation.json")
+    ap.add_argument("--matrix", default="results/phase2c/phase2c_matrix.json")
+    ap.add_argument("--out", default="results/phase3/phase3_ablation.json")
     args = ap.parse_args()
     rows, algos, fkeys, F, M, funcs, seeds, dims = load(args.matrix)
     n_row, n_alg = M.shape

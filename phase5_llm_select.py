@@ -4,7 +4,7 @@ phase5_llm_select.py
 Phase 5: told about an unseen problem, can an LLM pick an algorithm that beats
 always running the single best solver (SBS)? And which information helps it?
 
-Plan: docs/phase5_plan.md. Pre-registration: docs/phase5_preregistration.md.
+Plan: docs/planning/phase5/phase5_plan.md. Pre-registration: docs/planning/phase5/phase5_preregistration.md.
 
 ARMS -- what the LLM is told (LLMDesigner.describe_for_selection):
     A name     : function name, dimension, search box, budget
@@ -16,8 +16,8 @@ ARMS -- what the LLM is told (LLMDesigner.describe_for_selection):
 
 DATA -- the existing matrices only, read-only; md5 checked before and after.
     dev  : 24 training rows, every function at seed 42 and dim 10
-           (results/phase2c_matrix.json)
-    test : the 72-row evaluation matrix (results/phase2_matrix.json)
+           (results/phase2c/phase2c_matrix.json)
+    test : the 72-row evaluation matrix (results/phase2/phase2_matrix.json)
   The features come from the matrices: the inputs the Phase 3 selector used.
   The SBS is chosen from training ranks with the row's function left out
   (Phase 3b's rule). No optimiser is run: a pick is scored by its rank on the
@@ -29,8 +29,8 @@ CALLS -- K identical requests per row and arm: temperature 0, one fixed seed,
   A network or API error is retried with back-off; if it persists the run
   stops, and the same command resumes from the journal.
 
-STORE -- every call goes to results/phase5_calls_<stage>.jsonl (journal, local
-  only) and results/phase5_calls_<stage>.json (snapshot, tracked). --analyse
+STORE -- every call goes to results/phase5/phase5_calls_<stage>.jsonl (journal, local
+  only) and results/phase5/phase5_calls_<stage>.json (snapshot, tracked). --analyse
   reads only the snapshot, so the analysis is exact and makes no API call.
 
 The API key is read only through LLMDesigner.from_env() and is never printed.
@@ -61,11 +61,11 @@ import aad
 from aad.config_space import EXTENDED_CONFIG_SPACE
 from aad.llm_designer import DEFAULT_MODEL, LLMDesigner
 
-TRAIN_PATH = "results/phase2c_matrix.json"
-EVAL_PATH = "results/phase2_matrix.json"
-PREREG_PATH = "docs/phase5_preregistration.md"
-STORE = "results/phase5_calls_{stage}"         # + .jsonl journal / .json snapshot
-OUT_STEM = {"dev": "results/phase5a_dev", "test": "results/phase5b_confirm"}
+TRAIN_PATH = "results/phase2c/phase2c_matrix.json"
+EVAL_PATH = "results/phase2/phase2_matrix.json"
+PREREG_PATH = "docs/planning/phase5/phase5_preregistration.md"
+STORE = "results/phase5/phase5_calls_{stage}"         # + .jsonl journal / .json snapshot
+OUT_STEM = {"dev": "results/phase5/phase5a_dev", "test": "results/phase5/phase5b_confirm"}
 
 ARMS = {"A": {"name": True, "features": False},
         "B": {"name": False, "features": True},
@@ -273,6 +273,7 @@ def run_calls(args, train, test):
         sys.exit(f"NAME LEAK in {len(bad)} arm-B/D prompts, e.g. {bad[0]} -- stopping.")
     header = run_header(args.stage, args.model, prompts)
     stem = STORE.format(stage=args.stage)
+    os.makedirs(os.path.dirname(stem), exist_ok=True)
 
     slots = {}
     if os.path.exists(stem + ".jsonl"):                # resume
@@ -347,6 +348,7 @@ def test_call(args, train, test):
 
 def analyse(args, train, test):
     stem = STORE.format(stage=args.stage)
+    os.makedirs(os.path.dirname(stem), exist_ok=True)
     with open(stem + ".json", encoding="utf-8") as fh:
         store = json.load(fh)
     mat, ids = stage_rows(args.stage, train, test)
@@ -424,7 +426,7 @@ def analyse(args, train, test):
     passed = bool(prim["p"] < 0.05 and prim["gap_closed_pct"] > 0)
 
     title = ("PHASE 5a -- DEVELOPMENT CALLS (exploratory; no claim)" if args.stage == "dev"
-             else "PHASE 5b -- PRE-REGISTERED TEST (docs/phase5_preregistration.md)")
+             else "PHASE 5b -- PRE-REGISTERED TEST (docs/planning/phase5/phase5_preregistration.md)")
     L = ["=" * 78, "  " + title, "=" * 78,
          f"  matrix          : {mat.path}  ({len(ids)} rows; dims "
          f"{sorted(set(dims.tolist()))}; {len(ufuncs)} functions)",
@@ -474,6 +476,7 @@ def analyse(args, train, test):
                            "vbs_rank": float(v), **{f"{a}_rank": float(arm_r[a][n])
                                                     for a in ARMS}}
                           for n, (r, f, s, v) in enumerate(zip(rows, funcs, sbs_r, vbs_r))]}
+    os.makedirs(os.path.dirname(OUT_STEM[args.stage]), exist_ok=True)
     with open(OUT_STEM[args.stage] + ".txt", "w", encoding="utf-8") as fh:
         fh.write("\n".join(L) + "\n")
     with open(OUT_STEM[args.stage] + ".json", "w", encoding="utf-8") as fh:

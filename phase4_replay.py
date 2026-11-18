@@ -5,13 +5,13 @@ Phase 4: at an equal budget, does the meta-learner EA_Designer, which spends
 its budget trying algorithms on the problem itself, find better solutions than
 running the single best solver (SBS)?
 
-Plan: docs/phase4_plan.md. Pre-registration: docs/phase4_preregistration.md.
+Plan: docs/planning/phase4/phase4_plan.md. Pre-registration: docs/planning/phase4/phase4_preregistration.md.
 
 DATA -- only the matrices built in Phases 2 and 2c, both read-only.
-    results/phase2c_matrix.json : training, 720 rows, 5 runs per cell.
+    results/phase2c/phase2c_matrix.json : training, 720 rows, 5 runs per cell.
         Chooses the SBS, leaving out the test function (as in Phase 3b), and
         is the development set (--stage dev).
-    results/phase2_matrix.json  : evaluation, 72 rows, 15 runs per cell.
+    results/phase2/phase2_matrix.json  : evaluation, 72 rows, 15 runs per cell.
         The pre-registered test (--stage test).
     The md5 of each file is recorded before and after every run.
 
@@ -84,10 +84,10 @@ from aad.config_space import EXTENDED_CONFIG_SPACE
 from aad.meta_learner import EA_Designer
 from phase3b_holdout_confirm import assert_no_leakage
 
-TRAIN_PATH = "results/phase2c_matrix.json"
-EVAL_PATH = "results/phase2_matrix.json"
-PREREG_PATH = "docs/phase4_preregistration.md"
-OUT_STEM = {"dev": "results/phase4a_dev", "test": "results/phase4b_confirm"}
+TRAIN_PATH = "results/phase2c/phase2c_matrix.json"
+EVAL_PATH = "results/phase2/phase2_matrix.json"
+PREREG_PATH = "docs/planning/phase4/phase4_preregistration.md"
+OUT_STEM = {"dev": "results/phase4/phase4a_dev", "test": "results/phase4/phase4b_confirm"}
 
 BUDGET_RUNS = 15          # runs per row for every method, each 5000 evaluations
 GEN_CAP = 50              # EA_Designer generations: a cap; the budget ends the run
@@ -95,7 +95,7 @@ RUNS_PER_EVAL = 1         # 10 configs x 3 runs would spend 30 runs before adapt
 REPLAYS = {"dev": 1, "test": 30}
 SEED_BASE = {"dev": 10000, "test": 4000}
 
-# Declared in docs/phase4_plan.md section 3.6. Nothing else is tried.
+# Declared in docs/planning/phase4/phase4_plan.md section 3.6. Nothing else is tried.
 VARIANTS = {
     "v1": {"population_size": 5, "use_surrogate": True},
     "v2": {"population_size": 5, "use_surrogate": False},
@@ -510,7 +510,7 @@ def run_test(args):
     sbs_counts = Counter(mat.algos[j] for j in sbs_j)
 
     L = ["=" * 78,
-         "  PHASE 4b -- PRE-REGISTERED TEST (docs/phase4_preregistration.md)",
+         "  PHASE 4b -- PRE-REGISTERED TEST (docs/planning/phase4/phase4_preregistration.md)",
          "=" * 78,
          f"  train (SBS)     : {TRAIN_PATH}  (md5 {md5_before[TRAIN_PATH]})",
          f"  test            : {EVAL_PATH}  (md5 {md5_before[EVAL_PATH]})",

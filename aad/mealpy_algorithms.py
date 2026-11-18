@@ -61,7 +61,7 @@ import numpy as np
 #           evaluations differ only in the fifth decimal.
 #
 # JADE remains registered: it is a different class in the same module and is
-# not affected. See results/phase1b_screening.txt for the full evidence.
+# not affected. See results/phase1b/phase1b_screening.txt for the full evidence.
 
 MEALPY_REGISTRY: dict = {
     # ------------------------------------------------------------------ #

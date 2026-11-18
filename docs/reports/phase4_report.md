@@ -1,9 +1,9 @@
 # Phase 4: Meta-learner against the single best solver, at an equal budget
 
 Status: **complete**. Script: `phase4_replay.py` (steps 14 and 15).
-Plan: `docs/phase4_plan.md`. Pre-registration: `docs/phase4_preregistration.md`,
+Plan: `docs/planning/phase4/phase4_plan.md`. Pre-registration: `docs/planning/phase4/phase4_preregistration.md`,
 committed in `0953353` before the test was run. Output:
-`results/phase4a_dev.{txt,json}` and `results/phase4b_confirm.{txt,json}`.
+`results/phase4/phase4a_dev.{txt,json}` and `results/phase4/phase4b_confirm.{txt,json}`.
 
 Every figure below is literal output from those runs, or from the descriptive
 check named next to it.
@@ -48,8 +48,8 @@ their md5 was the same before and after every run:
 
 | Role | File |
 |---|---|
-| Choosing the SBS; development (Phase 4a) | `results/phase2c_matrix.json`: 720 rows, 5 runs per cell |
-| Test (Phase 4b) | `results/phase2_matrix.json`: 72 rows, seed 100, 15 runs per cell |
+| Choosing the SBS; development (Phase 4a) | `results/phase2c/phase2c_matrix.json`: 720 rows, 5 runs per cell |
+| Test (Phase 4b) | `results/phase2/phase2_matrix.json`: 72 rows, seed 100, 15 runs per cell |
 
 The test matrix was also the Phase 3b test set, and has been studied since
 Phase 2. No Phase 4 setting was chosen on it.
@@ -126,7 +126,7 @@ the honest summary is: no evidence that it helps, and some sign that it hurts.
 
 ## Why it falls short (descriptive only)
 
-These figures come from `results/phase4b_confirm.{txt,json}`. They describe
+These figures come from `results/phase4/phase4b_confirm.{txt,json}`. They describe
 what happened and carry no test.
 
 - **It spreads its runs thin.** v3 ran 9.39 different algorithms per replay on
@@ -207,9 +207,9 @@ any stored run would be reused or any matrix changes. Tests:
 
 ## Related
 
-- [`phase4_plan.md`](phase4_plan.md): the plan, with the changes made after
+- [`phase4_plan.md`](../planning/phase4/phase4_plan.md): the plan, with the changes made after
   approval
-- `docs/phase4_preregistration.md`: the method fixed before the test
+- `docs/planning/phase4/phase4_preregistration.md`: the method fixed before the test
 - [`phase3b_report.md`](phase3b_report.md): the feature-based selector's
   pre-registered test
 - [`phase2_report.md`](phase2_report.md): the evaluation data

@@ -3,7 +3,7 @@ phase2_analyse_matrix.py
 ------------------------
 Offline analysis of the Phase 2 performance matrix.
 
-This script NEVER invokes an optimiser. It reads results/phase2_matrix.json
+This script NEVER invokes an optimiser. It reads results/phase2/phase2_matrix.json
 and nothing else, so every number here is reproducible from that file alone.
 
 Contents
@@ -53,8 +53,8 @@ import numpy as np
 import scipy
 from scipy.stats import friedmanchisquare, rankdata
 
-IN_PATH = os.path.join("results", "phase2_matrix.json")
-CSV_PATH = os.path.join("results", "phase2_matrix.csv")
+IN_PATH = os.path.join("results", "phase2", "phase2_matrix.json")
+CSV_PATH = os.path.join("results", "phase2", "phase2_matrix.csv")
 
 BAR = "=" * 100
 
@@ -153,7 +153,7 @@ def print_matrix(P, A, M, n_runs="?"):
 
 
 def write_csv(P, A, M):
-    os.makedirs("results", exist_ok=True)
+    os.makedirs(os.path.dirname(CSV_PATH), exist_ok=True)
     with open(CSV_PATH, "w", newline="", encoding="utf-8") as fh:
         w = csv.writer(fh)
         w.writerow(["problem"] + A)

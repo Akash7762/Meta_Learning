@@ -1,8 +1,8 @@
 # Phase 3b: Pre-registered confirmation run
 
 Status: **complete**. Script: `phase3b_holdout_confirm.py` (step 13).
-Pre-registration: `docs/phase3_preregistration.md`. Output:
-`results/phase3b_holdout_confirm.{txt,json}`.
+Pre-registration: `docs/planning/phase3b/phase3_preregistration.md`. Output:
+`results/phase3b/phase3b_holdout_confirm.{txt,json}`.
 
 Updated 2026-10-01 with the confirmation run on the rebuilt, independent data.
 Every figure below is literal output from that run, or from the descriptive
@@ -34,7 +34,7 @@ test on data the model never trained on.
 
 | | Training | Evaluation |
 |---|---|---|
-| File | `results/phase2c_matrix.json` | `results/phase2_matrix.json` |
+| File | `results/phase2c/phase2c_matrix.json` | `results/phase2/phase2_matrix.json` |
 | Rows | 720 = 24 functions × dims 5/10/20 × seeds 42–51 | 72 = 24 functions × dims 5/10/20, seed 100 |
 | Runs per cell | 5 | 15 |
 
@@ -94,7 +94,7 @@ arise by chance.
 ## Why it lands at the SBS level (descriptive only)
 
 The figures below come from the per-row entries in
-`results/phase3b_holdout_confirm.json`. They describe what the selector did.
+`results/phase3b/phase3b_holdout_confirm.json`. They describe what the selector did.
 They are **not** part of the pre-registered analysis, carry no significance
 test, and must not be read as evidence of an effect.
 
@@ -163,7 +163,7 @@ evaluation seeds overlap.
 
 ## Related
 
-- `docs/phase3_preregistration.md`: the method fixed in advance, and the
+- `docs/planning/phase3b/phase3_preregistration.md`: the method fixed in advance, and the
   2026-09-25 entry logged before this run
 - [`phase3_report.md`](phase3_report.md): the selector and ablation on the
   training matrix

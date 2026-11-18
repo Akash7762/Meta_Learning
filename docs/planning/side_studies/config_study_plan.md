@@ -116,8 +116,8 @@ configuration selector, pre-registered like Phase 3b.
 
 ## 6. Files
 
-**Read only:** `results/phase2_matrix.json` (reused population-50 cells) and
-`results/phase2c_matrix.json` (stage 2 only).
+**Read only:** `results/phase2/phase2_matrix.json` (reused population-50 cells) and
+`results/phase2c/phase2c_matrix.json` (stage 2 only).
 
 **New:** `results/config_matrix_eval.json` (stage 1), its `.jsonl` journal
 (local only), the builder script, a test file, and a report.

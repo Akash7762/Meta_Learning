@@ -1,6 +1,6 @@
 # Phase 0 — Scope and Configuration Consistency
 
-Status: **complete**. Full decision record: [`phase0_decision.md`](phase0_decision.md).
+Status: **complete**. Full decision record: [`phase0_decision.md`](../planning/phase0/phase0_decision.md).
 Verification: `test_phase0_config_consistency.py`.
 
 ## Purpose

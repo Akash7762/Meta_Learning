@@ -1,12 +1,12 @@
 """
 PHASE 3b -- Confirmation run for the Phase 3 selector result.
 
-Method fixed in advance; see docs/phase3_preregistration.md. Nothing in
+Method fixed in advance; see docs/planning/phase3b/phase3_preregistration.md. Nothing in
 this file deviates from it. Reads cached JSON only; no optimiser is invoked
 and build_algorithm is never called.
 
-TRAIN : results/phase2c_matrix.json  (selector training, fewer runs per cell)
-EVAL  : results/phase2_matrix.json   (held out, n_runs=15)
+TRAIN : results/phase2c/phase2c_matrix.json  (selector training, fewer runs per cell)
+EVAL  : results/phase2/phase2_matrix.json   (held out, n_runs=15)
 Both overridable with --train-matrix / --eval-matrix. Row counts, run counts,
 seeds and dims are read from the files, never assumed here.
 
@@ -38,9 +38,9 @@ import numpy as np
 from scipy.stats import rankdata, wilcoxon
 from sklearn.ensemble import RandomForestRegressor
 
-TRAIN_PATH = "results/phase2c_matrix.json"
-EVAL_PATH = "results/phase2_matrix.json"
-OUT_STEM = "results/phase3b_holdout_confirm"
+TRAIN_PATH = "results/phase2c/phase2c_matrix.json"
+EVAL_PATH = "results/phase2/phase2_matrix.json"
+OUT_STEM = "results/phase3b/phase3b_holdout_confirm"
 RF_SEED = 20260916
 RF_TREES = 300
 

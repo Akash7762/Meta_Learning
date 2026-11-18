@@ -34,7 +34,7 @@ instances in the thesis.
 
 BUDGET
 ------
-max_fe=5000, population_size=50 -- identical to results/phase2_matrix.json, so
+max_fe=5000, population_size=50 -- identical to results/phase2/phase2_matrix.json, so
 the two matrices are comparable. max_generations is deliberately NOT used: it
 gives SA ~150 evaluations against everyone else's ~5050 (Phase 1b), a 33x
 handicap unrelated to algorithm merit.
@@ -46,14 +46,14 @@ cell in "budget_note", as in Phase 2.
 STATUS OF THIS FILE
 -------------------
 This matrix uses fewer runs per cell than Phase 2 (see N_RUNS). It exists for
-SELECTOR TRAINING, where many moderately-noisy rows beat few precise ones. results/phase2_matrix.json
+SELECTOR TRAINING, where many moderately-noisy rows beat few precise ones. results/phase2/phase2_matrix.json
 (n_runs=15) remains the authoritative source for SBS/VBS headline figures.
 Both files state this in their meta block.
 
 DURABILITY
 ----------
-Every completed cell is appended to results/phase2c_matrix.jsonl and flushed
-immediately (O(1)). A full structured snapshot of results/phase2c_matrix.json
+Every completed cell is appended to results/phase2c/phase2c_matrix.jsonl and flushed
+immediately (O(1)). A full structured snapshot of results/phase2c/phase2c_matrix.json
 is written after each completed row and at the end. On restart both are read
 and merged, so an interruption loses at most the cell in flight. Writing the
 whole JSON after every cell was measured at ~0.21s x 7920 = ~28 minutes of
@@ -96,7 +96,7 @@ EA_OPERATORS = {"selection": "tournament", "crossover": "sbx",
 FEATURE_SAMPLES = 300
 FEATURE_SEED = 20260915
 
-OUT_DIR = "results"
+OUT_DIR = os.path.join("results", "phase2c")
 OUT_JSON = os.path.join(OUT_DIR, "phase2c_matrix.json")
 OUT_JSONL = os.path.join(OUT_DIR, "phase2c_matrix.jsonl")
 
@@ -146,7 +146,7 @@ def fresh_state(functions, seeds, dims, algorithms, n_runs):
             # data file and would otherwise mislabel the matrix in the thesis.
             "purpose": ("SELECTOR TRAINING ONLY. n_runs={} makes per-cell "
                         "medians noisier than Phase 2. "
-                        "results/phase2_matrix.json (n_runs=15) remains the "
+                        "results/phase2/phase2_matrix.json (n_runs=15) remains the "
                         "AUTHORITATIVE source for SBS/VBS headline "
                         "figures.".format(n_runs)),
             "n_runs": n_runs,
@@ -168,7 +168,7 @@ def fresh_state(functions, seeds, dims, algorithms, n_runs):
             "algorithms": algorithms,
             "feature_samples": FEATURE_SAMPLES,
             "feature_seed": FEATURE_SEED,
-            "authoritative_matrix": "results/phase2_matrix.json",
+            "authoritative_matrix": "results/phase2/phase2_matrix.json",
             "env": _env_versions(),
         },
         "features": {},

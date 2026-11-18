@@ -1,7 +1,7 @@
 """
 PHASE 3 -- Validate a learned per-instance algorithm selector.
 
-Reads results/phase2c_matrix.json ONLY. Never imports or calls
+Reads results/phase2c/phase2c_matrix.json ONLY. Never imports or calls
 build_algorithm; no optimiser is invoked anywhere in this file.
 
 DIMENSION IS A LIVE VARIABLE. dim is carried through row keys, the feature
@@ -26,7 +26,7 @@ import numpy as np
 from scipy.stats import rankdata, wilcoxon
 from sklearn.ensemble import RandomForestRegressor
 
-MATRIX = "results/phase2c_matrix.json"
+MATRIX = "results/phase2c/phase2c_matrix.json"
 RF_SEED = 20260916
 RF_TREES = 300
 
@@ -60,7 +60,7 @@ def load(path):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--matrix", default=MATRIX)
-    ap.add_argument("--out-stem", default="results/phase3_selector")
+    ap.add_argument("--out-stem", default="results/phase3/phase3_selector")
     args = ap.parse_args()
 
     rows, algos, fkeys, F, M, funcs, seeds, dims = load(args.matrix)

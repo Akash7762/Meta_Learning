@@ -1,7 +1,7 @@
 # Phase 1b — Algorithm Health Screen
 
 Status: **complete**. Script: `phase1b_algorithm_screening.py`.
-Output: `results/phase1b_screening.{txt,json}`. Figures below are quoted from
+Output: `results/phase1b/phase1b_screening.{txt,json}`. Figures below are quoted from
 that cached output.
 
 ## Purpose

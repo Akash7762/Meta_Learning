@@ -85,7 +85,7 @@ EA_OPERATORS = {"selection": "tournament", "crossover": "sbx",
 FEATURE_SAMPLES = 300      # LandscapeFeatureExtractor default
 FEATURE_SEED = 20260915    # seeds the feature sampling, which is stochastic
 
-OUT_DIR = "results"
+OUT_DIR = os.path.join("results", "phase2")
 OUT_PATH = os.path.join(OUT_DIR, "phase2_matrix.json")
 
 PROBLEM_NAMES = [n for n in aad.__all__ if n.startswith("BBOB_")]

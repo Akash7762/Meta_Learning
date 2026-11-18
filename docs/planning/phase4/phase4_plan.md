@@ -1,9 +1,9 @@
 # Phase 4 plan
 
 Drafted and approved 2026-10-06, with the changes listed in the next section.
-The binding version of the method is `docs/phase4_preregistration.md`. Every
+The binding version of the method is `docs/planning/phase4/phase4_preregistration.md`. Every
 dataset used in Phases 0 to 3b stays read-only: Phase 4 reads
-`results/phase2_matrix.json` and `results/phase2c_matrix.json` and writes only
+`results/phase2/phase2_matrix.json` and `results/phase2c/phase2c_matrix.json` and writes only
 new files.
 
 ## Changes after approval
@@ -12,9 +12,9 @@ Decided 2026-10-06. Where the sections below disagree, this section wins.
 
 1. **Only the existing datasets.** At the user's request, no new seed-200
    matrix is built (step 4 is dropped, and so is code change 2 in section 4).
-   The test set is `results/phase2_matrix.json` (seed 100), which was also the
+   The test set is `results/phase2/phase2_matrix.json` (seed 100), which was also the
    Phase 3b test set.
-2. **Development moves to the training matrix** (`results/phase2c_matrix.json`),
+2. **Development moves to the training matrix** (`results/phase2c/phase2c_matrix.json`),
    so the test set is not used to choose anything. That matrix stores 5 runs
    per cell, fewer than the 15-run budget, so a replay can ask for a run that
    is not there. It then gets a used run again, and every such draw is counted
@@ -66,7 +66,7 @@ Checked against the source on 2026-10-06.
 | With defaults, up to 180 full runs per problem: 10 configs × 3 runs, then 5 generations × 10 children × 3 runs | `aad/meta_learner.py:203-255` | Far more budget than a single SBS run |
 | Landscape features are extracted on every call, 300 samples by default | `aad/meta_learner.py:191`, `aad/landscape_features.py:36` | Inside one problem every candidate gets the same feature values, so they cost evaluations but say nothing about which candidate is better |
 | The surrogate's memory (`_mem_X`, `_mem_y`) is never cleared inside `evolve` | `aad/meta_learner.py:90-91, 216-217, 254-255` | Reusing one object across problems would carry knowledge over. Each problem needs a fresh object |
-| A candidate the surrogate skips gets `prediction × 1.05`, commented "slightly pessimistic" | `aad/meta_learner.py:247` | Objective values can be negative: the lowest stored value is −1426.27, and 2,956 of the 23,760 runs in `results/phase2_matrix.json` are below zero. For a negative value, × 1.05 makes the guess look **better**, so a candidate that was never run can become the "best" with a made-up score |
+| A candidate the surrogate skips gets `prediction × 1.05`, commented "slightly pessimistic" | `aad/meta_learner.py:247` | Objective values can be negative: the lowest stored value is −1426.27, and 2,956 of the 23,760 runs in `results/phase2/phase2_matrix.json` are below zero. For a negative value, × 1.05 makes the guess look **better**, so a candidate that was never run can become the "best" with a made-up score |
 | `evolve` returns the best config and its score; that score is a mean of runs, or a surrogate guess | `aad/meta_learner.py:221-278` | Phase 4 must score only runs that actually happened |
 | Operator keys (`selection`, `crossover`, `mutation`) are ignored unless `algorithm == "ea"` | `aad/config_space.py:32-35` | Open item from Phase 0 §7. Not needed if the search is over algorithms only (section 3.1) |
 
@@ -114,7 +114,7 @@ Gap closed = (SBS − meta-learner) / (SBS − oracle), on the mean of that scor
 ### 3.4 Replay instead of new runs
 
 Every cell of an evaluation matrix stores 15 independent, seeded runs
-(`phase2_build_matrix.py:248-294`). `results/phase2_matrix.json` has no missing
+(`phase2_build_matrix.py:248-294`). `results/phase2/phase2_matrix.json` has no missing
 runs. When the meta-learner asks to run algorithm A on row r, the runner gives
 it one of the stored runs of cell (r, A) that it has not used yet. That is the
 same as running A with a fresh seed, because the stored runs are exactly such
@@ -141,8 +141,8 @@ after checking bit-for-bit that results do not change.
 
 | Set | File | Used for |
 |---|---|---|
-| Training | `results/phase2c_matrix.json`: 720 rows, seeds 42 to 51, 5 runs per cell | Choosing the SBS, leave-one-function-out. Read only |
-| Development | `results/phase2_matrix.json`: 72 rows, seed 100, 15 runs per cell | Phase 4a: checking the pipeline and choosing between the declared variants. Read only |
+| Training | `results/phase2c/phase2c_matrix.json`: 720 rows, seeds 42 to 51, 5 runs per cell | Choosing the SBS, leave-one-function-out. Read only |
+| Development | `results/phase2/phase2_matrix.json`: 72 rows, seed 100, 15 runs per cell | Phase 4a: checking the pipeline and choosing between the declared variants. Read only |
 | Test | **new** `results/phase4_matrix.json`: 72 rows, fresh problem seed 200, 15 runs per cell | Phase 4b: the single pre-registered test |
 
 Why a new test set: the seed-100 matrix was the test set for Phase 3b, and it
@@ -192,7 +192,7 @@ reproduce unchanged. The existing tests must still pass.
    - a skipped-candidate penalty that is worse for negative values too, for
      example `prediction + 0.05 × |prediction|`.
 2. `phase2_build_matrix.py`: `--problem-seed` and `--out` flags. The defaults
-   stay as they are, and it refuses to write to `results/phase2_matrix.json`
+   stay as they are, and it refuses to write to `results/phase2/phase2_matrix.json`
    unless the seed is 100.
 3. New `phase4_replay.py`, the replay runner. It:
    - reads functions, dims and algorithms from the matrix's metadata, so `dim`
@@ -208,23 +208,23 @@ reproduce unchanged. The existing tests must still pass.
 | 0 | You approve this plan | yes |
 | 1 | Code changes and tests; show the diff | yes |
 | 2 | Phase 4a replay on the seed-100 matrix; time one problem first | if over 2 min |
-| 3 | Write `docs/phase4_preregistration.md` with the frozen design, and commit it **before** the new matrix exists | yes, commit |
+| 3 | Write `docs/planning/phase4/phase4_preregistration.md` with the frozen design, and commit it **before** the new matrix exists | yes, commit |
 | 4 | Build `results/phase4_matrix.json` (about 8.45 h), then back it up | yes |
 | 5 | Run Phase 4b once | no |
-| 6 | Write `docs/phase4_report.md`, commit, back up | yes, commit |
+| 6 | Write `docs/reports/phase4_report.md`, commit, back up | yes, commit |
 
 ## 6. Files
 
-**Read only:** `results/phase2_matrix.json`, `results/phase2c_matrix.json`, and
+**Read only:** `results/phase2/phase2_matrix.json`, `results/phase2c/phase2c_matrix.json`, and
 every other Phase 0 to 3b result file.
 
 **New:**
 
-- `results/phase4a_dev.{json,txt}`
+- `results/phase4/phase4a_dev.{json,txt}`
 - `results/phase4_matrix.{json,csv}`
-- `results/phase4b_confirm.{json,txt}`
-- `docs/phase4_preregistration.md`
-- `docs/phase4_report.md`
+- `results/phase4/phase4b_confirm.{json,txt}`
+- `docs/planning/phase4/phase4_preregistration.md`
+- `docs/reports/phase4_report.md`
 - `phase4_replay.py`
 
 ## 7. Not in this plan

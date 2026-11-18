@@ -3,7 +3,7 @@ phase2_lopo.py
 --------------
 Leave-One-Problem-Out (LOPO) evaluation of feature-based algorithm selectors.
 
-Reads results/phase2_matrix.json ONLY. No optimiser is ever invoked, so every
+Reads results/phase2/phase2_matrix.json ONLY. No optimiser is ever invoked, so every
 number here is reproducible from that file.
 
 WHAT LOPO MEASURES
@@ -63,9 +63,9 @@ from scipy.stats import rankdata, wilcoxon
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.preprocessing import StandardScaler
 
-IN_PATH = os.path.join("results", "phase2_matrix.json")
-OUT_JSON = os.path.join("results", "phase2_lopo.json")
-OUT_TXT = os.path.join("results", "phase2_lopo.txt")
+IN_PATH = os.path.join("results", "phase2", "phase2_matrix.json")
+OUT_JSON = os.path.join("results", "phase2", "phase2_lopo.json")
+OUT_TXT = os.path.join("results", "phase2", "phase2_lopo.txt")
 
 RF_SEED = 20260915          # every stochastic component is seeded
 RANDOM_SEED = 20260915
@@ -85,13 +85,13 @@ def load(path=None, exclude=()):
 
     Two layouts are supported and auto-detected:
 
-      Phase 2  (results/phase2_matrix.json)
+      Phase 2  (results/phase2/phase2_matrix.json)
           meta.problems present; cell key "problem|algorithm".
           Each row is its own group, so grouped folds reduce exactly to the
           original leave-one-problem-out behaviour -- the default run
           reproduces the published Phase 2 numbers unchanged.
 
-      Phase 2c (results/phase2c_matrix.json)
+      Phase 2c (results/phase2c/phase2c_matrix.json)
           meta.functions + meta.pseudo_instance_seeds present; cell key
           "function|sSEED|dDIM|algorithm". The group is the FUNCTION, so all
           pseudo-instances of one function are held out together. Without
@@ -486,13 +486,13 @@ def main() -> int:
     ap.add_argument("--matrix", default=IN_PATH,
                     help="matrix JSON to evaluate (Phase 2 or Phase 2c layout)")
     ap.add_argument("--out-stem", default=None,
-                    help="output stem; defaults to results/<matrix stem>_lopo")
+                    help="output stem; defaults to <matrix folder>/<matrix stem>_lopo")
     ap.add_argument("--exclude", nargs="*", default=[],
                     help="function names to drop, e.g. BBOB_F5_LinearSlope")
     args = ap.parse_args()
 
     stem = args.out_stem or os.path.join(
-        "results", os.path.splitext(os.path.basename(args.matrix))[0]
+        os.path.dirname(args.matrix) or ".", os.path.splitext(os.path.basename(args.matrix))[0]
         .replace("_matrix", "") + "_lopo")
     out_txt, out_json = stem + ".txt", stem + ".json"
 
@@ -511,7 +511,7 @@ def main() -> int:
     text = report(P, A, M, N, names, picks, summ, data, groups, args.matrix)
     print(text)
 
-    os.makedirs("results", exist_ok=True)
+    os.makedirs(os.path.dirname(stem) or ".", exist_ok=True)
     with open(out_txt, "w", encoding="utf-8") as fh:
         fh.write(text + "\n")
     with open(out_json, "w", encoding="utf-8") as fh:

@@ -41,7 +41,7 @@ EA_CONFIG_SPACE: Dict[str, List[Any]] = {
 #
 # CMA_ES, AOA and DE were removed on 2026-09-15 -- their mealpy
 # implementations run without error but do not optimise (see the exclusion
-# note in aad/mealpy_algorithms.py and results/phase1b_screening.txt).
+# note in aad/mealpy_algorithms.py and results/phase1b/phase1b_screening.txt).
 
 MEALPY_ALGORITHM_KEYS: List[str] = [
     # Evolutionary

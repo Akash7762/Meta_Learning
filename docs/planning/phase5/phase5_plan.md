@@ -39,7 +39,7 @@ Before Phase 5 uses the key:
 > Given a description of an unseen problem, can an LLM pick an algorithm that
 > beats always running the SBS? And which part of the description helps it?
 
-`docs/phase0_decision.md` (line 39) already says `LLMDesigner` "is evaluated as
+`docs/planning/phase0/phase0_decision.md` (line 39) already says `LLMDesigner` "is evaluated as
 a *selector* for the primary question in a later phase". This is that phase.
 
 ## 2. What the code does today
@@ -112,9 +112,9 @@ As in Phase 4, only the existing matrices, both read only:
 
 | Set | File | Used for |
 |---|---|---|
-| Training | `results/phase2c_matrix.json` | choosing the SBS (leave-one-function-out) |
+| Training | `results/phase2c/phase2c_matrix.json` | choosing the SBS (leave-one-function-out) |
 | Development | 24 training rows: every function at seed 42, dim 10 | checking prompts, parsing, validity and cost. No setting is chosen by score |
-| Test | `results/phase2_matrix.json`, 72 rows | the single pre-registered test |
+| Test | `results/phase2/phase2_matrix.json`, 72 rows | the single pre-registered test |
 
 The test matrix was also the test set of Phases 3b and 4. The LLM never sees
 any result, and the prompts are fixed before any test call, but the reuse is
@@ -180,9 +180,9 @@ printed or committed.
 | 1 | Code changes and tests, all offline; show the diff | yes |
 | 2 | One test call: confirms the model, measures time and tokens | yes, it sends one prompt to Google |
 | 3 | Development run, 288 calls | yes, with a time and cost estimate |
-| 4 | Write `docs/phase5_preregistration.md` (prompts, model version and settings frozen) and commit it before the test | yes, commit |
+| 4 | Write `docs/planning/phase5/phase5_preregistration.md` (prompts, model version and settings frozen) and commit it before the test | yes, commit |
 | 5 | Test run, 864 calls | yes |
-| 6 | Analyse offline, write `docs/phase5_report.md`, update the docs, back up | yes, commit |
+| 6 | Analyse offline, write `docs/reports/phase5_report.md`, update the docs, back up | yes, commit |
 
 ## 6. Files
 
@@ -191,9 +191,9 @@ printed or committed.
 **New:**
 
 - `results/phase5_llm_calls.json`: every request and answer
-- `results/phase5a_dev.{json,txt}`
-- `results/phase5b_confirm.{json,txt}`
-- `docs/phase5_preregistration.md`, `docs/phase5_report.md`
+- `results/phase5/phase5a_dev.{json,txt}`
+- `results/phase5/phase5b_confirm.{json,txt}`
+- `docs/planning/phase5/phase5_preregistration.md`, `docs/reports/phase5_report.md`
 - `phase5_llm_select.py`, `tests/test_phase5_llm.py`
 
 `results/*.jsonl` is ignored by git, so the store is written as `.json`; its

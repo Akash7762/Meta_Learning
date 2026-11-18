@@ -2,7 +2,7 @@
 
 Updated 2026-10-01 for the rebuilt multi-dimension matrix. Every figure below
 is literal output from `phase2_analyse_matrix.py` and `phase2_lopo.py` run
-against `results/phase2_matrix.json`. Figures marked *supplementary* were
+against `results/phase2/phase2_matrix.json`. Figures marked *supplementary* were
 computed directly from the same file during the 2026-10-01 update and are not
 printed by either script. No optimiser was run to produce this report.
 
@@ -211,7 +211,7 @@ significance tests.
 ## 10. Reproducing
 
 ```bash
-python phase2_build_matrix.py     # ~8.45 hours, writes results/phase2_matrix.json
+python phase2_build_matrix.py     # ~8.45 hours, writes results/phase2/phase2_matrix.json
 python phase2_analyse_matrix.py   # seconds; ranking, Friedman, SBS/VBS gap
 python phase2_lopo.py             # about 3 minutes; LOPO selector evaluation
 ```
@@ -220,7 +220,7 @@ python phase2_lopo.py             # about 3 minutes; LOPO selector evaluation
 
 ## 11. Related
 
-- `docs/phase0_decision.md`: the equal-budget protocol
-- `results/phase2_lopo.txt`: full LOPO output, including per-row detail
+- `docs/planning/phase0/phase0_decision.md`: the equal-budget protocol
+- `results/phase2/phase2_lopo.txt`: full LOPO output, including per-row detail
 - [`phase3b_report.md`](phase3b_report.md): the independent confirmation test
   that uses this matrix as its evaluation set

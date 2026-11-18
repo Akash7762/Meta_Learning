@@ -3,7 +3,7 @@ phase2c_label_noise.py
 ----------------------
 How noisy are the selector training labels?
 
-Reads results/phase2c_matrix.json (the TRAINING matrix) only. No optimiser is
+Reads results/phase2c/phase2c_matrix.json (the TRAINING matrix) only. No optimiser is
 run, and the evaluation matrix is not read.
 
 Each row's training label is its best algorithm: the lowest median over the
@@ -25,10 +25,10 @@ With only 5 runs per cell the bootstrap is coarse. It shows how much the
 labels move under re-measurement, not an exact error rate.
 
 Outputs:
-  results/phase2c_label_noise.png           the figure
-  results/phase2c_label_noise.txt           summary
-  results/phase2c_label_noise_rows.csv      per-row values (table view)
-  results/phase2c_label_noise_functions.csv per-function values
+  results/phase2c/phase2c_label_noise.png           the figure
+  results/phase2c/phase2c_label_noise.txt           summary
+  results/phase2c/phase2c_label_noise_rows.csv      per-row values (table view)
+  results/phase2c/phase2c_label_noise_functions.csv per-function values
 """
 import argparse
 import csv
@@ -42,8 +42,8 @@ import matplotlib.pyplot as plt                       # noqa: E402
 from matplotlib.patches import Patch, PathPatch       # noqa: E402
 from matplotlib.path import Path                      # noqa: E402
 
-MATRIX = "results/phase2c_matrix.json"
-OUT_STEM = "results/phase2c_label_noise"
+MATRIX = "results/phase2c/phase2c_matrix.json"
+OUT_STEM = "results/phase2c/phase2c_label_noise"
 B = 1000
 SEED = 20261005
 HARM = 0.01

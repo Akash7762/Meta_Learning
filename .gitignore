@@ -4,12 +4,12 @@
 # Two files vanished from disk during that period with no explanation.
 #
 # Ignore only the transient pieces:
-results/*.tmp
+results/**/*.tmp
 # append-only crash journal; the .json snapshot is the durable record.
 # (git has no inline comments -- a "#" after a pattern becomes part of it.)
-results/*.jsonl
-results/_tmp_*
-results/*_dryrun.*
+results/**/*.jsonl
+results/**/_tmp_*
+results/**/*_dryrun.*
 # Configuration-grid dataset (grid_build_matrix.py): far too large for git.
 # Back it up by copying the folder.
 results/config_grid/

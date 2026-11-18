@@ -1,14 +1,14 @@
 # Phase 3: Learned per-instance algorithm selector
 
 Status: **complete**. Scripts: `phase3_selector_validation.py` (step 11) and
-`phase3_ablation.py` (step 12). Output: `results/phase3_selector.{txt,json}`,
-`results/phase3_ablation.json`. Confirmation run: [`phase3b_report.md`](phase3b_report.md).
+`phase3_ablation.py` (step 12). Output: `results/phase3/phase3_selector.{txt,json}`,
+`results/phase3/phase3_ablation.json`. Confirmation run: [`phase3b_report.md`](phase3b_report.md).
 
 Updated 2026-10-01 for the rebuilt training matrix. Every figure below is
 literal output from those scripts. An earlier version of this report described
 results on an older, smaller matrix (96 rows, dim 10 only). Those results are
 superseded. What was claimed on that data is recorded in
-`docs/phase3_preregistration.md`.
+`docs/planning/phase3b/phase3_preregistration.md`.
 
 ## Purpose
 
@@ -22,7 +22,7 @@ only; no optimiser runs.
 
 | Parameter | Value |
 |---|---|
-| Data | `results/phase2c_matrix.json`: 720 rows, 22 algorithms, `n_runs=5`, dims 5/10/20, seeds 42–51 |
+| Data | `results/phase2c/phase2c_matrix.json`: 720 rows, 22 algorithms, `n_runs=5`, dims 5/10/20, seeds 42–51 |
 | Model | one `RandomForestRegressor` over (features + algorithm one-hot), `n_estimators=300`, `RF_SEED=20260916` |
 | Target | per-row rank of each algorithm (1 = best of 22) |
 | Prediction | the algorithm with the lowest predicted rank |

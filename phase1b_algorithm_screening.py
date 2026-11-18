@@ -26,7 +26,7 @@ this path. Only the registered mealpy algorithms are covered.
 CMA_ES, AOA and DE are no longer registered: they run without error but do
 not optimise. See the exclusion note in aad/mealpy_algorithms.py.
 
-Writes results to results/phase1b_screening.{txt,json}.
+Writes results to results/phase1b/phase1b_screening.{txt,json}.
 
 Run:
     .venv\\Scripts\\python.exe phase1b_algorithm_screening.py
@@ -50,7 +50,7 @@ POPULATION_SIZE = 50
 MAX_FE = 5000
 SEEDS = [1000, 1001, 1002]
 
-OUT_DIR = "results"
+OUT_DIR = os.path.join("results", "phase1b")
 OUT_STEM = os.path.join(OUT_DIR, "phase1b_screening")
 
 BAR = "=" * 78

@@ -1,8 +1,8 @@
 # Phase 2c: Selector training matrix
 
 Status: **complete**. Script: `phase2c_expand_matrix.py`. Output:
-`results/phase2c_matrix.json`. Evaluation:
-`phase2_lopo.py --matrix results/phase2c_matrix.json --out-stem results/phase2c_lopo`.
+`results/phase2c/phase2c_matrix.json`. Evaluation:
+`phase2_lopo.py --matrix results/phase2c/phase2c_matrix.json --out-stem results/phase2c/phase2c_lopo`.
 
 Updated 2026-10-01 for the rebuilt matrix. Every figure below is literal output
 from those scripts, or from the checks named next to it, run against the
@@ -12,7 +12,7 @@ kept in the backup folder as `phase2c_matrix.96row_n3_legacy.json` (see
 `results/MANIFEST.md`) and its figures no longer apply.
 
 > **This matrix is for selector training only.** Its cells are medians of 5
-> runs, against 15 in `results/phase2_matrix.json`, which remains the
+> runs, against 15 in `results/phase2/phase2_matrix.json`, which remains the
 > authoritative source for any SBS/VBS figure quoted in the thesis.
 
 ## Purpose
@@ -51,7 +51,7 @@ reused across seeds or dimensions. Rows are keyed `{function}|s{seed}|d{dim}`.
 
 ## Integrity
 
-From `results/phase2c_matrix.json`:
+From `results/phase2c/phase2c_matrix.json`:
 
 ```
 rows=720 cells=15840 build_s=112514.4 (31.25 h)
@@ -85,7 +85,7 @@ has exactly 3 values, one per dimension built. That is expected, not a defect.
 
 ## Independence from the evaluation matrix
 
-The evaluation matrix (`results/phase2_matrix.json`) uses `problem_seed=100`,
+The evaluation matrix (`results/phase2/phase2_matrix.json`) uses `problem_seed=100`,
 which is not among this matrix's seeds:
 
 ```
@@ -136,7 +136,7 @@ SBS already matches the oracle on 235 of 720 rows.
 ## Limitations
 
 1. **5 runs per cell gives noisy labels.** Using the 15 stored runs per cell in
-   `results/phase2_matrix.json`, the algorithm picked from fewer runs lands
+   `results/phase2/phase2_matrix.json`, the algorithm picked from fewer runs lands
    within 1% of the 15-run best this often (computed 2026-10-01):
 
    ```
@@ -168,9 +168,9 @@ SBS already matches the oracle on 235 of 720 rows.
 ## Reproducing
 
 ```bash
-python phase2c_expand_matrix.py                # ~31 hours, writes results/phase2c_matrix.json
+python phase2c_expand_matrix.py                # ~31 hours, writes results/phase2c/phase2c_matrix.json
 python phase2c_expand_matrix.py --verify-only  # seconds; feature-variance check
-python phase2_lopo.py --matrix results/phase2c_matrix.json --out-stem results/phase2c_lopo
+python phase2_lopo.py --matrix results/phase2c/phase2c_matrix.json --out-stem results/phase2c/phase2c_lopo
 ```
 
 The build writes incrementally and resumes safely. It refuses to resume a file
