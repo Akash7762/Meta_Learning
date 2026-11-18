@@ -41,7 +41,7 @@ import numpy as np
 # Algorithms suspected of plagiarism (as flagged on the mealpy README) are
 # intentionally excluded.
 #
-# Also excluded (Phase 1b diagnostic, 2026-09-15) because their mealpy
+# Also excluded (v1 Phase 1b diagnostic, 2026-09-15) because their mealpy
 # implementations do not optimise. All three construct and run without error
 # and return finite values, so a crash-based smoke test does not catch them;
 # they were identified by budget-insensitivity (a 10x evaluation budget does
@@ -61,7 +61,7 @@ import numpy as np
 #           evaluations differ only in the fifth decimal.
 #
 # JADE remains registered: it is a different class in the same module and is
-# not affected. See results/phase1b/phase1b_screening.txt for the full evidence.
+# not affected. See results/phase1b/phase1b_screening.txt in git tag v1-final for the full evidence.
 
 MEALPY_REGISTRY: dict = {
     # ------------------------------------------------------------------ #

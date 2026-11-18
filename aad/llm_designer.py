@@ -21,7 +21,7 @@ The rule-based fallback is useful for testing, demos, and offline use.
 never reads the environment on its own: ``api_key=None`` means offline,
 whatever ``.env`` holds.
 
-Phase 5 uses :meth:`LLMDesigner.select_algorithm`: one call that must name one
+v1 Phase 5 uses :meth:`LLMDesigner.select_algorithm`: one call that must name one
 of the configured algorithms, with fixed generation settings, and that returns
 an unusable answer as unusable instead of replacing it.
 """
@@ -111,7 +111,7 @@ class LLMDesigner:
         the same response for repeated requests", not a guarantee.
     timeout_s : float, default 120
         Time limit for one HTTP request. Without one, a stalled connection
-        can block forever (seen in the first Phase 5 test call, 2026-10-08).
+        can block forever (seen in the first v1 Phase 5 test call, 2026-10-08).
     """
 
     def __init__(
@@ -277,7 +277,7 @@ class LLMDesigner:
             return self._rule_based_proposal(description)
 
     # ------------------------------------------------------------------
-    # Algorithm selection (Phase 5)
+    # Algorithm selection (v1 Phase 5)
     # ------------------------------------------------------------------
 
     @staticmethod
@@ -287,7 +287,7 @@ class LLMDesigner:
                                n_samples: int = None) -> str:
         """Problem text for :meth:`select_algorithm`. ``name`` and
         ``features`` are optional, so the same wording serves every
-        Phase 5 arm; a feature block needs ``n_samples``."""
+        v1 Phase 5 arm; a feature block needs ``n_samples``."""
         lines = []
         if name is not None:
             lines.append(f"Problem name: {name}.")

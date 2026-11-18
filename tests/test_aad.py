@@ -241,7 +241,7 @@ class TestEvolutionaryAlgorithm:
 
 class TestConfigSpace:
     def test_random_config_keys(self):
-        # EXTENDED_CONFIG_SPACE is the canonical default (Phase 0 decision)
+        # EXTENDED_CONFIG_SPACE is the canonical default (v1 Phase 0 decision)
         cfg = random_config()
         assert set(cfg.keys()) == set(EXTENDED_CONFIG_SPACE.keys())
 
