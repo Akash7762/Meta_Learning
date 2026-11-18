@@ -236,7 +236,7 @@ def g4_designer_default_space_is_predictable():
         return True, (
             "default space omits 'algorithm'; evolve() fails loudly with "
             f"ValueError: {str(exc)[:60]}... (predictable, but non-compliant "
-            "with the Phase 0 decision - see docs/planning/phase0/phase0_decision.md item 1)"
+            "with the Phase 0 decision - see docs/planning/phase0/phase0_decision.md item 1, git tag v1-final)"
         )
     except Exception as exc:                     # noqa: BLE001
         return False, f"failed with {type(exc).__name__}, not a clear ValueError"

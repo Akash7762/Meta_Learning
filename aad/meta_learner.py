@@ -60,7 +60,7 @@ class EA_Designer:
     evaluator : callable, optional
         ``evaluator(config, problem) -> float``, the raw best fitness of ONE
         run. Default ``None`` runs ``build_algorithm(config).run(problem)``.
-        Phase 4 passes a replay evaluator that hands out stored matrix runs.
+        v1 Phase 4 passes a replay evaluator that hands out stored matrix runs.
     max_runs : int, optional
         Run budget for each :meth:`evolve` call. ``None`` (default) keeps the
         fixed schedule: ``population_size`` initial candidates, then
