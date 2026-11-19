@@ -44,7 +44,9 @@ ALGORITHM_NAMES = {
     "ea": "this project's own evolutionary algorithm (tournament selection, "
           "SBX crossover, Gaussian mutation)",
     "GA": "Genetic Algorithm",
+    "DE": "Differential Evolution",
     "JADE": "JADE, an adaptive Differential Evolution",
+    "CMA_ES": "Covariance Matrix Adaptation Evolution Strategy",
     "SHADE": "Success-History Adaptation Differential Evolution",
     "L_SHADE": "Linear Population Size Reduction Success-History Adaptation "
                "Differential Evolution",
@@ -65,6 +67,7 @@ ALGORITHM_NAMES = {
     "SMA": "Slime Mould Algorithm",
     "BBO": "Biogeography-Based Optimization",
     "SCA": "Sine Cosine Algorithm",
+    "AOA": "Arithmetic Optimization Algorithm",
 }
 
 # What each stored landscape feature really is, from

@@ -82,8 +82,8 @@ def g1_extended_space_has_algorithm_key():
     if "algorithm" not in EXTENDED_CONFIG_SPACE:
         return False, "EXTENDED_CONFIG_SPACE has no 'algorithm' key"
     opts = EXTENDED_CONFIG_SPACE["algorithm"]
-    ok = opts[0] == "ea" and len(opts) == 22
-    return ok, f"{len(opts)} options, first={opts[0]!r} (expected 22, 'ea')"
+    ok = opts[0] == "ea" and len(opts) == 25
+    return ok, f"{len(opts)} options, first={opts[0]!r} (expected 25, 'ea')"
 
 
 def g1_random_config_ea_space_omits_algorithm():
@@ -341,7 +341,7 @@ def main() -> int:
     section("1. config space definitions")
     check("EA_CONFIG_SPACE has no 'algorithm' key",
           g1_ea_space_has_no_algorithm_key)
-    check("EXTENDED_CONFIG_SPACE has 'algorithm' with 22 options",
+    check("EXTENDED_CONFIG_SPACE has 'algorithm' with 25 options",
           g1_extended_space_has_algorithm_key)
     check("random_config(EA_CONFIG_SPACE) omits 'algorithm'",
           g1_random_config_ea_space_omits_algorithm)
