@@ -127,9 +127,17 @@ they are rebuilt there from the pinned files. In PowerShell:
    - `.venv-pflacco\Scripts\python.exe -m pip install -r requirements-pflacco.txt`
 4. Run: `.venv\Scripts\python.exe phase0_health_check.py`
    (a subset: `--only C1,C4`; describe without running: `--list`).
-5. Send the results back: `git add results/phase0`, then
+5. Send the results back: `git pull`, then `git add results/phase0`,
    `git commit -m "phase0: health check results"` and `git push`. On the first
    PC, `git pull` brings them over for step 3.
+
+Both computers push to the same GitHub repository (set up 2026-11-20). The
+second PC is signed in to GitHub with a different account, which needs write
+access first: on GitHub, the repository's Settings, Collaborators, Add people,
+then that account accepts the invitation. Two rules keep the computers from
+clashing: `git pull` before every run and before every push, and run a phase
+on one computer at a time. A re-run on the other computer replaces the result
+files; git keeps the earlier version in its history.
 
 No `.env` is needed: the script never calls an LLM API. Without a `.env`,
 defect #6 (".env loaded on import") shows NOT CHECKED. Run times and the CPU
