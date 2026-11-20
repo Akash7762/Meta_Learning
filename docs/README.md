@@ -22,9 +22,12 @@ report when all its steps finish without error.
 
 ## Phases
 
+Whole-project plan: [planning/project_plan.md](planning/project_plan.md)
+(draft; its phases follow the original README's pipeline).
+
 | Phase | Plan | Report | Status |
 |---|---|---|---|
-| 0 | — | — | not started: decide the rules |
+| 0 | [phase0_plan.md](planning/phase0/phase0_plan.md) | — | planned (draft): codebase health and connectivity check |
 
 ## Round one (v1), kept for reference only
 

@@ -39,20 +39,20 @@ EA_CONFIG_SPACE: Dict[str, List[Any]] = {
 # listed here but missing from the registry makes build_algorithm raise
 # ValueError as soon as the meta-learner samples it.
 #
-# CMA_ES, AOA and DE were removed on 2026-09-15 -- their mealpy
-# implementations run without error but do not optimise (see the exclusion
-# note in aad/mealpy_algorithms.py and results/phase1b/phase1b_screening.txt in git tag v1-final).
+# CMA_ES, AOA and DE were removed in v1 (2026-09-15) because their mealpy
+# implementations run without error but do not optimise, and restored on
+# 2026-11-19 at the user's request (see the note in aad/mealpy_algorithms.py).
 
 MEALPY_ALGORITHM_KEYS: List[str] = [
     # Evolutionary
-    "GA", "JADE", "SHADE", "L_SHADE",
+    "GA", "DE", "JADE", "CMA_ES", "SHADE", "L_SHADE",
     # Swarm
     "PSO", "GWO", "WOA", "HHO", "ABC",
     "GJO", "ARO", "AO", "MPA", "HBA",
     # Physics
     "SA", "EO", "MVO", "RIME",
     # Bio / Math
-    "SMA", "BBO", "SCA",
+    "SMA", "BBO", "SCA", "AOA",
 ]
 
 EXTENDED_CONFIG_SPACE: Dict[str, List[Any]] = {

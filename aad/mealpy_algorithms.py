@@ -41,27 +41,26 @@ import numpy as np
 # Algorithms suspected of plagiarism (as flagged on the mealpy README) are
 # intentionally excluded.
 #
-# Also excluded (v1 Phase 1b diagnostic, 2026-09-15) because their mealpy
-# implementations do not optimise. All three construct and run without error
-# and return finite values, so a crash-based smoke test does not catch them;
-# they were identified by budget-insensitivity (a 10x evaluation budget does
-# not improve the result) on BBOB F1 Sphere, dim=10:
+# CMA_ES, AOA and DE were excluded in v1 (Phase 1b diagnostic, 2026-09-15)
+# and restored on 2026-11-19 at the user's request, so the registry again
+# holds the project's original 24 algorithms. Keep in mind what v1 measured:
+# all three construct and run without error and return finite values (so a
+# crash-based smoke test does not catch them), but their mealpy
+# implementations did not optimise -- a 10x evaluation budget did not improve
+# the result on BBOB F1 Sphere, dim=10:
 #
-#   CMA_ES  ("mealpy.evolutionary_based.ES", "CMA_ES")
-#           Covariance matrix collapses (||C|| 2.97 -> 0.093) while the step
+#   CMA_ES  Covariance matrix collapses (||C|| 2.97 -> 0.093) while the step
 #           size never adapts (||sigma|| ~3.0 throughout), freezing the search
 #           3.34 away from the optimum. Identical result at 5k/20k/50k
 #           evaluations. mealpy exposes no parameters for it beyond epoch and
 #           pop_size, so there is no adapter-level fix.
-#   AOA     ("mealpy.math_based.AOA", "OriginalAOA")
-#           Returns 2.4756e+01 at every budget and never improves from its
+#   AOA     Returns 2.4756e+01 at every budget and never improves from its
 #           first epoch -- more completely frozen than CMA_ES.
-#   DE      ("mealpy.evolutionary_based.DE", "OriginalDE")
-#           Stagnates at ~7.3e-01 after early progress; 2000 vs 20000
+#   DE      Stagnates at ~7.3e-01 after early progress; 2000 vs 20000
 #           evaluations differ only in the fifth decimal.
 #
-# JADE remains registered: it is a different class in the same module and is
-# not affected. See results/phase1b/phase1b_screening.txt in git tag v1-final for the full evidence.
+# The v2 algorithm health screen (Phase 2) re-tests them before any data is
+# built. Evidence: results/phase1b/phase1b_screening.txt in git tag v1-final.
 
 MEALPY_REGISTRY: dict = {
     # ------------------------------------------------------------------ #
@@ -72,9 +71,19 @@ MEALPY_REGISTRY: dict = {
         "BaseGA",
         {},
     ),
+    "DE": (
+        "mealpy.evolutionary_based.DE",
+        "OriginalDE",
+        {},
+    ),
     "JADE": (
         "mealpy.evolutionary_based.DE",
         "JADE",
+        {},
+    ),
+    "CMA_ES": (
+        "mealpy.evolutionary_based.ES",
+        "CMA_ES",
         {},
     ),
     "SHADE": (
@@ -182,6 +191,11 @@ MEALPY_REGISTRY: dict = {
     "SCA": (
         "mealpy.math_based.SCA",
         "OriginalSCA",
+        {},
+    ),
+    "AOA": (
+        "mealpy.math_based.AOA",
+        "OriginalAOA",
         {},
     ),
 }
