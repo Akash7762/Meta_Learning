@@ -1,6 +1,7 @@
-# Phase 0 plan: codebase health and connectivity (DRAFT, for review)
+# Phase 0 plan: codebase health and connectivity (decisions taken, not yet run)
 
-Drafted 2026-11-18 on branch `v2`. Nothing has been run for Phase 0 yet.
+Drafted 2026-11-18 on branch `v2`; decisions D1 to D5 taken by 2026-11-20.
+Nothing has been run for Phase 0 yet.
 Phase 0 produces **no research result**. It proves the code is sound before
 any research starts.
 
@@ -101,19 +102,45 @@ algorithms. Each must be checked on v2, not assumed:
 
 | # | Step | Stop and ask? |
 |---|---|---|
-| 0 | You review this plan and decisions D1 to D4 | yes |
+| 0 | You review this plan and decisions D1 to D5 (done 2026-11-20) | yes |
 | 1 | Write `phase0_health_check.py`; show you what it does | yes |
-| 2 | Run it (expected: a few minutes) | only if the estimate is over about 2 minutes |
+| 2 | Run it on the second PC (rough estimate: 10 to 25 minutes; see below) | only if the estimate is over about 2 minutes |
 | 3 | Go through the findings together; decide each defect: fix in Phase 0, fix in Phase 2, or leave | yes |
 | 4 | Apply the fixes chosen for Phase 0, with tests; re-run until every check passes | yes, before each fix |
 | 5 | Write `docs/reports/phase0_report.md`; commit | yes, commit |
+
+## Running it on the second PC (decided 2026-11-20)
+
+Step 2 runs on the second PC. The two Python environments are not in git, so
+they are rebuilt there from the pinned files. In PowerShell:
+
+1. Python 3.11 must be installed (`py -0` lists it). Both environments here
+   are 3.11.9, and the pflacco pins (numpy 1.24.4) need 3.11.
+2. Get the code. First time:
+   `git clone https://github.com/Akash7762/Meta_Learning.git`, then
+   `cd Meta_Learning` and `git switch v2`. Later: `git switch v2` and `git pull`.
+3. Build the environments (the names must be exactly these; the script looks
+   for `.venv-pflacco`):
+   - `py -3.11 -m venv .venv`
+   - `.venv\Scripts\python.exe -m pip install -r requirements.txt`
+   - `py -3.11 -m venv .venv-pflacco`
+   - `.venv-pflacco\Scripts\python.exe -m pip install -r requirements-pflacco.txt`
+4. Run: `.venv\Scripts\python.exe phase0_health_check.py`
+   (a subset: `--only C1,C4`; describe without running: `--list`).
+5. Send the results back: `git add results/phase0`, then
+   `git commit -m "phase0: health check results"` and `git push`. On the first
+   PC, `git pull` brings them over for step 3.
+
+No `.env` is needed: the script never calls an LLM API. Without a `.env`,
+defect #6 (".env loaded on import") shows NOT CHECKED. Run times and the CPU
+count in defect #5 depend on the machine; the other checks do not.
 
 ## Decisions for you
 
 | # | Question | Recommendation |
 |---|---|---|
 | D1 | Should Phase 0 fix what it finds, or only report? | **Decided 2026-11-18: report only.** Fix in Phase 0 only what blocks the checks themselves (for example a broken import); everything else is fixed in Phase 2, once Phase 1 has set the rules |
-| D2 | Run `user_model_runner.py` and `test_runner.py` (your reference harnesses), or check them statically only? | static only (imports, compile, references): they are references, not the pipeline. Run `experiment_runner.py` for real, since it is the final-run file |
-| D3 | Keep the v1-era `test_phase0_config_consistency.py`? | keep it and call it from the new health check, so nothing is duplicated |
-| D4 | Check `.venv-pflacco` as well? | yes: pflacco imports and the problem fingerprint matches |
-| D5 | Run the README's code examples exactly as written? (The minimal example runs `EA_Designer` for real, on its default space with all 25 algorithms.) | yes, in a temporary folder, timed; a difference in behaviour is recorded, not fixed |
+| D2 | Run `user_model_runner.py` and `test_runner.py` (your reference harnesses), or check them statically only? | **Decided 2026-11-20:** static only (imports, compile, references): they are references, not the pipeline. Run `experiment_runner.py` for real, since it is the final-run file |
+| D3 | Keep the v1-era `test_phase0_config_consistency.py`? | **Decided 2026-11-20:** keep it and call it from the new health check, so nothing is duplicated |
+| D4 | Check `.venv-pflacco` as well? | **Decided 2026-11-20:** yes: pflacco imports and the problem fingerprint matches |
+| D5 | Run the README's code examples exactly as written? (The minimal example runs `EA_Designer` for real, on its default space with all 25 algorithms.) | **Decided 2026-11-20:** yes, in a temporary folder, timed; a difference in behaviour is recorded, not fixed |
