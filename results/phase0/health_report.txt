@@ -1,0 +1,342 @@
+Phase 0 health report
+========================================================================
+Generated 2026-11-20T17:14:04 with Python 3.11.9 (.venv/Scripts/python.exe)
+Checks run: C1, C2, C3, C4, C5, C6, C7, C8; total 1.5 min
+Plan: docs/planning/phase0/phase0_plan.md. This script changed no code.
+
+Summary
+  C1      27 s  INFO 1, PASS 31  -- imports: 12 modules in fresh processes, aad.__all__, every file compiles and its imports resolve
+  C2       9 s  FAIL 1, INFO 2, PASS 10  -- dependencies: imports covered by requirements.txt, installed = pinned in both environments, pflacco imports, BBOB fingerprint identical in both environments
+  C3      13 s  INFO 2, WARN 3  -- call map: every public function/class/method in aad, who refers to it, whether the tests run it
+  C4       1 s  PASS 7  -- fit between modules: algorithm lists, build_algorithm, operator settings, 30 problem classes, feature keys, surrogate shapes
+  C5      10 s  EXCEPTION 3, PASS 30  -- tiny working runs: 25 algorithms twice each, EA_Designer, LLMDesigner offline, EvaluationFramework, Visualizer, experiment_runner.py on one tiny problem
+  C6       3 s  CONFIRMED 11, ERROR 1, NOT CHECKED 1, NOT REPRODUCED 1, RULED OUT 2  -- known-defect register: confirm or rule out the 16 items in the plan
+  C7       1 s  PASS 2  -- test suites: tests/ (pytest) and test_phase0_config_consistency.py
+  C8      28 s  DIFFERS 8, INFO 1, MATCH 5, PASS 5, WARN 4  -- README check: names, code examples run as written (timed), claims compared with the code
+
+Needs attention (FAIL or ERROR): 2
+  C2 BBOB fingerprint, both environments: 13 of 72 (24 functions x dims 5/10/20, seed 100, 20 points each) bit-identical; numpy 2.4.6 vs 1.24.4; largest relative difference 1.24e-10 in ['F1_d5', 'F1_d10', 'F1_d20', 'F2_d5', 'F2_d10', 'F2_d20'
+  C6 #15 CMA_ES, AOA, DE do not optimise: LinAlgError: Matrix is not positive definite
+
+C1  imports: 12 modules in fresh processes, aad.__all__, every file compiles and its imports resolve
+------------------------------------------------------------------------
+[PASS] import aad
+    9.4 s in a fresh process
+[PASS] import aad.config_space
+    1.23 s in a fresh process
+[PASS] import aad.ea_components
+    1.18 s in a fresh process
+[PASS] import aad.evaluation
+    1.2 s in a fresh process
+[PASS] import aad.evolutionary_algorithm
+    1.17 s in a fresh process
+[PASS] import aad.landscape_features
+    1.18 s in a fresh process
+[PASS] import aad.llm_designer
+    1.18 s in a fresh process
+[PASS] import aad.mealpy_algorithms
+    1.2 s in a fresh process
+[PASS] import aad.meta_learner
+    1.19 s in a fresh process
+[PASS] import aad.problems
+    1.19 s in a fresh process
+[PASS] import aad.surrogate_model
+    1.19 s in a fresh process
+[PASS] import aad.visualization
+    1.2 s in a fresh process
+[INFO] modules imported
+    12 (aad and its 11 modules)
+[PASS] aad.__all__
+    53 names; missing: none; duplicated: none
+[PASS] compile + imports experiment_runner.py
+    compiles; 8 imports, all resolve
+[PASS] compile + imports phase0_health_check.py
+    compiles; 65 imports, all resolve
+[PASS] compile + imports test_phase0_config_consistency.py
+    compiles; 9 imports, all resolve
+[PASS] compile + imports test_runner.py
+    compiles; 8 imports, all resolve
+[PASS] compile + imports user_model_runner.py
+    compiles; 4 imports, all resolve
+[PASS] compile + imports aad/__init__.py
+    compiles; 11 imports, all resolve
+[PASS] compile + imports aad/config_space.py
+    compiles; 4 imports, all resolve
+[PASS] compile + imports aad/ea_components.py
+    compiles; 2 imports, all resolve
+[PASS] compile + imports aad/evaluation.py
+    compiles; 3 imports, all resolve
+[PASS] compile + imports aad/evolutionary_algorithm.py
+    compiles; 3 imports, all resolve
+[PASS] compile + imports aad/landscape_features.py
+    compiles; 1 imports, all resolve
+[PASS] compile + imports aad/llm_designer.py
+    compiles; 9 imports, all resolve
+[PASS] compile + imports aad/mealpy_algorithms.py
+    compiles; 4 imports, all resolve
+[PASS] compile + imports aad/meta_learner.py
+    compiles; 6 imports, all resolve
+[PASS] compile + imports aad/problems.py
+    compiles; 2 imports, all resolve
+[PASS] compile + imports aad/surrogate_model.py
+    compiles; 5 imports, all resolve
+[PASS] compile + imports aad/visualization.py
+    compiles; 4 imports, all resolve
+[PASS] compile + imports tests/test_aad.py
+    compiles; 14 imports, all resolve
+
+C2  dependencies: imports covered by requirements.txt, installed = pinned in both environments, pflacco imports, BBOB fingerprint identical in both environments
+------------------------------------------------------------------------
+[INFO] requirements.txt
+    59 pinned packages
+[PASS] import 'dotenv' covered
+    provided by python-dotenv
+[PASS] import 'google' covered
+    provided by google-auth, google-genai
+[PASS] import 'matplotlib' covered
+    provided by matplotlib
+[PASS] import 'mealpy' covered
+    provided by mealpy
+[PASS] import 'numpy' covered
+    provided by numpy
+[PASS] import 'pytest' covered
+    provided by pytest
+[PASS] import 'sklearn' covered
+    provided by scikit-learn
+[PASS] main .venv: installed = pinned
+    59 pins; differing: none; not installed: none
+[INFO] main .venv: installed but not pinned
+    none
+[PASS] .venv-pflacco: installed = pinned
+    Python 3.11.9; 25 pins; differing: none; not installed: none
+[PASS] .venv-pflacco: pflacco imports
+    pflacco: ok; pflacco.classical_ela_features: ok
+[FAIL] BBOB fingerprint, both environments
+    13 of 72 (24 functions x dims 5/10/20, seed 100, 20 points each) bit-identical; numpy 2.4.6 vs 1.24.4; largest relative difference 1.24e-10 in ['F1_d5', 'F1_d10', 'F1_d20', 'F2_d5', 'F2_d10', 'F2_d20', 'F3_d5', 'F3_d10', 'F3_d20', 'F4_d5', 'F4_d10', 'F4_d20', 'F5_d5', 'F5_d10', 'F5_d20', 'F6_d10', 'F6_d20', 'F7_d10', 'F7_d20', 'F9_d5', 'F9_d10', 'F9_d20', 'F10_d5', 'F10_d10', 'F10_d20', 'F11_d5', 'F11_d10', 'F11_d20', 'F12_d5', 'F12_d10', 'F12_d20', 'F13_d5', 'F13_d10', 'F13_d20', 'F14_d5', 'F14_d10', 'F14_d20', 'F15_d5', 'F15_d10', 'F15_d20', 'F16_d5', 'F16_d10', 'F16_d20', 'F17_d5', 'F17_d10', 'F17_d20', 'F18_d5', 'F18_d10', 'F18_d20', 'F19_d5', 'F19_d10', 'F19_d20', 'F21_d5', 'F23_d5', 'F23_d10', 'F23_d20', 'F24_d5', 'F24_d10', 'F24_d20']
+
+C3  call map: every public function/class/method in aad, who refers to it, whether the tests run it
+------------------------------------------------------------------------
+[INFO] call map written
+    138 items in aad (5 functions, 48 classes, 85 methods) -> results/phase0/call_map.csv; unused: 4, used only by scripts and tests: 2, used only by tests: 4, used, not run by tests: 66, used, tested: 62
+[WARN] items unused
+    4: EvaluationFramework.compare_configs, LLMDesigner.from_env, LLMDesigner.describe_for_selection, LLMDesigner.select_algorithm
+[WARN] items used only by tests
+    4: all_configs, vector_to_config, ZDT2Problem, SurrogateModel.predict_with_uncertainty
+[WARN] items used only by scripts and tests
+    2: OptimizationProblem.dimension, Visualizer.plot_algorithm_comparison
+[INFO] items used, not run by tests
+    66: SelectionOperator, SelectionOperator.select, CrossoverOperator, CrossoverOperator.crossover, MutationOperator, MutationOperator.mutate, EvaluationFramework.summarize, LLMDesigner.selection_prompt, LLMDesigner.parse_selection, OptimizationProblem.evaluate, OptimizationProblem.bounds, OptimizationProblem.is_multiobjective, RastriginProblem.is_multiobjective, RosenbrockProblem.bounds, RosenbrockProblem.is_multiobjective, AckleyProblem.bounds, AckleyProblem.is_multiobjective, ZDT2Problem.bounds, BBOB_F1_Sphere, BBOB_F1_Sphere.evaluate, BBOB_F2_EllipsoidalSeparable, BBOB_F2_EllipsoidalSeparable.evaluate, BBOB_F3_RastriginSeparable, BBOB_F3_RastriginSeparable.evaluate, BBOB_F4_BucheRastrigin, BBOB_F4_BucheRastrigin.evaluate, BBOB_F5_LinearSlope, BBOB_F5_LinearSlope.evaluate, BBOB_F6_AttractiveSector, BBOB_F6_AttractiveSector.evaluate, BBOB_F7_StepEllipsoidal, BBOB_F7_StepEllipsoidal.evaluate, BBOB_F8_Rosenbrock, BBOB_F8_Rosenbrock.evaluate, BBOB_F9_RosenbrockRotated, BBOB_F9_RosenbrockRotated.evaluate, BBOB_F10_EllipsoidalRotated, BBOB_F10_EllipsoidalRotated.evaluate, BBOB_F11_Discus, BBOB_F11_Discus.evaluate, BBOB_F12_BentCigar, BBOB_F12_BentCigar.evaluate, BBOB_F13_SharpRidge, BBOB_F13_SharpRidge.evaluate, BBOB_F14_DifferentPowers, BBOB_F14_DifferentPowers.evaluate, BBOB_F15_RastriginRotated, BBOB_F15_RastriginRotated.evaluate, BBOB_F16_Weierstrass, BBOB_F16_Weierstrass.evaluate, BBOB_F17_SchaffersF7, BBOB_F17_SchaffersF7.evaluate, BBOB_F18_SchaffersF7IllConditioned, BBOB_F18_SchaffersF7IllConditioned.evaluate, BBOB_F19_GriewankRosenbrock, BBOB_F19_GriewankRosenbrock.evaluate, BBOB_F20_Schwefel, BBOB_F20_Schwefel.evaluate, BBOB_F21_Gallagher101, BBOB_F21_Gallagher101.evaluate, BBOB_F22_Gallagher21, BBOB_F22_Gallagher21.evaluate, BBOB_F23_Katsuura, BBOB_F23_Katsuura.evaluate, BBOB_F24_LunacekBiRastrigin, BBOB_F24_LunacekBiRastrigin.evaluate
+
+C4  fit between modules: algorithm lists, build_algorithm, operator settings, 30 problem classes, feature keys, surrogate shapes
+------------------------------------------------------------------------
+[PASS] algorithm lists agree
+    registry 24, config_space list 24, EXTENDED options 25, LLM names 24 + 'ea'
+[PASS] build_algorithm reaches every algorithm
+    25 of 25 build and load their class
+[PASS] operator settings read only by ea
+    PSO with two different operator sets, same seed: identical result = True; ea with two operator sets, same seed: results differ = True; operator keys named in mealpy_algorithms.py at lines none
+[PASS] problem classes exported
+    30 exported (6 classic + 24 BBOB); 30 concrete classes in problems.py
+[PASS] 30 problem classes: evaluate, bounds, is_multiobjective, name
+    30 of 30 pass (dim 5, 10 points inside the bounds)
+[PASS] feature extractor returns the same 9 keys
+    30 of 30 problems; distinct key sets: 1; keys: ['dimension', 'fitness_max', 'fitness_mean', 'fitness_min', 'fitness_std', 'fitness_variance', 'gradient_magnitude', 'modality', 'ruggedness']
+[PASS] surrogate input and output shapes
+    config vector length [33] (expected 33); +9 features = 42 inputs; config -> vector -> config round trip: True; rf: predict(3 rows)->(3,), predict(1-D row)->(1,), uncertainty->(3,),(3,); gp: predict(3 rows)->(3,), predict(1-D row)->(1,), uncertainty->(3,),(3,)
+
+C5  tiny working runs: 25 algorithms twice each, EA_Designer, LLMDesigner offline, EvaluationFramework, Visualizer, experiment_runner.py on one tiny problem
+------------------------------------------------------------------------
+[EXCEPTION] tiny run ea
+    ignores max_fe=2000: used 1020 evaluations (pop x (generations + 1) = 1020); best 0.005058, identical twice; calibration probes 0 extra evaluations; 0.03 s
+[PASS] tiny run GA
+    2000 search evaluations for max_fe=2000; best 0.004579, identical twice; calibration probes 200 extra evaluations; 0.09 s
+[PASS] tiny run DE
+    2000 search evaluations for max_fe=2000; best 3.053, identical twice; calibration probes 200 extra evaluations; 0.06 s
+[PASS] tiny run JADE
+    2000 search evaluations for max_fe=2000; best 2.276e-07, identical twice; calibration probes 200 extra evaluations; 0.15 s
+[PASS] tiny run CMA_ES
+    2000 search evaluations for max_fe=2000; best 3.462, identical twice; calibration probes 200 extra evaluations; 0.16 s
+[PASS] tiny run SHADE
+    2000 search evaluations for max_fe=2000; best 8.645e-10, identical twice; calibration probes 200 extra evaluations; 0.14 s
+[PASS] tiny run L_SHADE
+    2000 search evaluations for max_fe=2000; best 4.124e-11, identical twice; calibration probes 200 extra evaluations; 0.15 s
+[PASS] tiny run PSO
+    2000 search evaluations for max_fe=2000; best 3.068e-14, identical twice; calibration probes 200 extra evaluations; 0.06 s
+[PASS] tiny run GWO
+    2000 search evaluations for max_fe=2000; best 0.0002112, identical twice; calibration probes 200 extra evaluations; 0.07 s
+[PASS] tiny run WOA
+    2000 search evaluations for max_fe=2000; best 0.006737, identical twice; calibration probes 200 extra evaluations; 0.05 s
+[EXCEPTION] tiny run HHO
+    over budget: 2010 search evaluations for max_fe=2000 (+10); best 1.964, identical twice; calibration probes 342 extra evaluations; 0.04 s
+[EXCEPTION] tiny run ABC
+    over budget: 2020 search evaluations for max_fe=2000 (+20); best 2.966e-06, identical twice; calibration probes 360 extra evaluations; 0.06 s
+[PASS] tiny run GJO
+    2000 search evaluations for max_fe=2000; best 0.1209, identical twice; calibration probes 200 extra evaluations; 0.05 s
+[PASS] tiny run ARO
+    2000 search evaluations for max_fe=2000; best 0.0001717, identical twice; calibration probes 200 extra evaluations; 0.07 s
+[PASS] tiny run AO
+    2000 search evaluations for max_fe=2000; best 7.351, identical twice; calibration probes 200 extra evaluations; 0.07 s
+[PASS] tiny run MPA
+    2000 search evaluations for max_fe=2000; best 1.627e-07, identical twice; calibration probes 200 extra evaluations; 0.05 s
+[PASS] tiny run HBA
+    2000 search evaluations for max_fe=2000; best 5.776e-05, identical twice; calibration probes 200 extra evaluations; 0.07 s
+[PASS] tiny run SA
+    2000 search evaluations for max_fe=2000; best 0.008223, identical twice; calibration probes 48 extra evaluations; 0.73 s; 69 evaluations outside the bounds
+[PASS] tiny run EO
+    1994 search evaluations for max_fe=2000; best 5.157e-10, identical twice; calibration probes 208 extra evaluations; 0.07 s
+[PASS] tiny run MVO
+    2000 search evaluations for max_fe=2000; best 1.69e-05, identical twice; calibration probes 200 extra evaluations; 0.09 s
+[PASS] tiny run RIME
+    2000 search evaluations for max_fe=2000; best 0.0001008, identical twice; calibration probes 200 extra evaluations; 0.05 s
+[PASS] tiny run SMA
+    2000 search evaluations for max_fe=2000; best 0.004003, identical twice; calibration probes 200 extra evaluations; 0.13 s
+[PASS] tiny run BBO
+    2000 search evaluations for max_fe=2000; best 0.1934, identical twice; calibration probes 200 extra evaluations; 0.07 s
+[PASS] tiny run SCA
+    2000 search evaluations for max_fe=2000; best 0.02406, identical twice; calibration probes 200 extra evaluations; 0.1 s
+[PASS] tiny run AOA
+    2000 search evaluations for max_fe=2000; best 4.997, identical twice; calibration probes 200 extra evaluations; 0.05 s
+[PASS] algorithms summary
+    25 of 25 finish, are finite and repeat exactly (BBOB F1, dim 5, seed 100, pop 20, max_fe 2000, seed 7); budget exceptions: ['ea', 'HHO', 'ABC']; evaluate outside the bounds: ['SA']
+[PASS] feature extraction
+    evaluations per extraction: dim 5 -> 850, dim 10 -> 1100
+[PASS] EA_Designer, tiny
+    best EO 0.00365; 8 runs; surrogate memory 8 rows; meta_convergence 2 points; 0.2 s (space reduced to pop 20, 20 generations)
+[PASS] LLMDesigner offline (no key)
+    rule-based proposal {'algorithm': 'SMA', 'population_size': 20, 'selection': 'tournament', 'crossover': 'sbx', 'mutation': 'gaussian', 'max_generations': 50}; every value is in EXTENDED_CONFIG_SPACE: True
+[PASS] LLMDesigner.select_algorithm offline
+    refuses without a key, as documented: RuntimeError: select_algorithm needs LLM mode: pass api_key or use LLMDesigner.from_env().
+[PASS] EvaluationFramework, 2 runs
+    keys ['best_fitness', 'convergence_speed', 'histories', 'mean_fitness', 'mean_runtime', 'stability', 'std_fitness', 'worst_fitness']; summarize() printed 6 lines
+[PASS] Visualizer, 4 plots
+    4 of 4 files written to the temporary folder
+[PASS] experiment_runner.py, tiny (SphereProblem dim 5, 1 meta-generation, 4 configs)
+    4 s; files written: ['results/experiment_results.json', 'results/fitness_SphereProblem.png', 'results/meta_SphereProblem.png']
+
+C6  known-defect register: confirm or rule out the 16 items in the plan
+------------------------------------------------------------------------
+[RULED OUT] #1 operator settings not masked
+    PSO ignores the operator keys (identical results: True), yet two PSO configurations that differ only in crossover encode differently: True; operator keys mentioned in meta_learner.py: [11, 45, 160, 161, 326, 350]
+[CONFIRMED] #2 feature points evaluated twice
+    one extraction (300 samples) used 850 evaluations at dim 5 and 1100 at dim 10, i.e. 600 + 50 x dimension
+    | double evaluation in sample_landscape: aad/landscape_features.py lines [58, 59, 97]
+[CONFIRMED] #3 ea ignores max_fe
+    ea with max_fe=2000, pop 20, 50 generations used 1020 evaluations (pop x (generations + 1) = 1020)
+[CONFIRMED] #4 failed runs replaced by 1e12
+    a problem that always returns NaN gives best_fitness=1e+12, warnings raised: 0, text printed: no
+    | aad/evaluation.py lines [28, 34]; aad/meta_learner.py lines [30, 34]
+[CONFIRMED] #5 surrogate n_jobs=-1 not repeatable
+    5 fits with the default n_jobs=-1 on identical data (24 CPUs): predictions bit-identical: False; largest difference 2.22e-16
+[NOT CHECKED] #6 importing aad loads .env
+    variable names added to the environment by 'import aad' (names only, values never read): none; .env present: False
+    | aad/llm_designer.py lines [36]
+[CONFIRMED] #7 three feature names mislead
+    fitness_variance = std/|mean|: True (= variance: False); modality = skewness: True (value 1.138, skew 1.138); ruggedness parameters ['fitnesses']: cannot see where points are: True
+[CONFIRMED] #8 experiment_runner.py: budgets, seeds, runs, LLM label
+    run_experiment: any seed: False; any max_fe (equal budget): False; default runs_per_eval=2; LLMDesigner built without a key at lines [198] (so it is the rule-based designer) and stored as 'llm_designer' at lines [256]
+[RULED OUT] #9 algorithm lists hold the same 24
+    registry, config_space list and LLM names hold the same 24: True; user_model_runner.py mentions 24 at lines [14, 19, 20, 133, 134, 275, 280, 290, 331, 366]
+[CONFIRMED] #10 LLM failure silently becomes a rule-based pick
+    with the API failing, propose_algorithm returned {'algorithm': 'WOA', 'population_size': 50, 'selection': 'tournament', 'crossover': 'sbx', 'mutation': 'gaussian', 'max_generations': 100} without raising; the only signal is printed text: '[LLMDesigner] API call failed (simulated API failure). Falling back to rule-based proposal.'; warnings: 0
+[CONFIRMED] #11 unused methods
+    unused by pipeline, scripts and tests: ['EvaluationFramework.compare_configs', 'LLMDesigner.from_env', 'LLMDesigner.describe_for_selection', 'LLMDesigner.select_algorithm']
+[CONFIRMED] #12 ZDT1/ZDT2 optimised as f1 + f2
+    ZDT1 returns 2 objectives; both algorithm families optimise their sum (2.946 = 0.3 + 2.646)
+[CONFIRMED] #13 pareto plot shows 200 random points
+    200 random points drawn at lines [298], plotted by plot_pareto_front at lines [300]
+[CONFIRMED] #14 EA_Designer's surrogate learns inside one problem only
+    the 9 feature columns are identical in all 8 rows of the surrogate memory: True; experiment_runner.py builds a new EA_Designer inside the per-problem loop at lines [227]
+[ERROR] #15 CMA_ES, AOA, DE do not optimise
+    LinAlgError: Matrix is not positive definite
+    | Traceback (most recent call last):
+    |   File "d:\META_LEARNING\Meta_Learning\phase0_health_check.py", line 1020, in item
+    |     status, detail, evidence = fn()
+    |                                ^^^^
+    |   File "d:\META_LEARNING\Meta_Learning\phase0_health_check.py", line 1232, in d15
+    |     "max_fe": fe, "seed": 7}).run(f1_sphere())
+    |                               ^^^^^^^^^^^^^^^^
+    |   File "d:\META_LEARNING\Meta_Learning\aad\mealpy_algorithms.py", line 396, in run
+    |     g_best = model.solve(
+    |              ^^^^^^^^^^^^
+    |   File "D:\META_LEARNING\Meta_Learning\.venv\Lib\site-packages\mealpy\optimizer.py", line 238, in solve
+    |     self.evolve(epoch)
+    |   File "D:\META_LEARNING\Meta_Learning\.venv\Lib\site-packages\mealpy\evolutionary_based\ES.py", line 272, in evolve
+    |     t11 = np.dot(self.x_step, np.linalg.inv(np.linalg.cholesky(self.C).T))
+    |                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\META_LEARNING\Meta_Learning\.venv\Lib\site-packages\numpy\linalg\_linalg.py", line 875, in cholesky
+    |     r = gufunc(a, signature=signature)
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\META_LEARNING\Meta_Learning\.venv\Lib\site-packages\numpy\linalg\_linalg.py", line 147, in _raise_linalgerror_nonposdef
+    |     raise LinAlgError("Matrix is not positive definite")
+    | numpy.linalg.LinAlgError: Matrix is not positive definite
+[NOT REPRODUCED] #16 ZDT1 square-root warning
+    RuntimeWarnings in this test run: none. ZDT1 evaluated at x1 = -0.5, outside its bounds, warns: ['invalid value encountered in sqrt']. Algorithms that evaluated points outside the bounds in C5: ['SA']
+
+C7  test suites: tests/ (pytest) and test_phase0_config_consistency.py
+------------------------------------------------------------------------
+[PASS] pytest tests/
+    56 passed, 0 failed, 0 skipped, 2 warnings; 12 s (under the profiler used by C3)
+[PASS] test_phase0_config_consistency.py
+    SUMMARY: 18 passed, 0 failed, 18 total; 1 s
+
+C8  README check: names, code examples run as written (timed), claims compared with the code
+------------------------------------------------------------------------
+[PASS] README names exist in aad
+    12 of 12; missing: none
+[PASS] README methods, parameters, meta_convergence
+    missing: none
+[PASS] README example 1: minimal example
+    as written: ok (7 s)
+[WARN] README example 2: custom problem
+    as written: NameError: name 'OptimizationProblem' is not defined (0 s); with only the undefined names supplied: ok (1 s)
+[PASS] README example 3: config space
+    as written: ok (0 s)
+[WARN] README example 4: EA_Designer
+    as written: NameError: name 'problem' is not defined (1 s); with only the undefined names supplied: ok (11 s)
+    | 
+    |   Evaluating initial meta-population (10 configs) …
+    |   Gen 0  best=0.000000  cfg={'algorithm': 'GJO', 'population_size': 20, 'selection': 'tournament', 'crossover': 'uniform', 'mutation': 'polynomial', 'max_generations': 200}
+    |   Gen 1  best=0.000000  cfg={'algorithm': 'GJO', 'population_size': 20, 'selection': 'tournament', 'crossover': 'uniform', 'mutation': 'polynomial', 'max_generations': 200}
+    |   Gen 2  best=0.000000  cfg={'algorithm': 'GJO', 'population_size': 20, 'selection': 'tournament', 'crossover': 'uniform', 'mutation': 'polynomial', 'max_generations': 200}
+    |   Gen 3  best=0.000000  cfg={'algorithm': 'GJO', 'population_size': 20, 'selection': 'tournament', 'crossover': 'uniform', 'mutation': 'polynomial', 'max_generations': 200}
+    |   Gen 4  best=0.000000  cfg={'algorithm': 'GJO', 'population_size': 20, 'selection': 'tournament', 'crossover': 'uniform', 'mutation': 'polynomial', 'max_generations': 200}
+    |   Gen 5  best=0.000000  cfg={'algorithm': 'GJO', 'population_size': 20, 'selection': 'tournament', 'crossover': 'uniform', 'mutation': 'polynomial', 'max_generations': 200}
+    | 
+    |   [OK] Best config : {'algorithm': 'GJO', 'population_size': 20, 'selection': 'tournament', 'crossover': 'uniform', 'mutation': 'polynomial', 'max_generations': 200}
+    |   [OK] Performance : 0.000000
+    | ============================================================
+[WARN] README example 5: LLM designer
+    as written: NameError: name 'problem' is not defined (1 s); with only the undefined names supplied: ok (2 s); network switched off for this block
+    | [LLMDesigner] API call failed (network disabled by phase0_health_check). Falling back to rule-based proposal.
+[WARN] README example 6: surrogate
+    as written: NameError: name 'X_train' is not defined (1 s); with only the undefined names supplied: ok (1 s)
+[INFO] README Quick Start 'python experiment_runner.py'
+    not run as written: it runs the full default experiment; C5 runs it for real on one tiny problem (D2)
+[PASS] custom problem with only the 3 README methods
+    runs through EvaluationFramework and the feature extractor: MyProblem 1.4e-05 9
+[DIFFERS] README claim: repository tree lists every aad module
+    not in the README tree: ['__init__.py', 'mealpy_algorithms.py']
+[MATCH] README claim: EA_CONFIG_SPACE equals the README's
+    identical
+[DIFFERS] README claim: EA_Designer searches the README's EA_CONFIG_SPACE by default
+    default space has 25 algorithms (keys ['algorithm', 'population_size', 'selection', 'crossover', 'mutation', 'max_generations'])
+[DIFFERS] README claim: result keys match the README's sample output
+    README shows ['best_fitness', 'mean_fitness', 'std_fitness', 'convergence_gen', 'stability', 'mean_runtime']; code returns ['best_fitness', 'convergence_speed', 'histories', 'mean_fitness', 'mean_runtime', 'stability', 'std_fitness', 'worst_fitness']
+[DIFFERS] README claim: LLM mode uses OpenAI, as the README says
+    imports openai: False; uses Google Gemini (google.genai): True
+[DIFFERS] README claim: Quick Start runs 5 benchmark problems
+    the default list in run_experiment has 24 active entries (read from the source, lines 163 on)
+[MATCH] README claim: output files named as in the README
+    expected ['results/experiment_results.json', 'results/fitness_SphereProblem.png', 'results/meta_SphereProblem.png']; the tiny run wrote ['results/experiment_results.json', 'results/fitness_SphereProblem.png', 'results/meta_SphereProblem.png']
+[DIFFERS] README claim: pareto_ZDT1Problem.png shows the EA's result
+    the runner plots 200 random points (see C6 #13)
+[DIFFERS] README claim: ZDT1/ZDT2 are optimised as multi-objective problems
+    both algorithm families optimise f1 + f2 (see C6 #12)
+[MATCH] README claim: surrogate screening on by default
+    use_surrogate=True
+[MATCH] README claim: parallel surrogate, n_jobs=-1
+    default n_jobs=-1 (repeatability: C6 #5)
+[MATCH] README claim: custom problems need only three methods
+    abstract methods: ['bounds', 'evaluate', 'is_multiobjective']
+[DIFFERS] README claim: README dependency list covers the imports
+    README lists ['matplotlib', 'numpy', 'openai', 'scikit-learn']; the code imports ['dotenv', 'google', 'matplotlib', 'mealpy', 'numpy', 'pytest', 'sklearn']

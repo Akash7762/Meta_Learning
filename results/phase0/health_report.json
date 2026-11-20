@@ -1,0 +1,1308 @@
+{
+  "generated": "2026-11-20T17:14:04",
+  "python": "3.11.9",
+  "executable": ".venv/Scripts/python.exe",
+  "checks_run": [
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C6",
+    "C7",
+    "C8"
+  ],
+  "seconds_total": 92.3,
+  "seconds_per_check": {
+    "C1": 26.6,
+    "C2": 8.8,
+    "C3": 13.2,
+    "C4": 0.8,
+    "C5": 10.1,
+    "C6": 3.2,
+    "C7": 1.4,
+    "C8": 28.2
+  },
+  "results": [
+    {
+      "check": "C1",
+      "item": "import aad",
+      "status": "PASS",
+      "detail": "9.4 s in a fresh process",
+      "evidence": ""
+    },
+    {
+      "check": "C1",
+      "item": "import aad.config_space",
+      "status": "PASS",
+      "detail": "1.23 s in a fresh process",
+      "evidence": ""
+    },
+    {
+      "check": "C1",
+      "item": "import aad.ea_components",
+      "status": "PASS",
+      "detail": "1.18 s in a fresh process",
+      "evidence": ""
+    },
+    {
+      "check": "C1",
+      "item": "import aad.evaluation",
+      "status": "PASS",
+      "detail": "1.2 s in a fresh process",
+      "evidence": ""
+    },
+    {
+      "check": "C1",
+      "item": "import aad.evolutionary_algorithm",
+      "status": "PASS",
+      "detail": "1.17 s in a fresh process",
+      "evidence": ""
+    },
+    {
+      "check": "C1",
+      "item": "import aad.landscape_features",
+      "status": "PASS",
+      "detail": "1.18 s in a fresh process",
+      "evidence": ""
+    },
+    {
+      "check": "C1",
+      "item": "import aad.llm_designer",
+      "status": "PASS",
+      "detail": "1.18 s in a fresh process",
+      "evidence": ""
+    },
+    {
+      "check": "C1",
+      "item": "import aad.mealpy_algorithms",
+      "status": "PASS",
+      "detail": "1.2 s in a fresh process",
+      "evidence": ""
+    },
+    {
+      "check": "C1",
+      "item": "import aad.meta_learner",
+      "status": "PASS",
+      "detail": "1.19 s in a fresh process",
+      "evidence": ""
+    },
+    {
+      "check": "C1",
+      "item": "import aad.problems",
+      "status": "PASS",
+      "detail": "1.19 s in a fresh process",
+      "evidence": ""
+    },
+    {
+      "check": "C1",
+      "item": "import aad.surrogate_model",
+      "status": "PASS",
+      "detail": "1.19 s in a fresh process",
+      "evidence": ""
+    },
+    {
+      "check": "C1",
+      "item": "import aad.visualization",
+      "status": "PASS",
+      "detail": "1.2 s in a fresh process",
+      "evidence": ""
+    },
+    {
+      "check": "C1",
+      "item": "modules imported",
+      "status": "INFO",
+      "detail": "12 (aad and its 11 modules)",
+      "evidence": ""
+    },
+    {
+      "check": "C1",
+      "item": "aad.__all__",
+      "status": "PASS",
+      "detail": "53 names; missing: none; duplicated: none",
+      "evidence": ""
+    },
+    {
+      "check": "C1",
+      "item": "compile + imports experiment_runner.py",
+      "status": "PASS",
+      "detail": "compiles; 8 imports, all resolve",
+      "evidence": ""
+    },
+    {
+      "check": "C1",
+      "item": "compile + imports phase0_health_check.py",
+      "status": "PASS",
+      "detail": "compiles; 65 imports, all resolve",
+      "evidence": ""
+    },
+    {
+      "check": "C1",
+      "item": "compile + imports test_phase0_config_consistency.py",
+      "status": "PASS",
+      "detail": "compiles; 9 imports, all resolve",
+      "evidence": ""
+    },
+    {
+      "check": "C1",
+      "item": "compile + imports test_runner.py",
+      "status": "PASS",
+      "detail": "compiles; 8 imports, all resolve",
+      "evidence": ""
+    },
+    {
+      "check": "C1",
+      "item": "compile + imports user_model_runner.py",
+      "status": "PASS",
+      "detail": "compiles; 4 imports, all resolve",
+      "evidence": ""
+    },
+    {
+      "check": "C1",
+      "item": "compile + imports aad/__init__.py",
+      "status": "PASS",
+      "detail": "compiles; 11 imports, all resolve",
+      "evidence": ""
+    },
+    {
+      "check": "C1",
+      "item": "compile + imports aad/config_space.py",
+      "status": "PASS",
+      "detail": "compiles; 4 imports, all resolve",
+      "evidence": ""
+    },
+    {
+      "check": "C1",
+      "item": "compile + imports aad/ea_components.py",
+      "status": "PASS",
+      "detail": "compiles; 2 imports, all resolve",
+      "evidence": ""
+    },
+    {
+      "check": "C1",
+      "item": "compile + imports aad/evaluation.py",
+      "status": "PASS",
+      "detail": "compiles; 3 imports, all resolve",
+      "evidence": ""
+    },
+    {
+      "check": "C1",
+      "item": "compile + imports aad/evolutionary_algorithm.py",
+      "status": "PASS",
+      "detail": "compiles; 3 imports, all resolve",
+      "evidence": ""
+    },
+    {
+      "check": "C1",
+      "item": "compile + imports aad/landscape_features.py",
+      "status": "PASS",
+      "detail": "compiles; 1 imports, all resolve",
+      "evidence": ""
+    },
+    {
+      "check": "C1",
+      "item": "compile + imports aad/llm_designer.py",
+      "status": "PASS",
+      "detail": "compiles; 9 imports, all resolve",
+      "evidence": ""
+    },
+    {
+      "check": "C1",
+      "item": "compile + imports aad/mealpy_algorithms.py",
+      "status": "PASS",
+      "detail": "compiles; 4 imports, all resolve",
+      "evidence": ""
+    },
+    {
+      "check": "C1",
+      "item": "compile + imports aad/meta_learner.py",
+      "status": "PASS",
+      "detail": "compiles; 6 imports, all resolve",
+      "evidence": ""
+    },
+    {
+      "check": "C1",
+      "item": "compile + imports aad/problems.py",
+      "status": "PASS",
+      "detail": "compiles; 2 imports, all resolve",
+      "evidence": ""
+    },
+    {
+      "check": "C1",
+      "item": "compile + imports aad/surrogate_model.py",
+      "status": "PASS",
+      "detail": "compiles; 5 imports, all resolve",
+      "evidence": ""
+    },
+    {
+      "check": "C1",
+      "item": "compile + imports aad/visualization.py",
+      "status": "PASS",
+      "detail": "compiles; 4 imports, all resolve",
+      "evidence": ""
+    },
+    {
+      "check": "C1",
+      "item": "compile + imports tests/test_aad.py",
+      "status": "PASS",
+      "detail": "compiles; 14 imports, all resolve",
+      "evidence": ""
+    },
+    {
+      "check": "C2",
+      "item": "requirements.txt",
+      "status": "INFO",
+      "detail": "59 pinned packages",
+      "evidence": ""
+    },
+    {
+      "check": "C2",
+      "item": "import 'dotenv' covered",
+      "status": "PASS",
+      "detail": "provided by python-dotenv",
+      "evidence": "used in aad/llm_designer.py, test_runner.py"
+    },
+    {
+      "check": "C2",
+      "item": "import 'google' covered",
+      "status": "PASS",
+      "detail": "provided by google-auth, google-genai",
+      "evidence": "used in aad/llm_designer.py"
+    },
+    {
+      "check": "C2",
+      "item": "import 'matplotlib' covered",
+      "status": "PASS",
+      "detail": "provided by matplotlib",
+      "evidence": "used in aad/visualization.py"
+    },
+    {
+      "check": "C2",
+      "item": "import 'mealpy' covered",
+      "status": "PASS",
+      "detail": "provided by mealpy",
+      "evidence": "used in aad/mealpy_algorithms.py"
+    },
+    {
+      "check": "C2",
+      "item": "import 'numpy' covered",
+      "status": "PASS",
+      "detail": "provided by numpy",
+      "evidence": "used in aad/config_space.py, aad/ea_components.py, aad/evaluation.py, aad/evolutionary_algorithm.py, aad/landscape_features.py, aad/mealpy_algorithms.py, aad/meta_learner.py, aad/problems.py, aad/surrogate_model.py, aad/visualization.py, experiment_runner.py, tests/test_aad.py, user_model_runner.py"
+    },
+    {
+      "check": "C2",
+      "item": "import 'pytest' covered",
+      "status": "PASS",
+      "detail": "provided by pytest",
+      "evidence": "used in tests/test_aad.py"
+    },
+    {
+      "check": "C2",
+      "item": "import 'sklearn' covered",
+      "status": "PASS",
+      "detail": "provided by scikit-learn",
+      "evidence": "used in aad/surrogate_model.py"
+    },
+    {
+      "check": "C2",
+      "item": "main .venv: installed = pinned",
+      "status": "PASS",
+      "detail": "59 pins; differing: none; not installed: none",
+      "evidence": ""
+    },
+    {
+      "check": "C2",
+      "item": "main .venv: installed but not pinned",
+      "status": "INFO",
+      "detail": "none",
+      "evidence": ""
+    },
+    {
+      "check": "C2",
+      "item": ".venv-pflacco: installed = pinned",
+      "status": "PASS",
+      "detail": "Python 3.11.9; 25 pins; differing: none; not installed: none",
+      "evidence": ""
+    },
+    {
+      "check": "C2",
+      "item": ".venv-pflacco: pflacco imports",
+      "status": "PASS",
+      "detail": "pflacco: ok; pflacco.classical_ela_features: ok",
+      "evidence": ""
+    },
+    {
+      "check": "C2",
+      "item": "BBOB fingerprint, both environments",
+      "status": "FAIL",
+      "detail": "13 of 72 (24 functions x dims 5/10/20, seed 100, 20 points each) bit-identical; numpy 2.4.6 vs 1.24.4; largest relative difference 1.24e-10 in ['F1_d5', 'F1_d10', 'F1_d20', 'F2_d5', 'F2_d10', 'F2_d20', 'F3_d5', 'F3_d10', 'F3_d20', 'F4_d5', 'F4_d10', 'F4_d20', 'F5_d5', 'F5_d10', 'F5_d20', 'F6_d10', 'F6_d20', 'F7_d10', 'F7_d20', 'F9_d5', 'F9_d10', 'F9_d20', 'F10_d5', 'F10_d10', 'F10_d20', 'F11_d5', 'F11_d10', 'F11_d20', 'F12_d5', 'F12_d10', 'F12_d20', 'F13_d5', 'F13_d10', 'F13_d20', 'F14_d5', 'F14_d10', 'F14_d20', 'F15_d5', 'F15_d10', 'F15_d20', 'F16_d5', 'F16_d10', 'F16_d20', 'F17_d5', 'F17_d10', 'F17_d20', 'F18_d5', 'F18_d10', 'F18_d20', 'F19_d5', 'F19_d10', 'F19_d20', 'F21_d5', 'F23_d5', 'F23_d10', 'F23_d20', 'F24_d5', 'F24_d10', 'F24_d20']",
+      "evidence": ""
+    },
+    {
+      "check": "C3",
+      "item": "call map written",
+      "status": "INFO",
+      "detail": "138 items in aad (5 functions, 48 classes, 85 methods) -> results/phase0/call_map.csv; unused: 4, used only by scripts and tests: 2, used only by tests: 4, used, not run by tests: 66, used, tested: 62",
+      "evidence": ""
+    },
+    {
+      "check": "C3",
+      "item": "items unused",
+      "status": "WARN",
+      "detail": "4: EvaluationFramework.compare_configs, LLMDesigner.from_env, LLMDesigner.describe_for_selection, LLMDesigner.select_algorithm",
+      "evidence": ""
+    },
+    {
+      "check": "C3",
+      "item": "items used only by tests",
+      "status": "WARN",
+      "detail": "4: all_configs, vector_to_config, ZDT2Problem, SurrogateModel.predict_with_uncertainty",
+      "evidence": ""
+    },
+    {
+      "check": "C3",
+      "item": "items used only by scripts and tests",
+      "status": "WARN",
+      "detail": "2: OptimizationProblem.dimension, Visualizer.plot_algorithm_comparison",
+      "evidence": ""
+    },
+    {
+      "check": "C3",
+      "item": "items used, not run by tests",
+      "status": "INFO",
+      "detail": "66: SelectionOperator, SelectionOperator.select, CrossoverOperator, CrossoverOperator.crossover, MutationOperator, MutationOperator.mutate, EvaluationFramework.summarize, LLMDesigner.selection_prompt, LLMDesigner.parse_selection, OptimizationProblem.evaluate, OptimizationProblem.bounds, OptimizationProblem.is_multiobjective, RastriginProblem.is_multiobjective, RosenbrockProblem.bounds, RosenbrockProblem.is_multiobjective, AckleyProblem.bounds, AckleyProblem.is_multiobjective, ZDT2Problem.bounds, BBOB_F1_Sphere, BBOB_F1_Sphere.evaluate, BBOB_F2_EllipsoidalSeparable, BBOB_F2_EllipsoidalSeparable.evaluate, BBOB_F3_RastriginSeparable, BBOB_F3_RastriginSeparable.evaluate, BBOB_F4_BucheRastrigin, BBOB_F4_BucheRastrigin.evaluate, BBOB_F5_LinearSlope, BBOB_F5_LinearSlope.evaluate, BBOB_F6_AttractiveSector, BBOB_F6_AttractiveSector.evaluate, BBOB_F7_StepEllipsoidal, BBOB_F7_StepEllipsoidal.evaluate, BBOB_F8_Rosenbrock, BBOB_F8_Rosenbrock.evaluate, BBOB_F9_RosenbrockRotated, BBOB_F9_RosenbrockRotated.evaluate, BBOB_F10_EllipsoidalRotated, BBOB_F10_EllipsoidalRotated.evaluate, BBOB_F11_Discus, BBOB_F11_Discus.evaluate, BBOB_F12_BentCigar, BBOB_F12_BentCigar.evaluate, BBOB_F13_SharpRidge, BBOB_F13_SharpRidge.evaluate, BBOB_F14_DifferentPowers, BBOB_F14_DifferentPowers.evaluate, BBOB_F15_RastriginRotated, BBOB_F15_RastriginRotated.evaluate, BBOB_F16_Weierstrass, BBOB_F16_Weierstrass.evaluate, BBOB_F17_SchaffersF7, BBOB_F17_SchaffersF7.evaluate, BBOB_F18_SchaffersF7IllConditioned, BBOB_F18_SchaffersF7IllConditioned.evaluate, BBOB_F19_GriewankRosenbrock, BBOB_F19_GriewankRosenbrock.evaluate, BBOB_F20_Schwefel, BBOB_F20_Schwefel.evaluate, BBOB_F21_Gallagher101, BBOB_F21_Gallagher101.evaluate, BBOB_F22_Gallagher21, BBOB_F22_Gallagher21.evaluate, BBOB_F23_Katsuura, BBOB_F23_Katsuura.evaluate, BBOB_F24_LunacekBiRastrigin, BBOB_F24_LunacekBiRastrigin.evaluate",
+      "evidence": ""
+    },
+    {
+      "check": "C4",
+      "item": "algorithm lists agree",
+      "status": "PASS",
+      "detail": "registry 24, config_space list 24, EXTENDED options 25, LLM names 24 + 'ea'",
+      "evidence": ""
+    },
+    {
+      "check": "C4",
+      "item": "build_algorithm reaches every algorithm",
+      "status": "PASS",
+      "detail": "25 of 25 build and load their class",
+      "evidence": ""
+    },
+    {
+      "check": "C4",
+      "item": "operator settings read only by ea",
+      "status": "PASS",
+      "detail": "PSO with two different operator sets, same seed: identical result = True; ea with two operator sets, same seed: results differ = True; operator keys named in mealpy_algorithms.py at lines none",
+      "evidence": ""
+    },
+    {
+      "check": "C4",
+      "item": "problem classes exported",
+      "status": "PASS",
+      "detail": "30 exported (6 classic + 24 BBOB); 30 concrete classes in problems.py",
+      "evidence": ""
+    },
+    {
+      "check": "C4",
+      "item": "30 problem classes: evaluate, bounds, is_multiobjective, name",
+      "status": "PASS",
+      "detail": "30 of 30 pass (dim 5, 10 points inside the bounds)",
+      "evidence": ""
+    },
+    {
+      "check": "C4",
+      "item": "feature extractor returns the same 9 keys",
+      "status": "PASS",
+      "detail": "30 of 30 problems; distinct key sets: 1; keys: ['dimension', 'fitness_max', 'fitness_mean', 'fitness_min', 'fitness_std', 'fitness_variance', 'gradient_magnitude', 'modality', 'ruggedness']",
+      "evidence": ""
+    },
+    {
+      "check": "C4",
+      "item": "surrogate input and output shapes",
+      "status": "PASS",
+      "detail": "config vector length [33] (expected 33); +9 features = 42 inputs; config -> vector -> config round trip: True; rf: predict(3 rows)->(3,), predict(1-D row)->(1,), uncertainty->(3,),(3,); gp: predict(3 rows)->(3,), predict(1-D row)->(1,), uncertainty->(3,),(3,)",
+      "evidence": ""
+    },
+    {
+      "check": "C5",
+      "item": "tiny run ea",
+      "status": "EXCEPTION",
+      "detail": "ignores max_fe=2000: used 1020 evaluations (pop x (generations + 1) = 1020); best 0.005058, identical twice; calibration probes 0 extra evaluations; 0.03 s",
+      "evidence": ""
+    },
+    {
+      "check": "C5",
+      "item": "tiny run GA",
+      "status": "PASS",
+      "detail": "2000 search evaluations for max_fe=2000; best 0.004579, identical twice; calibration probes 200 extra evaluations; 0.09 s",
+      "evidence": ""
+    },
+    {
+      "check": "C5",
+      "item": "tiny run DE",
+      "status": "PASS",
+      "detail": "2000 search evaluations for max_fe=2000; best 3.053, identical twice; calibration probes 200 extra evaluations; 0.06 s",
+      "evidence": ""
+    },
+    {
+      "check": "C5",
+      "item": "tiny run JADE",
+      "status": "PASS",
+      "detail": "2000 search evaluations for max_fe=2000; best 2.276e-07, identical twice; calibration probes 200 extra evaluations; 0.15 s",
+      "evidence": ""
+    },
+    {
+      "check": "C5",
+      "item": "tiny run CMA_ES",
+      "status": "PASS",
+      "detail": "2000 search evaluations for max_fe=2000; best 3.462, identical twice; calibration probes 200 extra evaluations; 0.16 s",
+      "evidence": ""
+    },
+    {
+      "check": "C5",
+      "item": "tiny run SHADE",
+      "status": "PASS",
+      "detail": "2000 search evaluations for max_fe=2000; best 8.645e-10, identical twice; calibration probes 200 extra evaluations; 0.14 s",
+      "evidence": ""
+    },
+    {
+      "check": "C5",
+      "item": "tiny run L_SHADE",
+      "status": "PASS",
+      "detail": "2000 search evaluations for max_fe=2000; best 4.124e-11, identical twice; calibration probes 200 extra evaluations; 0.15 s",
+      "evidence": ""
+    },
+    {
+      "check": "C5",
+      "item": "tiny run PSO",
+      "status": "PASS",
+      "detail": "2000 search evaluations for max_fe=2000; best 3.068e-14, identical twice; calibration probes 200 extra evaluations; 0.06 s",
+      "evidence": ""
+    },
+    {
+      "check": "C5",
+      "item": "tiny run GWO",
+      "status": "PASS",
+      "detail": "2000 search evaluations for max_fe=2000; best 0.0002112, identical twice; calibration probes 200 extra evaluations; 0.07 s",
+      "evidence": ""
+    },
+    {
+      "check": "C5",
+      "item": "tiny run WOA",
+      "status": "PASS",
+      "detail": "2000 search evaluations for max_fe=2000; best 0.006737, identical twice; calibration probes 200 extra evaluations; 0.05 s",
+      "evidence": ""
+    },
+    {
+      "check": "C5",
+      "item": "tiny run HHO",
+      "status": "EXCEPTION",
+      "detail": "over budget: 2010 search evaluations for max_fe=2000 (+10); best 1.964, identical twice; calibration probes 342 extra evaluations; 0.04 s",
+      "evidence": ""
+    },
+    {
+      "check": "C5",
+      "item": "tiny run ABC",
+      "status": "EXCEPTION",
+      "detail": "over budget: 2020 search evaluations for max_fe=2000 (+20); best 2.966e-06, identical twice; calibration probes 360 extra evaluations; 0.06 s",
+      "evidence": ""
+    },
+    {
+      "check": "C5",
+      "item": "tiny run GJO",
+      "status": "PASS",
+      "detail": "2000 search evaluations for max_fe=2000; best 0.1209, identical twice; calibration probes 200 extra evaluations; 0.05 s",
+      "evidence": ""
+    },
+    {
+      "check": "C5",
+      "item": "tiny run ARO",
+      "status": "PASS",
+      "detail": "2000 search evaluations for max_fe=2000; best 0.0001717, identical twice; calibration probes 200 extra evaluations; 0.07 s",
+      "evidence": ""
+    },
+    {
+      "check": "C5",
+      "item": "tiny run AO",
+      "status": "PASS",
+      "detail": "2000 search evaluations for max_fe=2000; best 7.351, identical twice; calibration probes 200 extra evaluations; 0.07 s",
+      "evidence": ""
+    },
+    {
+      "check": "C5",
+      "item": "tiny run MPA",
+      "status": "PASS",
+      "detail": "2000 search evaluations for max_fe=2000; best 1.627e-07, identical twice; calibration probes 200 extra evaluations; 0.05 s",
+      "evidence": ""
+    },
+    {
+      "check": "C5",
+      "item": "tiny run HBA",
+      "status": "PASS",
+      "detail": "2000 search evaluations for max_fe=2000; best 5.776e-05, identical twice; calibration probes 200 extra evaluations; 0.07 s",
+      "evidence": ""
+    },
+    {
+      "check": "C5",
+      "item": "tiny run SA",
+      "status": "PASS",
+      "detail": "2000 search evaluations for max_fe=2000; best 0.008223, identical twice; calibration probes 48 extra evaluations; 0.73 s; 69 evaluations outside the bounds",
+      "evidence": ""
+    },
+    {
+      "check": "C5",
+      "item": "tiny run EO",
+      "status": "PASS",
+      "detail": "1994 search evaluations for max_fe=2000; best 5.157e-10, identical twice; calibration probes 208 extra evaluations; 0.07 s",
+      "evidence": ""
+    },
+    {
+      "check": "C5",
+      "item": "tiny run MVO",
+      "status": "PASS",
+      "detail": "2000 search evaluations for max_fe=2000; best 1.69e-05, identical twice; calibration probes 200 extra evaluations; 0.09 s",
+      "evidence": ""
+    },
+    {
+      "check": "C5",
+      "item": "tiny run RIME",
+      "status": "PASS",
+      "detail": "2000 search evaluations for max_fe=2000; best 0.0001008, identical twice; calibration probes 200 extra evaluations; 0.05 s",
+      "evidence": ""
+    },
+    {
+      "check": "C5",
+      "item": "tiny run SMA",
+      "status": "PASS",
+      "detail": "2000 search evaluations for max_fe=2000; best 0.004003, identical twice; calibration probes 200 extra evaluations; 0.13 s",
+      "evidence": ""
+    },
+    {
+      "check": "C5",
+      "item": "tiny run BBO",
+      "status": "PASS",
+      "detail": "2000 search evaluations for max_fe=2000; best 0.1934, identical twice; calibration probes 200 extra evaluations; 0.07 s",
+      "evidence": ""
+    },
+    {
+      "check": "C5",
+      "item": "tiny run SCA",
+      "status": "PASS",
+      "detail": "2000 search evaluations for max_fe=2000; best 0.02406, identical twice; calibration probes 200 extra evaluations; 0.1 s",
+      "evidence": ""
+    },
+    {
+      "check": "C5",
+      "item": "tiny run AOA",
+      "status": "PASS",
+      "detail": "2000 search evaluations for max_fe=2000; best 4.997, identical twice; calibration probes 200 extra evaluations; 0.05 s",
+      "evidence": ""
+    },
+    {
+      "check": "C5",
+      "item": "algorithms summary",
+      "status": "PASS",
+      "detail": "25 of 25 finish, are finite and repeat exactly (BBOB F1, dim 5, seed 100, pop 20, max_fe 2000, seed 7); budget exceptions: ['ea', 'HHO', 'ABC']; evaluate outside the bounds: ['SA']",
+      "evidence": ""
+    },
+    {
+      "check": "C5",
+      "item": "feature extraction",
+      "status": "PASS",
+      "detail": "evaluations per extraction: dim 5 -> 850, dim 10 -> 1100",
+      "evidence": ""
+    },
+    {
+      "check": "C5",
+      "item": "EA_Designer, tiny",
+      "status": "PASS",
+      "detail": "best EO 0.00365; 8 runs; surrogate memory 8 rows; meta_convergence 2 points; 0.2 s (space reduced to pop 20, 20 generations)",
+      "evidence": ""
+    },
+    {
+      "check": "C5",
+      "item": "LLMDesigner offline (no key)",
+      "status": "PASS",
+      "detail": "rule-based proposal {'algorithm': 'SMA', 'population_size': 20, 'selection': 'tournament', 'crossover': 'sbx', 'mutation': 'gaussian', 'max_generations': 50}; every value is in EXTENDED_CONFIG_SPACE: True",
+      "evidence": ""
+    },
+    {
+      "check": "C5",
+      "item": "LLMDesigner.select_algorithm offline",
+      "status": "PASS",
+      "detail": "refuses without a key, as documented: RuntimeError: select_algorithm needs LLM mode: pass api_key or use LLMDesigner.from_env().",
+      "evidence": ""
+    },
+    {
+      "check": "C5",
+      "item": "EvaluationFramework, 2 runs",
+      "status": "PASS",
+      "detail": "keys ['best_fitness', 'convergence_speed', 'histories', 'mean_fitness', 'mean_runtime', 'stability', 'std_fitness', 'worst_fitness']; summarize() printed 6 lines",
+      "evidence": ""
+    },
+    {
+      "check": "C5",
+      "item": "Visualizer, 4 plots",
+      "status": "PASS",
+      "detail": "4 of 4 files written to the temporary folder",
+      "evidence": ""
+    },
+    {
+      "check": "C5",
+      "item": "experiment_runner.py, tiny (SphereProblem dim 5, 1 meta-generation, 4 configs)",
+      "status": "PASS",
+      "detail": "4 s; files written: ['results/experiment_results.json', 'results/fitness_SphereProblem.png', 'results/meta_SphereProblem.png']",
+      "evidence": ""
+    },
+    {
+      "check": "C6",
+      "item": "#1 operator settings not masked",
+      "status": "RULED OUT",
+      "detail": "PSO ignores the operator keys (identical results: True), yet two PSO configurations that differ only in crossover encode differently: True; operator keys mentioned in meta_learner.py: [11, 45, 160, 161, 326, 350]",
+      "evidence": ""
+    },
+    {
+      "check": "C6",
+      "item": "#2 feature points evaluated twice",
+      "status": "CONFIRMED",
+      "detail": "one extraction (300 samples) used 850 evaluations at dim 5 and 1100 at dim 10, i.e. 600 + 50 x dimension",
+      "evidence": "double evaluation in sample_landscape: aad/landscape_features.py lines [58, 59, 97]"
+    },
+    {
+      "check": "C6",
+      "item": "#3 ea ignores max_fe",
+      "status": "CONFIRMED",
+      "detail": "ea with max_fe=2000, pop 20, 50 generations used 1020 evaluations (pop x (generations + 1) = 1020)",
+      "evidence": ""
+    },
+    {
+      "check": "C6",
+      "item": "#4 failed runs replaced by 1e12",
+      "status": "CONFIRMED",
+      "detail": "a problem that always returns NaN gives best_fitness=1e+12, warnings raised: 0, text printed: no",
+      "evidence": "aad/evaluation.py lines [28, 34]; aad/meta_learner.py lines [30, 34]"
+    },
+    {
+      "check": "C6",
+      "item": "#5 surrogate n_jobs=-1 not repeatable",
+      "status": "CONFIRMED",
+      "detail": "5 fits with the default n_jobs=-1 on identical data (24 CPUs): predictions bit-identical: False; largest difference 2.22e-16",
+      "evidence": ""
+    },
+    {
+      "check": "C6",
+      "item": "#6 importing aad loads .env",
+      "status": "NOT CHECKED",
+      "detail": "variable names added to the environment by 'import aad' (names only, values never read): none; .env present: False",
+      "evidence": "aad/llm_designer.py lines [36]"
+    },
+    {
+      "check": "C6",
+      "item": "#7 three feature names mislead",
+      "status": "CONFIRMED",
+      "detail": "fitness_variance = std/|mean|: True (= variance: False); modality = skewness: True (value 1.138, skew 1.138); ruggedness parameters ['fitnesses']: cannot see where points are: True",
+      "evidence": ""
+    },
+    {
+      "check": "C6",
+      "item": "#8 experiment_runner.py: budgets, seeds, runs, LLM label",
+      "status": "CONFIRMED",
+      "detail": "run_experiment: any seed: False; any max_fe (equal budget): False; default runs_per_eval=2; LLMDesigner built without a key at lines [198] (so it is the rule-based designer) and stored as 'llm_designer' at lines [256]",
+      "evidence": ""
+    },
+    {
+      "check": "C6",
+      "item": "#9 algorithm lists hold the same 24",
+      "status": "RULED OUT",
+      "detail": "registry, config_space list and LLM names hold the same 24: True; user_model_runner.py mentions 24 at lines [14, 19, 20, 133, 134, 275, 280, 290, 331, 366]",
+      "evidence": ""
+    },
+    {
+      "check": "C6",
+      "item": "#10 LLM failure silently becomes a rule-based pick",
+      "status": "CONFIRMED",
+      "detail": "with the API failing, propose_algorithm returned {'algorithm': 'WOA', 'population_size': 50, 'selection': 'tournament', 'crossover': 'sbx', 'mutation': 'gaussian', 'max_generations': 100} without raising; the only signal is printed text: '[LLMDesigner] API call failed (simulated API failure). Falling back to rule-based proposal.'; warnings: 0",
+      "evidence": ""
+    },
+    {
+      "check": "C6",
+      "item": "#11 unused methods",
+      "status": "CONFIRMED",
+      "detail": "unused by pipeline, scripts and tests: ['EvaluationFramework.compare_configs', 'LLMDesigner.from_env', 'LLMDesigner.describe_for_selection', 'LLMDesigner.select_algorithm']",
+      "evidence": ""
+    },
+    {
+      "check": "C6",
+      "item": "#12 ZDT1/ZDT2 optimised as f1 + f2",
+      "status": "CONFIRMED",
+      "detail": "ZDT1 returns 2 objectives; both algorithm families optimise their sum (2.946 = 0.3 + 2.646)",
+      "evidence": ""
+    },
+    {
+      "check": "C6",
+      "item": "#13 pareto plot shows 200 random points",
+      "status": "CONFIRMED",
+      "detail": "200 random points drawn at lines [298], plotted by plot_pareto_front at lines [300]",
+      "evidence": ""
+    },
+    {
+      "check": "C6",
+      "item": "#14 EA_Designer's surrogate learns inside one problem only",
+      "status": "CONFIRMED",
+      "detail": "the 9 feature columns are identical in all 8 rows of the surrogate memory: True; experiment_runner.py builds a new EA_Designer inside the per-problem loop at lines [227]",
+      "evidence": ""
+    },
+    {
+      "check": "C6",
+      "item": "#15 CMA_ES, AOA, DE do not optimise",
+      "status": "ERROR",
+      "detail": "LinAlgError: Matrix is not positive definite",
+      "evidence": "Traceback (most recent call last):\n  File \"d:\\META_LEARNING\\Meta_Learning\\phase0_health_check.py\", line 1020, in item\n    status, detail, evidence = fn()\n                               ^^^^\n  File \"d:\\META_LEARNING\\Meta_Learning\\phase0_health_check.py\", line 1232, in d15\n    \"max_fe\": fe, \"seed\": 7}).run(f1_sphere())\n                              ^^^^^^^^^^^^^^^^\n  File \"d:\\META_LEARNING\\Meta_Learning\\aad\\mealpy_algorithms.py\", line 396, in run\n    g_best = model.solve(\n             ^^^^^^^^^^^^\n  File \"D:\\META_LEARNING\\Meta_Learning\\.venv\\Lib\\site-packages\\mealpy\\optimizer.py\", line 238, in solve\n    self.evolve(epoch)\n  File \"D:\\META_LEARNING\\Meta_Learning\\.venv\\Lib\\site-packages\\mealpy\\evolutionary_based\\ES.py\", line 272, in evolve\n    t11 = np.dot(self.x_step, np.linalg.inv(np.linalg.cholesky(self.C).T))\n                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\META_LEARNING\\Meta_Learning\\.venv\\Lib\\site-packages\\numpy\\linalg\\_linalg.py\", line 875, in cholesky\n    r = gufunc(a, signature=signature)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\META_LEARNING\\Meta_Learning\\.venv\\Lib\\site-packages\\numpy\\linalg\\_linalg.py\", line 147, in _raise_linalgerror_nonposdef\n    raise LinAlgError(\"Matrix is not positive definite\")\nnumpy.linalg.LinAlgError: Matrix is not positive definite\n"
+    },
+    {
+      "check": "C6",
+      "item": "#16 ZDT1 square-root warning",
+      "status": "NOT REPRODUCED",
+      "detail": "RuntimeWarnings in this test run: none. ZDT1 evaluated at x1 = -0.5, outside its bounds, warns: ['invalid value encountered in sqrt']. Algorithms that evaluated points outside the bounds in C5: ['SA']",
+      "evidence": ""
+    },
+    {
+      "check": "C7",
+      "item": "pytest tests/",
+      "status": "PASS",
+      "detail": "56 passed, 0 failed, 0 skipped, 2 warnings; 12 s (under the profiler used by C3)",
+      "evidence": "........................................................                                                                                                                                                             [100%]\n==================================================================================================== warnings summary =====================================================================================================\n.venv\\Lib\\site-packages\\_pytest\\config\\__init__.py:1345\n  D:\\META_LEARNING\\Meta_Learning\\.venv\\Lib\\site-packages\\_pytest\\config\\__init__.py:1345: PytestAssertRewriteWarning: Module already imported so cannot be rewritten; anyio\n    self._mark_plugins_for_rewrite(hook, disable_autoload)\n\ntests/test_aad.py::TestSurrogateModel::test_gp_fit_predict\n  D:\\META_LEARNING\\Meta_Learning\\.venv\\Lib\\site-packages\\sklearn\\gaussian_process\\kernels.py:445: ConvergenceWarning: The optimal value found for dimension 0 of parameter k2__length_scale is close to the specified lower bound 1e-05. Decreasing the bound and calling fit again may find a better value.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n56 passed, 2 warnings in 12.07s"
+    },
+    {
+      "check": "C7",
+      "item": "test_phase0_config_consistency.py",
+      "status": "PASS",
+      "detail": "SUMMARY: 18 passed, 0 failed, 18 total; 1 s",
+      "evidence": "         50/50 offspring retained 'algorithm'\n[PASS] EA_Designer.evolve smoke run on narrowed EXTENDED\n         best algorithm='ea' perf=0.0242229\n\n--- 5. LLMDesigner entry point (rule-based path only, no network) -\n[PASS] rule-based proposal emits a valid 'algorithm' (EXTENDED)\n         proposed algorithm='GWO'\n[PASS] rule-based proposal is accepted by build_algorithm\n         proposal built -> MealpyAlgorithm\n[PASS] LLMDesigner(EA_CONFIG_SPACE) still emits 'algorithm'\n         always emits 'algorithm'; reachable values = ['ea'] (collapses to 'ea' - conflates question (a) with (b))\n\n======================================================================\n  SUMMARY: 18 passed, 0 failed, 18 total\n======================================================================"
+    },
+    {
+      "check": "C8",
+      "item": "README names exist in aad",
+      "status": "PASS",
+      "detail": "12 of 12; missing: none",
+      "evidence": ""
+    },
+    {
+      "check": "C8",
+      "item": "README methods, parameters, meta_convergence",
+      "status": "PASS",
+      "detail": "missing: none",
+      "evidence": ""
+    },
+    {
+      "check": "C8",
+      "item": "README example 1: minimal example",
+      "status": "PASS",
+      "detail": "as written: ok (7 s)",
+      "evidence": "============================================================\n    run 1/5: best=0.000000  time=0.25s\n    run 2/5: best=0.000000  time=0.26s\n    run 3/5: best=0.000000  time=0.26s\n    run 4/5: best=0.000000  time=0.25s\n    run 5/5: best=0.000000  time=0.25s\n    best_fitness    : 0.000000\n    mean_fitness    : 0.000000\n    std_fitness     : 0.000000\n    convergence_gen : 4.8\n    stability       : 372765468.186\n    mean_runtime    : 0.25s"
+    },
+    {
+      "check": "C8",
+      "item": "README example 2: custom problem",
+      "status": "WARN",
+      "detail": "as written: NameError: name 'OptimizationProblem' is not defined (0 s); with only the undefined names supplied: ok (1 s)",
+      "evidence": ""
+    },
+    {
+      "check": "C8",
+      "item": "README example 3: config space",
+      "status": "PASS",
+      "detail": "as written: ok (0 s)",
+      "evidence": ""
+    },
+    {
+      "check": "C8",
+      "item": "README example 4: EA_Designer",
+      "status": "WARN",
+      "detail": "as written: NameError: name 'problem' is not defined (1 s); with only the undefined names supplied: ok (11 s)",
+      "evidence": "\n  Evaluating initial meta-population (10 configs) \u2026\n  Gen 0  best=0.000000  cfg={'algorithm': 'GJO', 'population_size': 20, 'selection': 'tournament', 'crossover': 'uniform', 'mutation': 'polynomial', 'max_generations': 200}\n  Gen 1  best=0.000000  cfg={'algorithm': 'GJO', 'population_size': 20, 'selection': 'tournament', 'crossover': 'uniform', 'mutation': 'polynomial', 'max_generations': 200}\n  Gen 2  best=0.000000  cfg={'algorithm': 'GJO', 'population_size': 20, 'selection': 'tournament', 'crossover': 'uniform', 'mutation': 'polynomial', 'max_generations': 200}\n  Gen 3  best=0.000000  cfg={'algorithm': 'GJO', 'population_size': 20, 'selection': 'tournament', 'crossover': 'uniform', 'mutation': 'polynomial', 'max_generations': 200}\n  Gen 4  best=0.000000  cfg={'algorithm': 'GJO', 'population_size': 20, 'selection': 'tournament', 'crossover': 'uniform', 'mutation': 'polynomial', 'max_generations': 200}\n  Gen 5  best=0.000000  cfg={'algorithm': 'GJO', 'population_size': 20, 'selection': 'tournament', 'crossover': 'uniform', 'mutation': 'polynomial', 'max_generations': 200}\n\n  [OK] Best config : {'algorithm': 'GJO', 'population_size': 20, 'selection': 'tournament', 'crossover': 'uniform', 'mutation': 'polynomial', 'max_generations': 200}\n  [OK] Performance : 0.000000\n============================================================"
+    },
+    {
+      "check": "C8",
+      "item": "README example 5: LLM designer",
+      "status": "WARN",
+      "detail": "as written: NameError: name 'problem' is not defined (1 s); with only the undefined names supplied: ok (2 s); network switched off for this block",
+      "evidence": "[LLMDesigner] API call failed (network disabled by phase0_health_check). Falling back to rule-based proposal."
+    },
+    {
+      "check": "C8",
+      "item": "README example 6: surrogate",
+      "status": "WARN",
+      "detail": "as written: NameError: name 'X_train' is not defined (1 s); with only the undefined names supplied: ok (1 s)",
+      "evidence": ""
+    },
+    {
+      "check": "C8",
+      "item": "README Quick Start 'python experiment_runner.py'",
+      "status": "INFO",
+      "detail": "not run as written: it runs the full default experiment; C5 runs it for real on one tiny problem (D2)",
+      "evidence": ""
+    },
+    {
+      "check": "C8",
+      "item": "custom problem with only the 3 README methods",
+      "status": "PASS",
+      "detail": "runs through EvaluationFramework and the feature extractor: MyProblem 1.4e-05 9",
+      "evidence": ""
+    },
+    {
+      "check": "C8",
+      "item": "README claim: repository tree lists every aad module",
+      "status": "DIFFERS",
+      "detail": "not in the README tree: ['__init__.py', 'mealpy_algorithms.py']",
+      "evidence": ""
+    },
+    {
+      "check": "C8",
+      "item": "README claim: EA_CONFIG_SPACE equals the README's",
+      "status": "MATCH",
+      "detail": "identical",
+      "evidence": ""
+    },
+    {
+      "check": "C8",
+      "item": "README claim: EA_Designer searches the README's EA_CONFIG_SPACE by default",
+      "status": "DIFFERS",
+      "detail": "default space has 25 algorithms (keys ['algorithm', 'population_size', 'selection', 'crossover', 'mutation', 'max_generations'])",
+      "evidence": ""
+    },
+    {
+      "check": "C8",
+      "item": "README claim: result keys match the README's sample output",
+      "status": "DIFFERS",
+      "detail": "README shows ['best_fitness', 'mean_fitness', 'std_fitness', 'convergence_gen', 'stability', 'mean_runtime']; code returns ['best_fitness', 'convergence_speed', 'histories', 'mean_fitness', 'mean_runtime', 'stability', 'std_fitness', 'worst_fitness']",
+      "evidence": ""
+    },
+    {
+      "check": "C8",
+      "item": "README claim: LLM mode uses OpenAI, as the README says",
+      "status": "DIFFERS",
+      "detail": "imports openai: False; uses Google Gemini (google.genai): True",
+      "evidence": ""
+    },
+    {
+      "check": "C8",
+      "item": "README claim: Quick Start runs 5 benchmark problems",
+      "status": "DIFFERS",
+      "detail": "the default list in run_experiment has 24 active entries (read from the source, lines 163 on)",
+      "evidence": ""
+    },
+    {
+      "check": "C8",
+      "item": "README claim: output files named as in the README",
+      "status": "MATCH",
+      "detail": "expected ['results/experiment_results.json', 'results/fitness_SphereProblem.png', 'results/meta_SphereProblem.png']; the tiny run wrote ['results/experiment_results.json', 'results/fitness_SphereProblem.png', 'results/meta_SphereProblem.png']",
+      "evidence": ""
+    },
+    {
+      "check": "C8",
+      "item": "README claim: pareto_ZDT1Problem.png shows the EA's result",
+      "status": "DIFFERS",
+      "detail": "the runner plots 200 random points (see C6 #13)",
+      "evidence": ""
+    },
+    {
+      "check": "C8",
+      "item": "README claim: ZDT1/ZDT2 are optimised as multi-objective problems",
+      "status": "DIFFERS",
+      "detail": "both algorithm families optimise f1 + f2 (see C6 #12)",
+      "evidence": ""
+    },
+    {
+      "check": "C8",
+      "item": "README claim: surrogate screening on by default",
+      "status": "MATCH",
+      "detail": "use_surrogate=True",
+      "evidence": ""
+    },
+    {
+      "check": "C8",
+      "item": "README claim: parallel surrogate, n_jobs=-1",
+      "status": "MATCH",
+      "detail": "default n_jobs=-1 (repeatability: C6 #5)",
+      "evidence": ""
+    },
+    {
+      "check": "C8",
+      "item": "README claim: custom problems need only three methods",
+      "status": "MATCH",
+      "detail": "abstract methods: ['bounds', 'evaluate', 'is_multiobjective']",
+      "evidence": ""
+    },
+    {
+      "check": "C8",
+      "item": "README claim: README dependency list covers the imports",
+      "status": "DIFFERS",
+      "detail": "README lists ['matplotlib', 'numpy', 'openai', 'scikit-learn']; the code imports ['dotenv', 'google', 'matplotlib', 'mealpy', 'numpy', 'pytest', 'sklearn']",
+      "evidence": ""
+    }
+  ],
+  "tiny_runs": [
+    {
+      "algorithm": "ea",
+      "best_run1": 0.005057761879259083,
+      "best_run2": 0.005057761879259083,
+      "evals_run1": 1020,
+      "evals_run2": 1020,
+      "out_of_bounds_evals": 0,
+      "secs_run2": 0.03,
+      "status": "EXCEPTION"
+    },
+    {
+      "algorithm": "GA",
+      "best_run1": 0.004579431360425522,
+      "best_run2": 0.004579431360425522,
+      "evals_run1": 2200,
+      "evals_run2": 2000,
+      "out_of_bounds_evals": 0,
+      "secs_run2": 0.09,
+      "status": "PASS"
+    },
+    {
+      "algorithm": "DE",
+      "best_run1": 3.0534492931566395,
+      "best_run2": 3.0534492931566395,
+      "evals_run1": 2200,
+      "evals_run2": 2000,
+      "out_of_bounds_evals": 0,
+      "secs_run2": 0.06,
+      "status": "PASS"
+    },
+    {
+      "algorithm": "JADE",
+      "best_run1": 2.2759665098933744e-07,
+      "best_run2": 2.2759665098933744e-07,
+      "evals_run1": 2200,
+      "evals_run2": 2000,
+      "out_of_bounds_evals": 0,
+      "secs_run2": 0.15,
+      "status": "PASS"
+    },
+    {
+      "algorithm": "CMA_ES",
+      "best_run1": 3.462081769841516,
+      "best_run2": 3.462081769841516,
+      "evals_run1": 2200,
+      "evals_run2": 2000,
+      "out_of_bounds_evals": 0,
+      "secs_run2": 0.16,
+      "status": "PASS"
+    },
+    {
+      "algorithm": "SHADE",
+      "best_run1": 8.644747253016201e-10,
+      "best_run2": 8.644747253016201e-10,
+      "evals_run1": 2200,
+      "evals_run2": 2000,
+      "out_of_bounds_evals": 0,
+      "secs_run2": 0.14,
+      "status": "PASS"
+    },
+    {
+      "algorithm": "L_SHADE",
+      "best_run1": 4.124055967606919e-11,
+      "best_run2": 4.124055967606919e-11,
+      "evals_run1": 2200,
+      "evals_run2": 2000,
+      "out_of_bounds_evals": 0,
+      "secs_run2": 0.15,
+      "status": "PASS"
+    },
+    {
+      "algorithm": "PSO",
+      "best_run1": 3.067765577187943e-14,
+      "best_run2": 3.067765577187943e-14,
+      "evals_run1": 2200,
+      "evals_run2": 2000,
+      "out_of_bounds_evals": 0,
+      "secs_run2": 0.06,
+      "status": "PASS"
+    },
+    {
+      "algorithm": "GWO",
+      "best_run1": 0.00021118002884658392,
+      "best_run2": 0.00021118002884658392,
+      "evals_run1": 2200,
+      "evals_run2": 2000,
+      "out_of_bounds_evals": 0,
+      "secs_run2": 0.07,
+      "status": "PASS"
+    },
+    {
+      "algorithm": "WOA",
+      "best_run1": 0.0067369260582707665,
+      "best_run2": 0.0067369260582707665,
+      "evals_run1": 2200,
+      "evals_run2": 2000,
+      "out_of_bounds_evals": 0,
+      "secs_run2": 0.05,
+      "status": "PASS"
+    },
+    {
+      "algorithm": "HHO",
+      "best_run1": 1.9642343494501342,
+      "best_run2": 1.9642343494501342,
+      "evals_run1": 2352,
+      "evals_run2": 2010,
+      "out_of_bounds_evals": 0,
+      "secs_run2": 0.04,
+      "status": "EXCEPTION"
+    },
+    {
+      "algorithm": "ABC",
+      "best_run1": 2.9655765342896648e-06,
+      "best_run2": 2.9655765342896648e-06,
+      "evals_run1": 2380,
+      "evals_run2": 2020,
+      "out_of_bounds_evals": 0,
+      "secs_run2": 0.06,
+      "status": "EXCEPTION"
+    },
+    {
+      "algorithm": "GJO",
+      "best_run1": 0.12088761092210853,
+      "best_run2": 0.12088761092210853,
+      "evals_run1": 2200,
+      "evals_run2": 2000,
+      "out_of_bounds_evals": 0,
+      "secs_run2": 0.05,
+      "status": "PASS"
+    },
+    {
+      "algorithm": "ARO",
+      "best_run1": 0.00017169754633073391,
+      "best_run2": 0.00017169754633073391,
+      "evals_run1": 2200,
+      "evals_run2": 2000,
+      "out_of_bounds_evals": 0,
+      "secs_run2": 0.07,
+      "status": "PASS"
+    },
+    {
+      "algorithm": "AO",
+      "best_run1": 7.350623107745273,
+      "best_run2": 7.350623107745273,
+      "evals_run1": 2200,
+      "evals_run2": 2000,
+      "out_of_bounds_evals": 0,
+      "secs_run2": 0.07,
+      "status": "PASS"
+    },
+    {
+      "algorithm": "MPA",
+      "best_run1": 1.626574042640241e-07,
+      "best_run2": 1.626574042640241e-07,
+      "evals_run1": 2200,
+      "evals_run2": 2000,
+      "out_of_bounds_evals": 0,
+      "secs_run2": 0.05,
+      "status": "PASS"
+    },
+    {
+      "algorithm": "HBA",
+      "best_run1": 5.77612199569585e-05,
+      "best_run2": 5.77612199569585e-05,
+      "evals_run1": 2200,
+      "evals_run2": 2000,
+      "out_of_bounds_evals": 0,
+      "secs_run2": 0.07,
+      "status": "PASS"
+    },
+    {
+      "algorithm": "SA",
+      "best_run1": 0.008222781734024876,
+      "best_run2": 0.008222781734024876,
+      "evals_run1": 2048,
+      "evals_run2": 2000,
+      "out_of_bounds_evals": 69,
+      "secs_run2": 0.73,
+      "status": "PASS"
+    },
+    {
+      "algorithm": "EO",
+      "best_run1": 5.157228450591666e-10,
+      "best_run2": 5.157228450591666e-10,
+      "evals_run1": 2202,
+      "evals_run2": 1994,
+      "out_of_bounds_evals": 0,
+      "secs_run2": 0.07,
+      "status": "PASS"
+    },
+    {
+      "algorithm": "MVO",
+      "best_run1": 1.6895889337523868e-05,
+      "best_run2": 1.6895889337523868e-05,
+      "evals_run1": 2200,
+      "evals_run2": 2000,
+      "out_of_bounds_evals": 0,
+      "secs_run2": 0.09,
+      "status": "PASS"
+    },
+    {
+      "algorithm": "RIME",
+      "best_run1": 0.00010083152389345184,
+      "best_run2": 0.00010083152389345184,
+      "evals_run1": 2200,
+      "evals_run2": 2000,
+      "out_of_bounds_evals": 0,
+      "secs_run2": 0.05,
+      "status": "PASS"
+    },
+    {
+      "algorithm": "SMA",
+      "best_run1": 0.004002690836312744,
+      "best_run2": 0.004002690836312744,
+      "evals_run1": 2200,
+      "evals_run2": 2000,
+      "out_of_bounds_evals": 0,
+      "secs_run2": 0.13,
+      "status": "PASS"
+    },
+    {
+      "algorithm": "BBO",
+      "best_run1": 0.19341983042710398,
+      "best_run2": 0.19341983042710398,
+      "evals_run1": 2200,
+      "evals_run2": 2000,
+      "out_of_bounds_evals": 0,
+      "secs_run2": 0.07,
+      "status": "PASS"
+    },
+    {
+      "algorithm": "SCA",
+      "best_run1": 0.02406104567901882,
+      "best_run2": 0.02406104567901882,
+      "evals_run1": 2200,
+      "evals_run2": 2000,
+      "out_of_bounds_evals": 0,
+      "secs_run2": 0.1,
+      "status": "PASS"
+    },
+    {
+      "algorithm": "AOA",
+      "best_run1": 4.997056361938965,
+      "best_run2": 4.997056361938965,
+      "evals_run1": 2200,
+      "evals_run2": 2000,
+      "out_of_bounds_evals": 0,
+      "secs_run2": 0.05,
+      "status": "PASS"
+    }
+  ],
+  "fingerprint": {
+    "identical": 13,
+    "total": 72,
+    "different": [
+      "F1_d5",
+      "F1_d10",
+      "F1_d20",
+      "F2_d5",
+      "F2_d10",
+      "F2_d20",
+      "F3_d5",
+      "F3_d10",
+      "F3_d20",
+      "F4_d5",
+      "F4_d10",
+      "F4_d20",
+      "F5_d5",
+      "F5_d10",
+      "F5_d20",
+      "F6_d10",
+      "F6_d20",
+      "F7_d10",
+      "F7_d20",
+      "F9_d5",
+      "F9_d10",
+      "F9_d20",
+      "F10_d5",
+      "F10_d10",
+      "F10_d20",
+      "F11_d5",
+      "F11_d10",
+      "F11_d20",
+      "F12_d5",
+      "F12_d10",
+      "F12_d20",
+      "F13_d5",
+      "F13_d10",
+      "F13_d20",
+      "F14_d5",
+      "F14_d10",
+      "F14_d20",
+      "F15_d5",
+      "F15_d10",
+      "F15_d20",
+      "F16_d5",
+      "F16_d10",
+      "F16_d20",
+      "F17_d5",
+      "F17_d10",
+      "F17_d20",
+      "F18_d5",
+      "F18_d10",
+      "F18_d20",
+      "F19_d5",
+      "F19_d10",
+      "F19_d20",
+      "F21_d5",
+      "F23_d5",
+      "F23_d10",
+      "F23_d20",
+      "F24_d5",
+      "F24_d10",
+      "F24_d20"
+    ]
+  },
+  "readme_examples": [
+    {
+      "block": 1,
+      "label": "minimal example",
+      "as_written": "ok",
+      "secs": 6.7
+    },
+    {
+      "block": 2,
+      "label": "custom problem",
+      "as_written": "NameError: name 'OptimizationProblem' is not defined",
+      "secs": 0.0,
+      "with_missing_names_supplied": "ok",
+      "secs_supplied": 1.4
+    },
+    {
+      "block": 3,
+      "label": "config space",
+      "as_written": "ok",
+      "secs": 0.0
+    },
+    {
+      "block": 4,
+      "label": "EA_Designer",
+      "as_written": "NameError: name 'problem' is not defined",
+      "secs": 1.4,
+      "with_missing_names_supplied": "ok",
+      "secs_supplied": 11.1
+    },
+    {
+      "block": 5,
+      "label": "LLM designer",
+      "as_written": "NameError: name 'problem' is not defined",
+      "secs": 1.3,
+      "with_missing_names_supplied": "ok",
+      "secs_supplied": 2.1
+    },
+    {
+      "block": 6,
+      "label": "surrogate",
+      "as_written": "NameError: name 'X_train' is not defined",
+      "secs": 1.3,
+      "with_missing_names_supplied": "ok",
+      "secs_supplied": 1.4
+    }
+  ]
+}
